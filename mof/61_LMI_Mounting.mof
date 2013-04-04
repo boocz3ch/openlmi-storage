@@ -1,0 +1,384 @@
+/*
+ * Copyright (C) 2013 Red Hat, Inc.  All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Authors: Jan Synacek <jsynacek@redhat.com>
+ */
+
+[ Description (
+    "Class for representing mount options. Basic boolean properties represent "
+    "filesystem independent mount options (as listed in mount(8))." ) ]
+class LMI_MountedFileSystemSetting : CIM_SettingData
+{
+    [ Description (
+        "All I/O to the filesystem should be done synchronously. In case of "
+        "media with limited number of write cycles (e.g. some flash drives), "
+        "this option may cause life-cycle shortening. Corresponds to 'sync' "
+        "mount option." ) ]
+    boolean SynchronousIO;
+
+    [ Description (
+        "All directory updates within the filesystem should be done "
+        "synchronously. This affects the following system calls: creat, link, "
+        "unlink, symlink, mkdir, rmdir, mknod and rename. Corresponds to "
+        "'dirsync' mount option." ) ]
+    boolean SynchronousDirectoryUpdates;
+
+    [ Description (
+        "Update inode access times on this filesystem. Corresponds to 'atime' "
+        "mount option." ) ]
+    boolean UpdateAccessTimes;
+
+    [ Description (
+        "Allows to explicitly requesting full atime updates. This makes it "
+        "possible for kernel to defaults to relatime or noatime but still "
+        "allow userspace to override it. Corresponds to 'strictatime' mount "
+        "option." ) ]
+    boolean UpdateFullAccessTimes;
+
+    [ Description (
+        "Update inode access times relative to modify or change time. Access "
+        "time is only updated if the previous access time was earlier than the "
+        "current modify or change time. Corresponds to 'relatime' mount "
+        "option." ) ]
+    boolean UpdateRelativeAccessTimes;
+
+    [ Description (
+        "Update directory inode access times on this filesystem. This is the "
+        "default. Corresponds to 'diratime' mount option." ) ]
+    boolean UpdateDirectoryAccessTimes;
+
+    [ Description (
+        "Interpret character or block special devices on the filesystem."
+        "Corresponds to 'dev' mount option." ) ]
+    boolean InterpretDevices;
+
+    [ Description (
+        "Allow mandatory locks on this filesystem. See fcntl(2). Corresponds "
+        "to 'mand' mount option." ) ]
+    boolean AllowMandatoryLock;
+
+    [ Description (
+        "Permit execution of binaries. Corresponds to 'exec' mount option." ) ]
+    boolean AllowExecution;
+
+    [ Description (
+        "Allow set-user-identifier or set-group-identifier bits to take "
+        "effect. Corresponds to 'suid' mount option." ) ]
+    boolean AllowSUID;
+
+    [ Description (
+        "Mount the filesystem read-write. If false, mount read-only."
+        "Corresponds to 'rw' mount option." ) ]
+    boolean AllowWrite;
+
+    [ Description (
+        "Turn on the silent flag. Corresponds to 'silent' mount option." ) ]
+    boolean Silent;
+
+    [ Description (
+        "Other mount options that can be filesystem specific. This property is "
+        "also used to specify options with values (e.g. uid=0 or gid=100). "
+        "OtherOptions are appended (in the same order as they appear in the "
+        "array) to the basic options." ),
+      ArrayType ( "Indexed" ) ]
+    string OtherOptions[];
+
+    [ Description (
+        "Mount automatically at boot-up. Corresponds to 'auto' mount "
+        "option. This option is only relevant in /etc/fstab." ) ]
+    boolean Auto;
+
+    [ Description (
+        "Allow an ordinary user to mount the filesystem. Corresponds to 'user' "
+        "mount option. This option is only relevant in /etc/fstab." ) ]
+    boolean AllowUserMount;
+
+    [ Description (
+        "This field is used for these filesystems by the dump(8) command to "
+        "determine which filesystems need to be dumped. If the field is "
+        "not present, a value of zero is returned and dump will assume that "
+        "the filesystem does not need to be dumped. This option is only "
+        "relevant in /etc/fstab." ) ]
+    boolean Dump;
+
+    [ Description (
+        "Used by the fsck(8) program to determine the order in which "
+        "filesystem checks are done at reboot time. The root filesystem should "
+        "be specified with a 1, other filesystems with a 2. Filesystems within "
+        "a drive are checked sequentially, but filesystems on different drives "
+        "are checked in parallel. This option is only relevant in "
+        "/etc/fstab." ) ]
+    uint16 FileSystemCheckOrder;
+};
+
+[ Description (
+    "Class for representing mounted filesystems. Can be thought of as either "
+    "an entry in /etc/mtab, or in /etc/fstab, according to its associated "
+    "LMI_MountedFileSystemSetting." ) ]
+class LMI_MountedFileSystem : CIM_ManagedElement
+{
+    [ Description (
+        "Filesystem type.") ]
+    string FileSystemType;
+
+    [ Key, Description (
+        "Filesystem specification. Corresponds to the device field in "
+        "/etc/fstab." ) ]
+    string FileSystemSpec;
+
+    [ Key, Description (
+        "Path to a directory where the device is mounted." ) ]
+    string MountPointPath;
+};
+
+class LMI_MountedFileSystemCapabilities : CIM_Capabilities
+{
+    [ Description (
+        "Method to create and populate an LMI_MountedFileSystemSetting instance. This "
+        "removes the need to populate default settings and other settings "
+        "in the context of each LMI_MountedFileSystemCapabilities (which could be "
+        "numerous)." ),
+      ValueMap { "0", "1", "2", "3", "4", "5", "..", "32768..65535" },
+      Values { "Success", "Not Supported", "Unspecified Error", "Timeout",
+               "Failed", "Invalid Parameter", "DMTF Reserved",
+               "Vendor Specific" } ]
+    uint32 CreateSetting(
+        [ IN(false), OUT, Description (
+            "Reference to the created setting instance." ) ]
+        LMI_MountedFileSystemSetting REF MountSetting
+    );
+
+    [ ValueMap { "0", "1", "2" },
+      Values { "CreateMount", "ModifyMount", "DeleteMount" } ]
+    uint16 SupportedAsynchronousMethods[];
+};
+
+class LMI_MountConfigurationService : CIM_Service
+{
+    [ Description (
+        "Mounts the specified filesystem to a mountpoint." ),
+      ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+                 "4098..32767", "32768..65535" },
+      Values { "Job Completed with No Error", "Not Supported",
+               "Unknown", "Timeout", "Failed", "Invalid Parameter",
+               "In Use", "DMTF Reserved",
+               "Method Parameters Checked - Job Started",
+               "Method Reserved", "Vendor Specific" } ]
+    uint32 CreateMount(
+        [ IN(false), OUT, Description (
+            "Reference to the created job." ) ]
+        CIM_ConcreteJob REF Job,
+
+        [ IN(false), OUT, Description (
+            "Reference to the created LMI_MountedFileSystem instance." ) ]
+        LMI_MountedFileSystem REF Mount,
+
+        [ IN, Description (
+           "Existing filesystem that should be mounted. If NULL, mount a "
+           "remote filesystem, or mount a non-device filesystem (e.g. tmpfs). "
+           "If not NULL, mount a local filesystem. When mounting a local "
+           "filesystem, the FileSystemType parameter has to agree with "
+           "the type of FileSystem." ) ]
+        CIM_FileSystem REF FileSystem,
+
+        [ IN, Description (
+            "Directory where the mounted filesystem should be attached at." ) ]
+        string MountPoint,
+
+        [ IN, Description (
+            "Filesystem specification. Specifies the device that should be "
+            "mounted. Remote filesystems can be specified in their usual "
+            "form (e.g. 'hostname:/share' for NFS, or '//hostname/share' for "
+            "CIFS). Non-device filesystems can also be specified "
+            "(e.g. 'tmpfs' or 'sysfs'). When performing a bind mount, "
+            "FileSystemSpec is the path to the source directory." ) ]
+        string FileSystemSpec,
+
+        [ IN, Description (
+            "Filesystem type. If NULL, perform a binding mount. If mounting a "
+            "local filesystem, this parameter has to be in agreement with the "
+            "FileSystem." ) ]
+        string FileSystemType,
+
+        [ IN, Description (
+            "Desired mount settings. If NULL, defaults will be used. Default "
+            "mount options are 'rw, suid, dev, exec, auto, nouser, async'." ) ]
+        LMI_MountedFileSystemSetting REF Goal,
+
+        [ IN, Description (
+            "The mode in which the configuration is to be applied to the "
+            "MountedFileSystem."
+            "\nIsNext and IsCurrent are properties of "
+            "LMI_MountedFileSystemElementSettingData, which will be created."
+            "\nMeaning of IsNext and IsCurrent is: "
+            "\nIsCurrent = 1: The filesystem will be mounted."
+            "\nIsNext = 1: A persistent entry will be created (in /etc/fstab). "
+            "\nMode 1 - IsNext = 1, IsCurrent = 1."
+            "\nMode 2 - IsNext = 1, IsCurrent not affected."
+            "\nMode 32768 - IsNext not affected, IsCurrent = 1."
+          ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "32768", "32769" },
+          Values { "Mode 0", "Mode 1", "Mode 2", "Mode 3", "Mode 4", "Mode 5",
+                   "Mode 6", "DMTF Reserved", "Mode 32768", "Mode 32769" } ]
+        uint16 Mode
+    );
+
+    [ Description (
+        "Modifies (remounts) an existing mount." ),
+      ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+                 "4098..32767", "32768..65535" },
+      Values { "Job Completed with No Error", "Not Supported",
+               "Unknown", "Timeout", "Failed", "Invalid Parameter",
+               "In Use", "DMTF Reserved",
+               "Method Parameters Checked - Job Started",
+               "Method Reserved", "Vendor Specific" } ]
+    uint32 ModifyMount(
+        [ IN(false), OUT, Description (
+            "Reference to the created job." ) ]
+        CIM_ConcreteJob REF Job,
+
+        [ IN, OUT, Description (
+            "Reference to the LMI_Mount instance that is being modified. " ) ]
+        LMI_MountedFileSystem REF Mount,
+
+        [ IN, Description (
+           "Desired mount settings. If NULL, the mount options are not "
+           "changed. If mount (or an fstab entry) should be performed "
+           "(created), the appropriate respective MountedFileSystemSetting "
+           "will be created." ) ]
+        LMI_MountedFileSystemSetting REF Goal,
+
+        [ IN, Description (
+            "The mode in which the configuration is to be applied to the "
+            "MountedFileSystem."
+            "\nIsNext and IsCurrent are properties of "
+            "LMI_MountedFileSystemElementSettingData, which will be created."
+            "\nMeaning of IsNext and IsCurrent is: "
+            "\nIsCurrent = 1: The filesystem will be mounted."
+            "\nIsCurrent = 2: The filesystem will be unmounted."
+            "\nIsNext = 1: A persistent entry will be created (in /etc/fstab). "
+            "\nIsNext = 2: The persistent entry will be removed. "
+            "\nMode 1 - IsNext = 1, IsCurrent = 1."
+            "\nMode 2 - IsNext = 1, IsCurrent not affected."
+            "\nMode 4 - IsNext = 2, IsCurrent = 2."
+            "\nMode 5 - IsNext = 2, IsCurrent not affected."
+            "\nMode 32768 - IsNext not affected, IsCurrent = 1."
+            "\nMode 32769 - IsNext not affected, IsCurrent = 2." ),
+          ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "32768", "32769" },
+          Values { "Mode 0", "Mode 1", "Mode 2", "Mode 3", "Mode 4", "Mode 5",
+                   "Mode 6", "DMTF Reserved", "Mode 32768", "Mode 32769" } ]
+        uint16 Mode
+    );
+
+    [ Description (
+        "Unmounts an existing mount." ),
+      ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+                 "4098..32767", "32768..65535" },
+      Values { "Job Completed with No Error", "Not Supported",
+               "Unknown", "Timeout", "Failed", "Invalid Parameter",
+               "In Use", "DMTF Reserved",
+               "Method Parameters Checked - Job Started",
+               "Method Reserved", "Vendor Specific" } ]
+    uint32 DeleteMount(
+        [ IN(false), OUT, Description (
+            "Reference to the created job." ) ]
+        CIM_ConcreteJob REF Job,
+
+        [ IN, Description (
+            "An existing mount." ) ]
+        LMI_MountedFileSystem REF Mount,
+
+        [ IN, Description (
+            "The mode in which the configuration is to be applied to the "
+            "MountedFileSystem."
+            "\nIsNext and IsCurrent are properties of "
+            "LMI_MountedFileSystemElementSettingData, which will be created."
+            "\nMeaning of IsNext and IsCurrent is: "
+            "\nIsCurrent = 1: The filesystem will be mounted."
+            "\nIsCurrent = 2: The filesystem will be unmounted."
+            "\nIsNext = 1: A persistent entry will be created (in /etc/fstab). "
+            "\nIsNext = 2: The persistent entry will be removed. "
+            "\nMode 4 - IsNext = 2, IsCurrent = 2."
+            "\nMode 5 - IsNext = 2, IsCurrent not affected."
+            "\nMode 32769 - IsNext not affected, IsCurrent = 2." ),
+          ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "32768", "32769" },
+          Values { "Mode 0", "Mode 1", "Mode 2", "Mode 3", "Mode 4", "Mode 5",
+                   "Mode 6", "DMTF Reserved", "Mode 32768", "Mode 32769" } ]
+        uint16 Mode
+    );
+};
+
+[ Association ]
+class LMI_HostedMount : CIM_Dependency
+{
+    [ Override("Antecedent"), Description (
+        "The hosting system." ) ]
+    CIM_System REF Antecedent;
+
+    [ Override("Dependent"), Description (
+        "A mounted filesystem on the system." ) ]
+    LMI_MountedFileSystem REF Dependent;
+};
+
+[ Association ]
+class LMI_MountedFileSystemElementSettingData : CIM_ElementSettingData
+{
+    [ Override("ManagedElement"), Description (
+        "A mounted filesystem." ) ]
+    LMI_MountedFileSystem REF ManagedElement;
+
+    [ Override("SettingData"), Description (
+        "A setting attached to the mounted filesystem. Each filesystem can have "
+        "two setting instances attached, one for currently mounted filesystem "
+        "and one for a persistent setting (typically an fstab entry)." ) ]
+    LMI_MountedFileSystemSetting REF SettingData;
+};
+
+[ Association ]
+class LMI_MountElementCapabilities : CIM_ElementCapabilities
+{
+    [ Override("Capabilities"), Description (
+        "Supported capabilities for mounting support." ) ]
+    LMI_MountedFileSystemCapabilities REF Capabilities;
+
+    [ Override("ManagedElement"), Description (
+        "The central instance of mounting management." ) ]
+    LMI_MountConfigurationService REF ManagedElement;
+};
+
+[ Association ]
+class LMI_MountPoint: CIM_Dependency
+{
+    [ Override("Antecedent"), Description (
+        "Mountpoint. A directory where the mounted filesystem is attached at." ) ]
+    CIM_Directory REF Antecedent;
+
+    [ Override("Dependent"), Description (
+        "The mounted filesystem." ) ]
+    LMI_MountedFileSystem REF Dependent;
+};
+
+[ Association ]
+class LMI_AttachedFileSystem: CIM_Dependency
+{
+    [ Override("Antecedent"), Description (
+        "A file or dataset store local to the System." ) ]
+    CIM_FileSystem REF Antecedent;
+
+    [ Override("Dependent"), Description (
+        "The mounted filesystem." ) ]
+    LMI_MountedFileSystem REF Dependent;
+};
