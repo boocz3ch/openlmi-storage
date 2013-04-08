@@ -32,9 +32,9 @@ class SettingProvider(BaseProvider):
             - number of configurable in-memory (transient) instances
             - instances associated to managed elements
         This class provides all four instance types.
-        
+
         The setting itself is represented by dictionary of key -> value.
-        
+
         Preconfigured instances are stored in /etc/openlmi/storage/settings/<setting_classname>.ini
         Persistent instances are stored in /var/lib/openlmi-storage/settings/<setting_classname>.ini
     """
@@ -59,7 +59,7 @@ class SettingProvider(BaseProvider):
                 If this value of the property is set, the ModifyInstance
                 won't complain, but it will silently ignore the value.
                 This is useful when someone tries to set default value
-                of a property and the provider does not implement it. 
+                of a property and the provider does not implement it.
         """
         self.setting_classname = setting_classname
         supported_properties['Caption'] = str
@@ -77,12 +77,12 @@ class SettingProvider(BaseProvider):
     @cmpi_logging.trace_method
     def enumerate_configurations(self):
         """
-            Enumerate all instances of LMI_*Setting, which are attached 
+            Enumerate all instances of LMI_*Setting, which are attached
             to managed elements, i.e. are not transient, persistent nor
             preconfigured.
-            
+
             This method returns iterabe with Setting instances.
-            
+
             Subclasses should override this method.
         """
         return []
@@ -119,8 +119,8 @@ class SettingProvider(BaseProvider):
     def get_configuration_for_id(self, instance_id):
         """
             Return Setting instance for given instance_id.
-            Return None if no such Setting is found. 
-            
+            Return None if no such Setting is found.
+
             Subclasses should override this method.
         """
         return None
@@ -130,7 +130,7 @@ class SettingProvider(BaseProvider):
     def get_associated_element_name(self, instance_id):
         """
             Return CIMInstanceName for ElementSettingData association.
-            Return None if no such element exist. 
+            Return None if no such element exist.
             Subclasses should override this method.
         """
         return None
@@ -334,22 +334,22 @@ class SettingProvider(BaseProvider):
 
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        instance -- The new pywbem.CIMInstance.  If modifying an existing 
-            instance, the properties on this instance have been filtered by 
+        instance -- The new pywbem.CIMInstance.  If modifying an existing
+            instance, the properties on this instance have been filtered by
             the PropertyList from the request.
         modify_existing -- True if ModifyInstance, False if CreateInstance
 
-        Return the new instance.  The keys must be set on the new instance. 
+        Return the new instance.  The keys must be set on the new instance.
 
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
         CIM_ERR_NOT_SUPPORTED
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, unrecognized 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, unrecognized
             or otherwise incorrect parameters)
-        CIM_ERR_ALREADY_EXISTS (the CIM Instance already exists -- only 
+        CIM_ERR_ALREADY_EXISTS (the CIM Instance already exists -- only
             valid if modify_existing is False, indicating that the operation
             was CreateInstance)
-        CIM_ERR_NOT_FOUND (the CIM Instance does not exist -- only valid 
+        CIM_ERR_NOT_FOUND (the CIM Instance does not exist -- only valid
             if modify_existing is True, indicating that the operation
             was ModifyInstance)
         CIM_ERR_FAILED (some other unspecified error occurred)
@@ -380,18 +380,18 @@ class SettingProvider(BaseProvider):
 
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        instance_name -- A pywbem.CIMInstanceName specifying the instance 
+        instance_name -- A pywbem.CIMInstanceName specifying the instance
             to delete.
 
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
         CIM_ERR_NOT_SUPPORTED
         CIM_ERR_INVALID_NAMESPACE
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, unrecognized 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, unrecognized
             or otherwise incorrect parameters)
-        CIM_ERR_INVALID_CLASS (the CIM Class does not exist in the specified 
+        CIM_ERR_INVALID_CLASS (the CIM Class does not exist in the specified
             namespace)
-        CIM_ERR_NOT_FOUND (the CIM Class does exist, but the requested CIM 
+        CIM_ERR_NOT_FOUND (the CIM Class does exist, but the requested CIM
             Instance does not exist in the specified namespace)
         CIM_ERR_FAILED (some other unspecified error occurred)
 
@@ -416,28 +416,28 @@ class SettingProvider(BaseProvider):
         the same class and the same properties as the original instance
         except ChangeableType, which will be set to "Changeable -
         Transient" in the clone, and InstanceID.
-        
+
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName 
-            specifying the object on which the method CloneSetting() 
+        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName
+            specifying the object on which the method CloneSetting()
             should be invoked.
 
         Returns a two-tuple containing the return value (type pywbem.Uint32)
         and a list of CIMParameter objects representing the output parameters
 
         Output parameters:
-        Clone -- (type REF (pywbem.CIMInstanceName(setting_classname='CIM_StorageSetting', ...)) 
+        Clone -- (type REF (pywbem.CIMInstanceName(setting_classname='CIM_StorageSetting', ...))
             Created copy.
-            
+
 
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate,
             unrecognized or otherwise incorrect parameters)
-        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not 
+        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not
             exist in the specified namespace)
-        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor 
+        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor
             the invocation request)
         CIM_ERR_FAILED (some other unspecified error occurred)
 
@@ -564,7 +564,7 @@ class SettingHelperProvider(SettingProvider):
     @cmpi_logging.trace_method
     def enumerate_configurations(self):
         """
-            Enumerate all instances of LMI_*Setting, which are attached 
+            Enumerate all instances of LMI_*Setting, which are attached
             to managed elements, i.e. are not transient, persistent nor
             preconfigured.
             It returns setting_helper.enumerate_settings.
