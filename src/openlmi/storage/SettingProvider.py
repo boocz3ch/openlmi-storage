@@ -448,7 +448,6 @@ class SettingProvider(BaseProvider):
                     "Cannot find setting.")
 
         instance_id = self.setting_manager.allocate_id(self.setting_classname)
-        print "instanceid = ", instance_id
         new_setting = Setting(Setting.TYPE_TRANSIENT, instance_id)
         for (key, value) in setting.items():
             new_setting[key] = value

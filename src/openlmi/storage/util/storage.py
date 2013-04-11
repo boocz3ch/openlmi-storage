@@ -58,7 +58,6 @@ def get_logical_partition_start(partition):
             break
         part = part.nextPartition()
 
-    print 'partition', part, 'metadata', metadata
     if not part:
         raise pywbem.CIMError(pywbem.CIM_ERR_FAILED,
                 'Cannot find the partition on the disk.')

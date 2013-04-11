@@ -361,7 +361,8 @@ def get_providers(env):
     provider = LMI_HostedFileSystem(**opts)
     providers['LMI_HostedFileSystem'] = provider
 
-    print "providers:", providers
+    cmpi_logging.logger.trace_info("Registered providers: %s"
+            % (str(providers)))
     return providers
 
 def authorize_filter(env, fltr, ns, classes, owner):
