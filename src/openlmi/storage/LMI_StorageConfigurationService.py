@@ -26,7 +26,7 @@ import openlmi.storage.util.units as units
 import openlmi.storage.util.storage as storage
 from openlmi.storage.DeviceProvider import DeviceProvider
 from openlmi.storage.SettingProvider import SettingProvider
-from openlmi.storage.JobManager import Job
+from openlmi.common.JobManager import Job
 
 class LMI_StorageConfigurationService(ServiceProvider):
     """ Provider of LMI_StorageConfigurationService. """

@@ -27,7 +27,7 @@ import openlmi.storage.util.storage as storage
 import openlmi.storage.util.units as units
 import parted
 import openlmi.common.cmpi_logging as cmpi_logging
-from openlmi.storage.JobManager import Job
+from openlmi.common.JobManager import Job
 
 class LMI_DiskPartitionConfigurationService(ServiceProvider):
     """

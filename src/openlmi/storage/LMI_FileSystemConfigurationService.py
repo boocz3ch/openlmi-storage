@@ -20,7 +20,7 @@
 
 import blivet.formats
 import openlmi.storage.util
-from openlmi.storage.JobManager import Job
+from openlmi.common.JobManager import Job
 from openlmi.storage.ServiceProvider import ServiceProvider
 import pywbem
 import openlmi.common.cmpi_logging as cmpi_logging

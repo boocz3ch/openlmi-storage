@@ -71,15 +71,13 @@ from openlmi.storage.LMI_FileSystemConfigurationService \
         import LMI_FileSystemConfigurationService
 from openlmi.storage.LMI_FileSystemConfigurationCapabilities \
         import LMI_FileSystemConfigurationCapabilities
-from openlmi.storage.JobManager import JobManager
-from openlmi.storage.IndicationManager import IndicationManager
+from openlmi.common.JobManager import JobManager
+from openlmi.common.IndicationManager import IndicationManager
 from openlmi.storage.LMI_HostedFileSystem import LMI_HostedFileSystem
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
 import logging
-
-indication_manager = None
 
 def init_anaconda(log_manager, config):
     """ Initialize Anaconda storage module."""
@@ -150,8 +148,8 @@ def get_providers(env):
 
     cmpi_logging.logger.info("Provider init.")
 
-    global indication_manager
-    indication_manager = IndicationManager(env, "Storage", config.namespace)
+    indication_manager = IndicationManager.get_instance(
+            env, "Storage", config.namespace)
 
     manager = ProviderManager()
     setting_manager = SettingManager(config)
@@ -367,24 +365,26 @@ def get_providers(env):
 
 def authorize_filter(env, fltr, ns, classes, owner):
     """ CIMOM callback."""
-    indication_manager.authorize_filter(env, fltr, ns, classes, owner)
+    IndicationManager.get_instance().authorize_filter(
+            env, fltr, ns, classes, owner)
 
 def activate_filter (env, fltr, ns, classes, first_activation):
     """ CIMOM callback."""
-    indication_manager.activate_filter(env, fltr, ns, classes, first_activation)
+    IndicationManager.get_instance().activate_filter(
+            env, fltr, ns, classes, first_activation)
 
 def deactivate_filter(env, fltr, ns, classes, last_activation):
     """ CIMOM callback."""
-    indication_manager.deactivate_filter(env, fltr, ns, classes,
-            last_activation)
+    IndicationManager.get_instance().deactivate_filter(
+            env, fltr, ns, classes, last_activation)
 
 def enable_indications(env):
     """ CIMOM callback."""
-    indication_manager.enable_indications(env)
+    IndicationManager.get_instance().enable_indications(env)
 
 def disable_indications(env):
     """ CIMOM callback."""
-    indication_manager.disable_indications(env)
+    IndicationManager.get_instance().disable_indications(env)
 
 def can_unload(_env):
     """ CIMOM callback."""
