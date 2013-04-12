@@ -123,6 +123,7 @@ def do_storage_action(storage, actions):
         Perform array Anaconda DeviceActions on given Storage instance.
     """
     do_partitioning = False
+    need_reset = False
 
     for action in actions:
         cmpi_logging.logger.trace_info("Running action " + str(action))
@@ -132,6 +133,19 @@ def do_storage_action(storage, actions):
                 and isinstance(action,
                         blivet.deviceaction.ActionCreateDevice)):
             do_partitioning = True
+
+        if (isinstance(action.device, blivet.devices.PartitionDevice) and not
+                isinstance(action, blivet.deviceaction.ActionDestroyFormat)):
+            # The action is partition manipulation action, Blivet needs reload
+            # to get parted devices right
+            need_reset = True
+        elif not isinstance(action,
+                    (blivet.deviceaction.ActionDestroyFormat,
+                    blivet.deviceaction.ActionDestroyDevice)):
+            # The action is device creation/manipulation, Blivet needs reload
+            # to get new/changed device properties (like udev symlinks,
+            # uuid etc.)
+            need_reset = True
 
         storage.devicetree.registerAction(action)
     try:
@@ -149,9 +163,10 @@ def do_storage_action(storage, actions):
                         "Result: " + repr(action.device))
 
     finally:
-        os.system('udevadm trigger --subsystem-match block')
-        os.system('udevadm settle')
-        storage.reset()
+        if need_reset:
+            os.system('udevadm trigger --subsystem-match block')
+            os.system('udevadm settle')
+            storage.reset()
 
 def log_storage_call(msg, args):
     """
