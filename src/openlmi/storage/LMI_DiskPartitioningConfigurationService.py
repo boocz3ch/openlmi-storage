@@ -158,6 +158,7 @@ class LMI_DiskPartitionConfigurationService(ServiceProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_INVALID_PARAMETER,
                 "LMI_DiskPartitionConfigurationSetting Goal does not"
                 " found.")
+        goal.touch()
         return goal
 
     @cmpi_logging.trace_method
