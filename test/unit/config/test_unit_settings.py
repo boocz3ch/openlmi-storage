@@ -20,19 +20,34 @@
 from openlmi.storage.StorageConfiguration import StorageConfiguration
 from openlmi.storage.SettingManager import SettingManager, Setting
 import openlmi.common.cmpi_logging as cmpi_logging
+from openlmi.common.TimerManager import TimerManager
 
 import logging
 import unittest
 import os
 import shutil
+import time
 
 class TestSetting(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # fake ProviderEnvironment for TimerManager
+        class Env(object):
+            def AttachThread(self):
+                pass
+            def PrepareAttachThread(self):
+                return self
+            def get_cimom_handle(self):
+                return self
+        cmpi_logging.logger = logging.getLogger('openlmi.storage')
+        cls.timer_mgr = TimerManager.get_instance(Env())
+
     def setUp(self):
         self.directory = os.path.dirname(__file__)
         if not self.directory:
             self.directory = "."
 
-        cmpi_logging.logger = logging.getLogger('openlmi.storage')
 
         StorageConfiguration.CONFIG_FILE = "/not/existing"
         self.config = StorageConfiguration()
@@ -45,7 +60,7 @@ class TestSetting(unittest.TestCase):
         self.config.CONFIG_PATH = self.directory + "/configs/missing/etc/"
         self.config.PERSISTENT_PATH = self.directory + "/configs/missing/var/"
 
-        mgr = SettingManager(self.config)
+        mgr = SettingManager(self.config, self.timer_mgr)
         mgr.load()
 
         self.assertDictEqual(mgr.classes, {})
@@ -58,7 +73,7 @@ class TestSetting(unittest.TestCase):
         self.config.CONFIG_PATH = self.directory + "/configs/empty/etc/"
         self.config.PERSISTENT_PATH = self.directory + "/configs/empty/var/"
 
-        mgr = SettingManager(self.config)
+        mgr = SettingManager(self.config, self.timer_mgr)
         mgr.load()
 
         self.assertDictEqual(mgr.classes, {})
@@ -71,7 +86,7 @@ class TestSetting(unittest.TestCase):
         self.config.CONFIG_PATH = self.directory + "/configs/full/etc/"
         self.config.PERSISTENT_PATH = self.directory + "/configs/full/var/"
 
-        mgr = SettingManager(self.config)
+        mgr = SettingManager(self.config, self.timer_mgr)
         mgr.load()
 
         # check LMI_StorageSetting class loaded OK
@@ -106,7 +121,7 @@ class TestSetting(unittest.TestCase):
         self.config.CONFIG_PATH = self.directory + "/configs/full/etc/"
         self.config.PERSISTENT_PATH = self.directory + "/configs/full/var/"
 
-        mgr = SettingManager(self.config)
+        mgr = SettingManager(self.config, self.timer_mgr)
         mgr.load()
 
         # dirty hack to save it to different directory...
@@ -170,7 +185,7 @@ class TestSetting(unittest.TestCase):
         # remove one persistent, it should be saved imediatelly
         mgr.delete_setting('LMI_StorageSetting', s2)
         # check it is really removed
-        mgr = SettingManager(self.config)
+        mgr = SettingManager(self.config, self.timer_mgr)
         mgr.load()
         settings = mgr.get_settings("LMI_StorageSetting")
         self.assertNotIn("LMI:StorageSetting:persistent3", settings.keys())
@@ -182,7 +197,7 @@ class TestSetting(unittest.TestCase):
         s3['third'] = "-3.0"
         mgr.set_setting('LMI_StorageSetting', s3)
         # check it is really removed
-        mgr = SettingManager(self.config)
+        mgr = SettingManager(self.config, self.timer_mgr)
         mgr.load()
         settings = mgr.get_settings("LMI_StorageSetting")
         s3 = settings['LMI:StorageSetting:persistent2']
@@ -192,6 +207,81 @@ class TestSetting(unittest.TestCase):
         self.assertEqual(s3['second'], "minus one")
         self.assertEqual(s3['third'], "-3.0")
 
+    def test_expire(self):
+        """
+        Test that transient setting expires.
+        """
+        # hack shorter timeout
+        old_timeout = Setting.TRAINSIENT_SETTING_LIFETIME
+        Setting.TRAINSIENT_SETTING_LIFETIME = 3
+
+        self.config.CONFIG_PATH = self.directory + "/configs/none/etc/"
+        self.config.PERSISTENT_PATH = self.directory + "/configs/none/var/"
+
+        try:
+            mgr = SettingManager(self.config, self.timer_mgr)
+
+            # add one transient setting
+            s = Setting(mgr, 'LMI_StorageSetting',
+                    Setting.TYPE_TRANSIENT, "LMI:StorageSetting:transient1")
+            s['first'] = "111"
+            s['second'] = "two two two"
+            s['third'] = "333.0"
+            mgr.set_setting("LMI_StorageSetting", s)
+
+            # add one preconfigured setting (this should not happen in reality,
+            # but let's test it).
+            s = Setting(mgr, 'LMI_StorageSetting',
+                    Setting.TYPE_PRECONFIGURED, "LMI:StorageSetting:preconfigured3")
+            s['first'] = "1111"
+            s['second'] = "two two two two"
+            s['third'] = "3333.0"
+            mgr.set_setting("LMI_StorageSetting", s)
+
+            # add one persistent setting
+            s = Setting(mgr, 'LMI_StorageSetting',
+                    Setting.TYPE_PERSISTENT, "LMI:StorageSetting:persistent3")
+            s['first'] = "11"
+            s['second'] = "two two"
+            s['third'] = "33.0"
+            mgr.set_setting("LMI_StorageSetting", s)
+
+            time.sleep(4)
+
+            settings = mgr.get_settings("LMI_StorageSetting")
+            self.assertIn('LMI:StorageSetting:persistent3', settings.keys())
+            self.assertIn('LMI:StorageSetting:preconfigured3', settings.keys())
+            self.assertNotIn(
+                    'LMI:StorageSetting:transient1', settings.keys())
+
+            # change the persistent to transient -> must be deleted
+            setting = settings['LMI:StorageSetting:persistent3']
+            setting.type = Setting.TYPE_TRANSIENT
+            mgr.set_setting('LMI_StorageSetting', setting)
+
+            # add transient
+            s = Setting(mgr, 'LMI_StorageSetting',
+                    Setting.TYPE_TRANSIENT, "LMI:StorageSetting:transient4")
+            s['first'] = "111"
+            s['second'] = "two two two"
+            s['third'] = "333.0"
+            mgr.set_setting("LMI_StorageSetting", s)
+            # and change it to persistent -> must not be deleted
+            s.type = Setting.TYPE_PERSISTENT
+            mgr.set_setting("LMI_StorageSetting", s)
+
+            time.sleep(4)
+
+            settings = mgr.get_settings("LMI_StorageSetting")
+            self.assertNotIn('LMI:StorageSetting:persistent3', settings.keys())
+            self.assertIn('LMI:StorageSetting:preconfigured3', settings.keys())
+            self.assertIn('LMI:StorageSetting:transient4', settings.keys())
+
+            setting = settings['LMI:StorageSetting:transient4']
+            mgr.delete_setting('LMI_StorageSetting', setting)
+
+        finally:
+            Setting.TRAINSIENT_SETTING_LIFETIME = old_timeout
 
     def tearDown(self):
         # remove any files in configs/save_load/var/
