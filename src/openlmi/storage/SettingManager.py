@@ -46,14 +46,19 @@ class SettingManager(object):
     """
 
     @cmpi_logging.trace_method
-    def __init__(self, storage_configuration):
+    def __init__(self, storage_configuration, timer_manager):
         """
-            Create new SettingManager.
+        Create new SettingManager.
+
+        :param storage_configuration: (``StorageConfiguration``) Current
+                configuration.
+        :param timer_manager: (``TimerManager``) Timer manager instance.
         """
         # hash classname -> settings
         #   settings = hash setting_id -> Setting
         self.classes = {}
         self.config = storage_configuration
+        self.timer_manager = timer_manager
         # hash classname -> last generated unique ID (integer)
         self.ids = {}
 
@@ -115,6 +120,7 @@ class SettingManager(object):
             stg[setting.the_id] = setting
         else:
             self.classes[classname] = { setting.the_id : setting}
+        setting.touch()
 
     @cmpi_logging.trace_method
     def set_setting(self, classname, setting):
@@ -206,6 +212,22 @@ class SettingManager(object):
         else:
             return Setting(self, classname, setting_type, setting_id)
 
+    @cmpi_logging.trace_method
+    def expire_setting(self, classname, the_id):
+        """
+        Removes expired setting.
+        
+        :param classname: (``string``) Name of LMI_*Setting CIM class.
+        :param the_id: (``string``) ID of the setting instance, which has
+                expired.
+        """
+        settings = self.get_settings(classname)
+        if settings:
+            old_setting = settings.get(the_id, None)
+            if old_setting:
+                if old_setting.type == Setting.TYPE_TRANSIENT:
+                    # Remove transient settings only.
+                    del(settings[the_id])
 
 class Setting(object):
     """
@@ -224,6 +246,9 @@ class Setting(object):
     # managed element, usually associated to it
     TYPE_CONFIGURATION = 4
 
+    # Time of life of transient setting, in seconds.
+    TRAINSIENT_SETTING_LIFETIME = 3600
+
     @cmpi_logging.trace_method
     def __init__(self, setting_manager, classname, setting_type=None, setting_id=None):
         self.type = setting_type
@@ -231,6 +256,9 @@ class Setting(object):
         self.properties = {}
         self.manager = setting_manager
         self.classname = classname
+
+        self.timer = None
+        self.touch()
 
     @cmpi_logging.trace_method
     def load(self, config):
@@ -288,6 +316,23 @@ class Setting(object):
             Return all (key, value) properties.
         """
         return self.properties.items()
+
+    @cmpi_logging.trace_method
+    def touch(self):
+        """
+        Reset expiration timer of transient setting.
+        """
+        if self.timer:
+            self.timer.cancel()
+        if self.type == self.TYPE_TRANSIENT:
+            self.timer = self.manager.timer_manager.create_timer(
+                    "Setting " + self.the_id)
+            self.timer.set_callback(
+                    self.manager.expire_setting,
+                    self.classname,
+                    self.the_id)
+            self.timer.start(self.TRAINSIENT_SETTING_LIFETIME)
+
 
 class StorageSetting(Setting):
     """

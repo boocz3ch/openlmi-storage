@@ -160,7 +160,7 @@ def get_providers(env):
             env, "Storage", config.namespace)
 
     manager = ProviderManager()
-    setting_manager = SettingManager(config)
+    setting_manager = SettingManager(config, timer_manager)
     setting_manager.load()
     storage = init_anaconda(log_manager, config)
 
