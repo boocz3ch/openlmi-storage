@@ -17,8 +17,8 @@
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
 
-from StorageConfiguration import StorageConfiguration
-import cmpi_logging
+from openlmi.storage.StorageConfiguration import StorageConfiguration
+import openlmi.common.cmpi_logging as cmpi_logging
 import unittest
 
 import sys
@@ -107,7 +107,7 @@ class TestLogging(unittest.TestCase):
         StorageConfiguration.CONFIG_PATH = "/"
         StorageConfiguration.CONFIG_FILE = "/configs/not-existing.conf"
         cfg = StorageConfiguration()
-        cfg.config.set("debug", "tracing", "true")
+        cfg.config.set("Log", "Debug", "true")
         self.logmgr.set_config(cfg)
 
         # log at various log levels)
@@ -134,7 +134,7 @@ class TestLogging(unittest.TestCase):
         StorageConfiguration.CONFIG_PATH = "/"
         StorageConfiguration.CONFIG_FILE = "/configs/not-existing.conf"
         cfg = StorageConfiguration()
-        cfg.config.set("debug", "stderr", "true")
+        cfg.config.set("Log", "Stderr", "true")
 
         self.logmgr.set_config(cfg)
 
@@ -162,8 +162,8 @@ class TestLogging(unittest.TestCase):
         StorageConfiguration.CONFIG_PATH = "/"
         StorageConfiguration.CONFIG_FILE = "/configs/not-existing.conf"
         cfg = StorageConfiguration()
-        cfg.config.set("debug", "tracing", "true")
-        cfg.config.set("debug", "stderr", "true")
+        cfg.config.set("Log", "Debug", "true")
+        cfg.config.set("Log", "Stderr", "true")
         self.logmgr.set_config(cfg)
 
         # log at various log levels)
@@ -200,9 +200,9 @@ class TestLogging(unittest.TestCase):
         self.logger.trace_info("i1")
         self.logger.trace_verbose("v1")
 
-        # enable tracing and stderr        
-        cfg.config.set("debug", "tracing", "true")
-        cfg.config.set("debug", "stderr", "true")
+        # enable tracing and stderr
+        cfg.config.set("Log", "Debug", "true")
+        cfg.config.set("Log", "Stderr", "true")
         cfg._call_listeners()
 
         # log at various log levels)
@@ -214,9 +214,9 @@ class TestLogging(unittest.TestCase):
         self.logger.trace_info("i2")
         self.logger.trace_verbose("v2")
 
-        # disable tracing and stderr        
-        cfg.config.set("debug", "tracing", "false")
-        cfg.config.set("debug", "stderr", "false")
+        # disable tracing and stderr
+        cfg.config.set("Log", "Debug", "false")
+        cfg.config.set("Log", "Stderr", "false")
         cfg._call_listeners()
 
         # log at various log levels)
