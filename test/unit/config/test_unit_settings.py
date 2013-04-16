@@ -17,9 +17,11 @@
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
 
-from StorageConfiguration import StorageConfiguration
-from SettingManager import SettingManager, Setting
+from openlmi.storage.StorageConfiguration import StorageConfiguration
+from openlmi.storage.SettingManager import SettingManager, Setting
+import openlmi.common.cmpi_logging as cmpi_logging
 
+import logging
 import unittest
 import os
 import shutil
@@ -29,6 +31,8 @@ class TestSetting(unittest.TestCase):
         self.directory = os.path.dirname(__file__)
         if not self.directory:
             self.directory = "."
+
+        cmpi_logging.logger = logging.getLogger('openlmi.storage')
 
         StorageConfiguration.CONFIG_FILE = "/not/existing"
         self.config = StorageConfiguration()
@@ -82,7 +86,7 @@ class TestSetting(unittest.TestCase):
 
         # check one preconfigured setting
         s1 = settings['LMI:StorageSetting:preconfigured1']
-        self.assertEqual(s1.id, "LMI:StorageSetting:preconfigured1")
+        self.assertEqual(s1.the_id, "LMI:StorageSetting:preconfigured1")
         self.assertEqual(s1.type, Setting.TYPE_PRECONFIGURED)
         self.assertEqual(s1['first'], "1")
         self.assertEqual(s1['second'], "two")
@@ -90,7 +94,7 @@ class TestSetting(unittest.TestCase):
 
         # check one persistent setting
         s2 = settings['LMI:StorageSetting:persistent2']
-        self.assertEqual(s2.id, "LMI:StorageSetting:persistent2")
+        self.assertEqual(s2.the_id, "LMI:StorageSetting:persistent2")
         self.assertEqual(s2.type, Setting.TYPE_PERSISTENT)
         self.assertEqual(s2['first'], "1000")
         self.assertEqual(s2['second'], "two thousand")
@@ -109,7 +113,8 @@ class TestSetting(unittest.TestCase):
         self.config.PERSISTENT_PATH = self.directory + "/configs/save_load/var/"
 
         # add one transient setting
-        s = Setting(Setting.TYPE_TRANSIENT, "LMI:StorageSetting:transient1")
+        s = Setting(mgr, 'LMI_StorageSetting',
+                Setting.TYPE_TRANSIENT, "LMI:StorageSetting:transient1")
         s['first'] = "111"
         s['second'] = "two two two"
         s['third'] = "333.0"
@@ -117,14 +122,16 @@ class TestSetting(unittest.TestCase):
 
         # add one preconfigured setting (this should not happen in reality,
         # but let's test it).
-        s = Setting(Setting.TYPE_PRECONFIGURED, "LMI:StorageSetting:preconfigured3")
+        s = Setting(mgr, 'LMI_StorageSetting',
+                Setting.TYPE_PRECONFIGURED, "LMI:StorageSetting:preconfigured3")
         s['first'] = "1111"
         s['second'] = "two two two two"
         s['third'] = "3333.0"
         mgr.set_setting("LMI_StorageSetting", s)
 
         # add one persistent setting
-        s = Setting(Setting.TYPE_PERSISTENT, "LMI:StorageSetting:persistent3")
+        s = Setting(mgr, 'LMI_StorageSetting',
+                Setting.TYPE_PERSISTENT, "LMI:StorageSetting:persistent3")
         s['first'] = "11"
         s['second'] = "two two"
         s['third'] = "33.0"
@@ -146,7 +153,7 @@ class TestSetting(unittest.TestCase):
 
         # check the transient is ok
         s1 = settings['LMI:StorageSetting:transient1']
-        self.assertEqual(s1.id, "LMI:StorageSetting:transient1")
+        self.assertEqual(s1.the_id, "LMI:StorageSetting:transient1")
         self.assertEqual(s1.type, Setting.TYPE_TRANSIENT)
         self.assertEqual(s1['first'], "111")
         self.assertEqual(s1['second'], "two two two")
@@ -154,7 +161,7 @@ class TestSetting(unittest.TestCase):
 
         # check the persistent is there
         s2 = settings['LMI:StorageSetting:persistent3']
-        self.assertEqual(s2.id, "LMI:StorageSetting:persistent3")
+        self.assertEqual(s2.the_id, "LMI:StorageSetting:persistent3")
         self.assertEqual(s2.type, Setting.TYPE_PERSISTENT)
         self.assertEqual(s2['first'], "11")
         self.assertEqual(s2['second'], "two two")
@@ -179,7 +186,7 @@ class TestSetting(unittest.TestCase):
         mgr.load()
         settings = mgr.get_settings("LMI_StorageSetting")
         s3 = settings['LMI:StorageSetting:persistent2']
-        self.assertEqual(s3.id, "LMI:StorageSetting:persistent2")
+        self.assertEqual(s3.the_id, "LMI:StorageSetting:persistent2")
         self.assertEqual(s3.type, Setting.TYPE_PERSISTENT)
         self.assertEqual(s3['first'], "-1")
         self.assertEqual(s3['second'], "minus one")
