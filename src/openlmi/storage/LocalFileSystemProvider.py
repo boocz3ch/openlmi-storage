@@ -336,7 +336,9 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
         values = self.fs_settings.get(fmt.type, None)
         if values:
             # yes, we should create Setting for this FS
-            setting = Setting(Setting.TYPE_CONFIGURATION,
+            setting = self.setting_manager.create_setting(
+                    setting_provider.setting_classname,
+                    Setting.TYPE_CONFIGURATION,
                     setting_provider.create_setting_id(fmt.device))
             for (key, value) in values.iteritems():
                 setting[key] = str(value)

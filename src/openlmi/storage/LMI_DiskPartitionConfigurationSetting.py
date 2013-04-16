@@ -50,7 +50,10 @@ class LMI_DiskPartitionConfigurationSetting(SettingProvider):
             Return Setting with configuration of given device.
         """
         _id = self.create_setting_id(storage.get_persistent_name(device))
-        setting = Setting(Setting.TYPE_CONFIGURATION, _id)
+        setting = self.setting_manager.create_setting(
+                self.setting_classname,
+                Setting.TYPE_CONFIGURATION,
+                _id)
         setting['Bootable'] = str(device.bootable)
         flag = device.getFlag(parted.PARTITION_HIDDEN)
         if flag:

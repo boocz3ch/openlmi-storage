@@ -79,7 +79,10 @@ class LMI_MDRAIDStorageCapabilities(CapabilitiesProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_FAILED,
                     "Failed to allocate setting InstanceID")
 
-        setting = Setting(Setting.TYPE_TRANSIENT, setting_id)
+        setting = self.setting_manager.create_setting(
+                'LMI_MDRAIDStorageSetting',
+                Setting.TYPE_TRANSIENT,
+                setting_id)
 
         if default:
             setting['DataRedundancyGoal'] = pywbem.Uint16(
@@ -233,7 +236,10 @@ class LMI_MDRAIDStorageCapabilities(CapabilitiesProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_FAILED,
                     "Failed to allocate setting InstanceID")
 
-        setting = Setting(Setting.TYPE_TRANSIENT, setting_id)
+        setting = self.setting_manager.create_setting(
+                'LMI_MDRAIDStorageSetting',
+                Setting.TYPE_TRANSIENT,
+                setting_id)
         setting['DataRedundancyGoal'] = pywbem.Uint16(
                 final_redundancy.data_redundancy)
         setting['DataRedundancyMax'] = pywbem.Uint16(

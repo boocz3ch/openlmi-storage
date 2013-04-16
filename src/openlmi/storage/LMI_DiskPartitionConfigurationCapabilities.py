@@ -136,7 +136,10 @@ class LMI_DiskPartitionConfigurationCapabilities(CapabilitiesProvider):
                     "Failed to allocate setting InstanceID")
 
         values = LMI_DiskPartitionConfigurationSetting.Values
-        setting = Setting(Setting.TYPE_TRANSIENT, setting_id)
+        setting = self.setting_manager.create_setting(
+                'LMI_DiskPartitionConfigurationSetting',
+                Setting.TYPE_TRANSIENT,
+                setting_id)
         setting['Bootable'] = False
         setting['ElementName'] = 'CreatedFrom' + capabilities['InstanceID']
         setting['Hidden'] = None

@@ -258,9 +258,11 @@ class LMI_VGStoragePool(DeviceProvider, SettingHelper):
     def _get_setting_for_device(self, device, setting_provider):
         """ Return setting for given device """
         _id = storage.get_persistent_name(device)
-        setting = StorageSetting(
+        setting = self.setting_manager.create_setting(
+                self.setting_classname,
                 StorageSetting.TYPE_CONFIGURATION,
-                setting_provider.create_setting_id(_id))
+                setting_provider.create_setting_id(_id),
+                class_to_create=StorageSetting)
         setting.set_setting(self.get_redundancy(device))
         setting['ExtentSize'] = device.peSize * units.MEGABYTE
         setting['ElementName'] = device.path

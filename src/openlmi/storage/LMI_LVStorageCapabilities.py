@@ -118,7 +118,11 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_FAILED,
                     "Failed to allocate setting InstanceID")
 
-        setting = StorageSetting(StorageSetting.TYPE_TRANSIENT, setting_id)
+        setting = self.setting_manager.create_setting(
+                'LMI_LVStorageSetting',
+                StorageSetting.TYPE_TRANSIENT,
+                setting_id,
+                class_to_create=StorageSetting)
         setting['DataRedundancyGoal'] = capabilities['DataRedundancyDefault']
         setting['DataRedundancyMax'] = capabilities['DataRedundancyDefault']
         setting['DataRedundancyMin'] = capabilities['DataRedundancyDefault']

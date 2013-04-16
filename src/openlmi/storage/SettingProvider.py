@@ -460,7 +460,10 @@ class SettingProvider(BaseProvider):
                     "Cannot find setting.")
 
         instance_id = self.setting_manager.allocate_id(self.setting_classname)
-        new_setting = Setting(Setting.TYPE_TRANSIENT, instance_id)
+        new_setting = self.setting_manager.create_setting(
+                self.setting_classname,
+                Setting.TYPE_TRANSIENT,
+                instance_id)
         for (key, value) in setting.items():
             new_setting[key] = value
         self.setting_manager.set_setting(self.setting_classname, new_setting)

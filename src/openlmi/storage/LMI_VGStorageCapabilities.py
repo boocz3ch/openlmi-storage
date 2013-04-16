@@ -81,7 +81,10 @@ class LMI_VGStorageCapabilities(CapabilitiesProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_FAILED,
                     "Failed to allocate setting InstanceID")
 
-        setting = Setting(Setting.TYPE_TRANSIENT, setting_id)
+        setting = self.setting_manager.create_setting(
+                'LMI_VGStorageSetting',
+                Setting.TYPE_TRANSIENT,
+                setting_id)
 
         if default:
             setting['ExtentSize'] = pywbem.Uint64(
@@ -227,7 +230,10 @@ class LMI_VGStorageCapabilities(CapabilitiesProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_FAILED,
                     "Failed to allocate setting InstanceID")
 
-        setting = Setting(Setting.TYPE_TRANSIENT, setting_id)
+        setting = self.setting_manager.create_setting(
+                'LMI_VGStorageSetting',
+                Setting.TYPE_TRANSIENT,
+                setting_id)
         setting['ExtentSize'] = pywbem.Uint64(DEFAULT_EXTENT_SIZE)
         setting['DataRedundancyGoal'] = pywbem.Uint16(
                 final_redundancy.data_redundancy)

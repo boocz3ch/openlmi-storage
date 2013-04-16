@@ -103,7 +103,7 @@ class SettingManager(object):
             ini.optionxform = str  # don't convert to lowercase
             ini.read(directory + classname)
             for sid in ini.sections():
-                setting = Setting(setting_type, sid)
+                setting = self.create_setting(classname, setting_type, sid)
                 setting.load(ini)
                 self._set_setting(classname, setting)
 
@@ -188,6 +188,24 @@ class SettingManager(object):
         self.ids[classname] = i + 1
         return "LMI:" + classname + ":" + str(i)
 
+    @cmpi_logging.trace_method
+    def create_setting(self, classname, setting_type=None, setting_id=None,
+            class_to_create=None):
+        """
+        Create new Setting instance.
+
+        :param classname: (``string``) Name of related CIM LMI_*Setting class.
+        :param setting_type: (``Setting.TYPE_*`` constant) Type of the setting
+                to create.
+        :param setting_id: (``string`` constant) ID of the new setting.
+        :param class_to_create: (``Class``) Subclass of Setting, which should
+                be instantiated.
+        """
+        if class_to_create:
+            return class_to_create(self, classname, setting_type, setting_id)
+        else:
+            return Setting(self, classname, setting_type, setting_id)
+
 
 class Setting(object):
     """
@@ -207,10 +225,12 @@ class Setting(object):
     TYPE_CONFIGURATION = 4
 
     @cmpi_logging.trace_method
-    def __init__(self, setting_type=None, setting_id=None):
+    def __init__(self, setting_manager, classname, setting_type=None, setting_id=None):
         self.type = setting_type
         self.the_id = setting_id
         self.properties = {}
+        self.manager = setting_manager
+        self.classname = classname
 
     @cmpi_logging.trace_method
     def load(self, config):
