@@ -17,9 +17,11 @@
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
 
-from StorageConfiguration import StorageConfiguration
+from openlmi.storage.StorageConfiguration import StorageConfiguration
+import openlmi.common.cmpi_logging as cmpi_logging
 import unittest
 
+import logging
 import socket
 import os
 
@@ -28,6 +30,7 @@ class TestConfig(unittest.TestCase):
         self.directory = os.path.dirname(__file__)
         if not self.directory:
             self.directory = "."
+        cmpi_logging.logger = logging.getLogger('openlmi.storage')
 
     def test_missing(self):
         """ Test configuration when CONFIG_FILE cannot be found."""
