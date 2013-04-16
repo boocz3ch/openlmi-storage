@@ -94,10 +94,13 @@ class FormatProvider(BaseProvider):
     def get_format_for_id(self, name):
         """
             Return tuple (StorageDevice, DeviceFormat) for given Name property
-            of CIMInstance. Return None if no such format exist.
+            of CIMInstance. Return (None, None) if no such format exist.
             This is reverse function to get_format_id().
             Subclasses do not need to override this method if they do not
             override get_format_id().
+            The returned device represents one randomly chosen device if the
+            format spans over multiple devices, use get_devices() to get all
+            of them.
         """
 
         if name.startswith("DEVICE="):
@@ -107,9 +110,9 @@ class FormatProvider(BaseProvider):
             (_unused, uuid) = name.split("=")
             device = self.storage.devicetree.getDeviceByUuid(uuid)
         else:
-            return None
+            return (None, None)
         if not device:
-            return None
+            return (None, None)
         return (device, device.format)
 
     @cmpi_logging.trace_method
@@ -147,15 +150,19 @@ class FormatProvider(BaseProvider):
     def get_format_for_name(self, instance_name):
         """
             Return tuple (StorageDevice, DeviceFormat) instance for given
-            CIMInstanceName. Return None if no such instance_name exists.
+            CIMInstanceName. Return (None, None) if no such instance_name
+            exists.
+            The returned device represents one randomly chosen device if the
+            format spans over multiple devices, use get_devices() to get all
+            of them.
         """
         if instance_name['CSName'] != self.config.system_name:
-            return None
+            return (None, None)
         if instance_name['CSCreationClassName'] != \
                     self.config.system_class_name:
-            return None
+            return (None, None)
         if instance_name['CreationClassName'] != self.classname:
-            return None
+            return (None, None)
         return self.get_format_for_id(instance_name['Name'])
 
 
@@ -258,7 +265,7 @@ class LMI_ResidesOnExtent(BaseProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
                     "The Antecedent device has unknown format.")
 
-        fmt = fmtprovider.get_format_for_name(fmtname)
+        (device, fmt) = fmtprovider.get_format_for_name(fmtname)
         if not fmt:
             raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
                     "The Antecedent device has unknown format.")
