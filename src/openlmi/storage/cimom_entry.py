@@ -74,6 +74,8 @@ from openlmi.storage.LMI_FileSystemConfigurationCapabilities \
 from openlmi.common.JobManager import JobManager
 from openlmi.common.IndicationManager import IndicationManager
 from openlmi.storage.LMI_HostedFileSystem import LMI_HostedFileSystem
+from openlmi.storage.LMI_MountedFileSystem import LMI_MountedFileSystem
+from openlmi.storage.LMI_HostedMount import LMI_HostedMount
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -234,6 +236,27 @@ def get_providers(env):
             "LMI_LVElementCapabilities",
             cap_provider, provider, **opts)
     providers['LMI_LVElementCapabilities'] = assoc_provider
+
+    # mounting
+    provider = LMI_MountedFileSystem(**opts)
+    providers['LMI_MountedFileSystem'] = provider
+
+    setting_provider = SettingHelperProvider(
+            setting_helper=provider,
+            setting_classname="LMI_MountedFileSystemSetting",
+            **opts)
+    manager.add_setting_provider(setting_provider)
+    providers['LMI_MountedFileSystemSetting'] = setting_provider
+
+    assoc_provider = ElementSettingDataProvider(
+            setting_provider=setting_provider,
+            managed_element_classname="LMI_MountedFileSystem",
+            setting_data_classname="LMI_MountedFileSystemSetting",
+            **opts)
+    providers['LMI_MountedFileSystemElementSettingData'] = assoc_provider
+
+    provider = LMI_HostedMount(**opts)
+    providers['LMI_HostedMount'] = provider
 
     # settings
     setting_provider = LMI_DiskPartitionConfigurationSetting(
