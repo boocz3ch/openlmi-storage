@@ -19,6 +19,7 @@
 """ Module for SettingProvider class."""
 
 import pywbem
+import ast
 from openlmi.storage.BaseProvider import BaseProvider
 from openlmi.storage.SettingManager import Setting
 import openlmi.common.cmpi_logging as cmpi_logging
@@ -254,8 +255,7 @@ class SettingProvider(BaseProvider):
         """
         if not (value[0] == "[" and value[-1] == "]"):
             return None
-        # TODO rewrite without using eval
-        return eval(value)
+        return ast.literal_eval(value)
 
     @cmpi_logging.trace_function
     def _check_changeable_type_modify(self, instance, setting):
