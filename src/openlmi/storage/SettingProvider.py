@@ -245,6 +245,18 @@ class SettingProvider(BaseProvider):
         values = value.split(",")
         return [pywbem.Uint64(i) for i in values]
 
+    @staticmethod
+    @cmpi_logging.trace_function
+    def string_to_string_array(value):
+        """
+            Convert a string to array of strings.
+            The string must be enclosed in [].
+        """
+        if not (value[0] == "[" and value[-1] == "]"):
+            return None
+        # TODO rewrite without using eval
+        return eval(value)
+
     @cmpi_logging.trace_function
     def _check_changeable_type_modify(self, instance, setting):
         """
