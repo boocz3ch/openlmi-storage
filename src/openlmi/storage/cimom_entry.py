@@ -76,6 +76,7 @@ from openlmi.common.IndicationManager import IndicationManager
 from openlmi.storage.LMI_HostedFileSystem import LMI_HostedFileSystem
 from openlmi.storage.LMI_MountedFileSystem import LMI_MountedFileSystem
 from openlmi.storage.LMI_HostedMount import LMI_HostedMount
+from openlmi.storage.LMI_MountPoint import LMI_MountPoint
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -257,6 +258,9 @@ def get_providers(env):
 
     provider = LMI_HostedMount(**opts)
     providers['LMI_HostedMount'] = provider
+
+    provider = LMI_MountPoint(**opts)
+    providers['LMI_MountPoint'] = provider
 
     # settings
     setting_provider = LMI_DiskPartitionConfigurationSetting(
