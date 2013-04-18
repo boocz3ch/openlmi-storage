@@ -231,7 +231,7 @@ class LMI_StorageConfigurationService(ServiceProvider):
                 instance_id, classname)
             if not goal:
                 raise pywbem.CIMError(pywbem.CIM_ERR_INVALID_PARAMETER,
-                    classname + " Goal does not found.")
+                    classname + " Goal was not found.")
         else:
             goal = None
         return goal
