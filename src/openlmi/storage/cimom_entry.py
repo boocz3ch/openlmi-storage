@@ -78,6 +78,7 @@ from openlmi.storage.LMI_MountedFileSystem import LMI_MountedFileSystem
 from openlmi.storage.LMI_HostedMount import LMI_HostedMount
 from openlmi.storage.LMI_MountPoint import LMI_MountPoint
 from openlmi.storage.LMI_AttachedFileSystem import LMI_AttachedFileSystem
+from openlmi.common.TimerManager import TimerManager
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -152,6 +153,9 @@ def get_providers(env):
 
     cmpi_logging.logger.info("Provider init.")
 
+    # initialize the timer manager
+    timer_manager = TimerManager.get_instance(env)
+
     indication_manager = IndicationManager.get_instance(
             env, "Storage", config.namespace)
 
@@ -160,10 +164,10 @@ def get_providers(env):
     setting_manager.load()
     storage = init_anaconda(log_manager, config)
 
+    job_manager = JobManager('Storage', config.namespace,
+            indication_manager, timer_manager)
+
     providers = {}
-
-    job_manager = JobManager('Storage', config.namespace, indication_manager)
-
     # common construction options
     opts = {'storage': storage,
             'config': config,
