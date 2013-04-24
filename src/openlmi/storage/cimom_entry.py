@@ -78,6 +78,7 @@ from openlmi.storage.LMI_MountedFileSystem import LMI_MountedFileSystem
 from openlmi.storage.LMI_HostedMount import LMI_HostedMount
 from openlmi.storage.LMI_MountPoint import LMI_MountPoint
 from openlmi.storage.LMI_AttachedFileSystem import LMI_AttachedFileSystem
+from openlmi.storage.LMI_MountConfigurationService import LMI_MountConfigurationService
 from openlmi.common.TimerManager import TimerManager
 
 import openlmi.common.cmpi_logging as cmpi_logging
@@ -269,6 +270,10 @@ def get_providers(env):
 
     provider = LMI_AttachedFileSystem(**opts)
     providers['LMI_AttachedFileSystem'] = provider
+
+    provider = LMI_MountConfigurationService(**opts)
+    manager.add_service_provider(provider)
+    providers['LMI_MountConfigurationService'] = provider
 
     # settings
     setting_provider = LMI_DiskPartitionConfigurationSetting(
