@@ -229,7 +229,7 @@ class LMI_MountConfigurationService : CIM_Service
             "\nIsNext = 1: A persistent entry will be created (in /etc/fstab). "
             "\nMode 1 - IsNext = 1, IsCurrent = 1."
             "\nMode 2 - IsNext = 1, IsCurrent not affected."
-            "\nMode 32768 - IsNext not affected, IsCurrent = 1."
+            "\nMode 32768 - IsNext not affected, IsCurrent = 1." ),
           ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "32768", "32769" },
           Values { "Mode 0", "Mode 1", "Mode 2", "Mode 3", "Mode 4", "Mode 5",
                    "Mode 6", "DMTF Reserved", "Mode 32768", "Mode 32769" } ]
