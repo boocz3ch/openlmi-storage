@@ -162,14 +162,11 @@ class LMI_MountedFileSystem(BaseProvider, SettingHelper):
         TBI: This method is a half stub... Until blivet can read mount options
         correctly, it will stay that way.
         """
-
-        mountid = self._create_id(spec, path)
-        setting = Setting(
-                Setting.TYPE_CONFIGURATION,
-                setting_provider.create_setting_id(mountid))
-
-        setting['ElementName'] = mountid
-
+        _id = self._create_instance_id(self._create_id(spec, path))
+        setting = self.setting_manager.create_setting(self.setting_classname,
+                                                      Setting.TYPE_CONFIGURATION,
+                                                      _id)
+        setting['ElementName'] = _id
         # TODO blivet can't read mount options correctly yet
         # opts = ['rw', 'nouser', 'relatime', 'auto', 'uid=0', 'gid=1']
         # for opt in opts[:]:
@@ -179,7 +176,6 @@ class LMI_MountedFileSystem(BaseProvider, SettingHelper):
         #         opts.remove(opt)
         # if opts:
         #     setting['OtherOptions'] = str(opts)
-
         return setting
 
     @cmpi_logging.trace_method
