@@ -374,6 +374,13 @@ type: instance method
 namespace: root/cimv2
 unload: never
 
+[LMI_MountedFileSystemCapabilities]
+provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
+location: pyCmpiProvider
+type: instance method
+namespace: root/cimv2
+unload: never
+
 [LMI_MountedFileSystemElementSettingData]
 provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
