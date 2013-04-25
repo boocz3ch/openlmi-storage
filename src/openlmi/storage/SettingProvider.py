@@ -153,6 +153,9 @@ class SettingProvider(BaseProvider):
                 yield model
             else:
                 yield self.get_instance(env, model, setting)
+                # Make sure we will not return old values in next loop.
+                for key in model.keys():
+                    del model[key]
 
         # handle configurations
         for setting in self.enumerate_configurations():
