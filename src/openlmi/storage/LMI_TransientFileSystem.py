@@ -73,3 +73,14 @@ class LMI_TransientFileSystem(LocalFileSystemProvider):
 
         model['PersistenceType'] = self.Values.PersistenceType.Temporary
         return model
+
+    def get_format_id(self, device, fmt):
+        return "PATH=" + fmt.mountpoint
+
+    def get_format_for_id(self, name):
+        if name.startswith("PATH="):
+            (_unused, mountpoint) = name.split("=")
+            for (path, device) in self.storage.mountpoints.iteritems():
+                if path == mountpoint:
+                    return (device, device.format)
+        return (None, None)
