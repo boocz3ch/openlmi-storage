@@ -143,6 +143,9 @@ class LMI_MountedFileSystem(BaseProvider, SettingHelper):
     def _create_instance_id(self, mountid):
         return 'LMI:' + self.classname + ':' + mountid
 
+    def _create_setting_instance_id(self, mountid):
+        return 'LMI:' + self.classname + 'Setting:' + mountid
+
     def _create_id(self, spec, path):
         return spec + '|' + path
 
@@ -162,7 +165,7 @@ class LMI_MountedFileSystem(BaseProvider, SettingHelper):
         TBI: This method is a half stub... Until blivet can read mount options
         correctly, it will stay that way.
         """
-        _id = self._create_instance_id(self._create_id(spec, path))
+        _id = self._create_setting_instance_id(self._create_id(spec, path))
         setting = self.setting_manager.create_setting(self.setting_classname,
                                                       Setting.TYPE_CONFIGURATION,
                                                       _id)
