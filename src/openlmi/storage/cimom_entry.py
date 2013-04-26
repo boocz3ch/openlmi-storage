@@ -79,6 +79,7 @@ from openlmi.storage.LMI_HostedMount import LMI_HostedMount
 from openlmi.storage.LMI_MountPoint import LMI_MountPoint
 from openlmi.storage.LMI_AttachedFileSystem import LMI_AttachedFileSystem
 from openlmi.common.TimerManager import TimerManager
+from openlmi.storage.LMI_TransientFileSystem import LMI_TransientFileSystem
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -375,6 +376,10 @@ def get_providers(env):
             setting_data_classname="LMI_FileSystemSetting",
             **opts)
     providers['LMI_FileSystemElementSettingData'] = assoc_provider
+
+    fmt = LMI_TransientFileSystem(**opts)
+    manager.add_format_provider(fmt)
+    providers['LMI_TransientFileSystem'] = fmt
 
     service_provider = LMI_FileSystemConfigurationService(**opts)
     manager.add_service_provider(service_provider)
