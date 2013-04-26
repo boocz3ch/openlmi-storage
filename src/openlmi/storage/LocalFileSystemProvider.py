@@ -25,6 +25,7 @@ from openlmi.storage.SettingManager import Setting
 from openlmi.storage.SettingProvider import SettingProvider
 import openlmi.common.cmpi_logging as cmpi_logging
 from openlmi.storage.util import storage
+import os
 
 class LocalFileSystemProvider(FormatProvider, SettingHelper):
     """
@@ -320,11 +321,25 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
         model['CasePreserved'] = True
         model['PersistenceType'] = self.Values.PersistenceType.Persistent
         model['ElementName'] = fmt.device
+        model['IsFixedSize'] = (fmt.resizable == False)
         uuid = self.get_uuid(device, fmt)
         if uuid:
             model['UUID'] = uuid
         if fmt.label:
             model['ElementName'] = fmt.label
+
+        if fmt.mountpoint:
+            model['Root'] = fmt.mountpoint
+            # TODO: this should be provided by Blivet, see bug #915201
+            stat = os.statvfs(fmt.mountpoint)
+            model['BlockSize'] = pywbem.Uint64(stat.f_bsize)
+            model['FileSystemSize'] = pywbem.Uint64(
+                    stat.f_blocks * stat.f_frsize)
+            model['AvailableSpace'] = pywbem.Uint64(
+                    stat.f_bavail * stat.f_bsize)
+            model['ReadOnly'] = (stat.f_flag & os.ST_RDONLY) > 0
+            model['MaxFileNameLength'] = pywbem.Uint32(stat.f_namemax)
+
         return model
 
     @cmpi_logging.trace_method
