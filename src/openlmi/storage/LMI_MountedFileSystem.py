@@ -127,19 +127,6 @@ class LMI_MountedFileSystem(BaseProvider, SettingHelper):
                                        pywbem.CIM_ERR_ACCESS_DENIED):
                             raise
 
-    def set_instance(self, env, instance, modify_existing):
-        """Return a newly created or modified instance.
-        """
-
-        raise pywbem.CIMError(pywbem.CIM_ERR_NOT_SUPPORTED) # Remove to implement
-        return instance
-
-    def delete_instance(self, env, instance_name):
-        """Delete an instance.
-        """
-
-        raise pywbem.CIMError(pywbem.CIM_ERR_NOT_SUPPORTED) # Remove to implement
-
     def _create_instance_id(self, mountid):
         return 'LMI:' + self.classname + ':' + mountid
 
