@@ -546,7 +546,7 @@ class LMI_MountConfigurationService(ServiceProvider, MountingProvider):
             state,
             return_value=rval,
             return_type=Job.ReturnValueType.Uint32,
-            output_arguments=outparams
+            output_arguments=outparams,
             affected_elements=[mfsname],
             error=err)
 

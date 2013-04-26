@@ -272,13 +272,18 @@ def get_providers(env):
     provider = LMI_AttachedFileSystem(**opts)
     providers['LMI_AttachedFileSystem'] = provider
 
-    provider = LMI_MountConfigurationService(**opts)
-    manager.add_service_provider(provider)
-    providers['LMI_MountConfigurationService'] = provider
+    service_provider = LMI_MountConfigurationService(**opts)
+    manager.add_service_provider(service_provider)
+    providers['LMI_MountConfigurationService'] = service_provider
 
-    provider = LMI_MountedFileSystemCapabilities(**opts)
-    manager.add_capabilities_provider(provider)
-    providers['LMI_MountedFileSystemCapabilities'] = provider
+    cap_provider = LMI_MountedFileSystemCapabilities(**opts)
+    manager.add_capabilities_provider(cap_provider)
+    providers['LMI_MountedFileSystemCapabilities'] = cap_provider
+
+    assoc_provider = ElementCapabilitiesProvider(
+            'LMI_MountElementCapabilities',
+            cap_provider, service_provider, **opts)
+    providers['LMI_MountElementCapabilities'] = assoc_provider
 
     # settings
     setting_provider = LMI_DiskPartitionConfigurationSetting(
