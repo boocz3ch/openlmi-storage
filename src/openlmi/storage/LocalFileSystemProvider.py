@@ -355,10 +355,20 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
                     setting_provider.setting_classname,
                     Setting.TYPE_CONFIGURATION,
                     setting_provider.create_setting_id(fmt.device))
+
+            if fmt.mountpoint:
+                # Fill in current filesystem setting.
+                # Copy the values dictionary, we are modifying it.
+                values = values.copy()
+                # TODO: this should be provided by Blivet, see bug #915201
+                stat = os.statvfs(fmt.mountpoint)
+                # [nr. of inodes, nr. of files, nr. of files in a directory]
+                values['NumberOfObjects'] = [stat.f_files, stat.f_files, 0]
+                values['FilenameLengthMax'] = [stat.f_namemax]
+
             for (key, value) in values.iteritems():
                 setting[key] = str(value)
 
-            # TODO: add current block size, nr. of inodes, nr. of
             return setting
         return None
 
