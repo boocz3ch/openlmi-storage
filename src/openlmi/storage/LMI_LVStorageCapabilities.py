@@ -100,7 +100,7 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
             dictionaries property_name -> value.
             If the capabilities are the default ones, it must have
             '_default' as a property name.
-            
+
             Subclasses must override this method.
         """
         for vg in self.storage.vgs:
@@ -110,7 +110,7 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
     def create_setting_for_capabilities(self, capabilities):
         """
             Create LMI_*Setting for given capabilities.
-            Return CIMInstanceName of the setting or raise CIMError on error. 
+            Return CIMInstanceName of the setting or raise CIMError on error.
        """
         setting_id = self.setting_manager.allocate_id(
                 'LMI_LVStorageSetting')
@@ -159,7 +159,7 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
             If the capabilities are the default ones, it must have
             '_default' as a property name.
             Return None if there is no such Capabilities instance.
-            
+
             Subclasses can override this method.
         """
         path = self.parse_instance_id(instance_id)
@@ -185,7 +185,7 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
 
             Create LMI_LVStorageSetting applicable to this VG
             All properties its will have default values.
-            
+
         """
         # just check param_settingtype
         if param_settingtype:
@@ -238,10 +238,10 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
 class LMI_LVElementCapabilities(BaseProvider):
     """
         Base class for LMI_*ElementCapabilities providers.
-        
+
         If all capabilities instances are associated only with appropriate
         LMI_*Service, this class does not need to be subclasses.
-        
+
         Otherwise, subclasses can associate capabilities to other managed
         elements.
     """
@@ -259,10 +259,10 @@ class LMI_LVElementCapabilities(BaseProvider):
             Return iterable with (managed_element_name, capabilities_name),
             where managed_element_name and capabilities_name
             are CIMInstanceName.
-            
+
             By default, all capabilities provided by capabilities_provider
             are associated to service_provider.
-            
+
             Subclasses can override this method if different behavior is
             requested.
         """

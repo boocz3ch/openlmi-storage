@@ -194,7 +194,7 @@ class LMI_DiskPartitionConfigurationCapabilities(CapabilitiesProvider):
     @cmpi_logging.trace_method
     def get_capabilities_for_device(self, device):
         """
-            Return capabilities for given StorageDevice 
+            Return capabilities for given StorageDevice
             Return None if it does not have any partition capabilities.
         """
 

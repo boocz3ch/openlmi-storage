@@ -402,7 +402,7 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
                 constructor is a function which takes string argument
                 and returns CIM value. (i.e. pywbem.Uint16
                 or bool or string etc).
-            This hash will be passed to SettingProvider.__init__ 
+            This hash will be passed to SettingProvider.__init__
         """
         return {
                 'ActualFileSystemType': pywbem.Uint16,

@@ -18,7 +18,7 @@
 """
     This is a simple wrapper to gather test coverage of OpenLMI storage
     providers.
-    
+
     It is special provider module, which starts collecting the coverage
     and just calls cimom_entry provider module functions.
 """

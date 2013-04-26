@@ -132,17 +132,17 @@ class LMI_VGStoragePool(DeviceProvider, SettingHelper):
         """Enumerate instances.
 
         The WBEM operations EnumerateInstances and EnumerateInstanceNames
-        are both mapped to this method. 
+        are both mapped to this method.
         This method is a python generator
 
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        model -- A template of the pywbem.CIMInstances to be generated.  
-            The properties of the model are already filtered according to 
-            the PropertyList from the request.  Only properties present in 
-            the model need to be given values.  If you prefer, you can 
-            always set all of the values, and the instance will be filtered 
-            for you. 
+        model -- A template of the pywbem.CIMInstances to be generated.
+            The properties of the model are already filtered according to
+            the PropertyList from the request.  Only properties present in
+            the model need to be given values.  If you prefer, you can
+            always set all of the values, and the instance will be filtered
+            for you.
         keys_only -- A boolean.  True if only the key properties should be
             set on the generated instances.
 
@@ -177,24 +177,24 @@ class LMI_VGStoragePool(DeviceProvider, SettingHelper):
                                          param_volumesizedivisor=None,
                                          param_goal=None):
         """Implements LMI_VGStoragePool.GetSupportedSizeRange()
-        param_minimumvolumesize --  The input parameter MinimumVolumeSize (type pywbem.Uint64) 
+        param_minimumvolumesize --  The input parameter MinimumVolumeSize (type pywbem.Uint64)
             The minimum size for a volume/pool in bytes.
-            
-        param_maximumvolumesize --  The input parameter MaximumVolumeSize (type pywbem.Uint64) 
+
+        param_maximumvolumesize --  The input parameter MaximumVolumeSize (type pywbem.Uint64)
             The maximum size for a volume/pool in bytes.
-            
-        param_elementtype --  The input parameter ElementType (type pywbem.Uint16 self.Values.GetSupportedSizeRange.ElementType) 
+
+        param_elementtype --  The input parameter ElementType (type pywbem.Uint16 self.Values.GetSupportedSizeRange.ElementType)
             The type of element for which supported size ranges are
             reported. The Thin Provision values are only supported when
             the Thin Provisioning Profile is supported; the resulting
             StorageVolues/LogicalDisk shall have ThinlyPprovisioned set to
             true.
-            
-        param_volumesizedivisor --  The input parameter VolumeSizeDivisor (type pywbem.Uint64) 
+
+        param_volumesizedivisor --  The input parameter VolumeSizeDivisor (type pywbem.Uint64)
             A volume/pool size must be a multiple of this value which is
             specified in bytes.
-            
-        param_goal --  The input parameter Goal (type REF (pywbem.CIMInstanceName(classname='CIM_StorageSetting', ...)) 
+
+        param_goal --  The input parameter Goal (type REF (pywbem.CIMInstanceName(classname='CIM_StorageSetting', ...))
             The StorageSetting for which supported size ranges should be
             reported for.
 
@@ -202,23 +202,23 @@ class LMI_VGStoragePool(DeviceProvider, SettingHelper):
         and a list of CIMParameter objects representing the output parameters
 
         Output parameters:
-        MinimumVolumeSize -- (type pywbem.Uint64) 
+        MinimumVolumeSize -- (type pywbem.Uint64)
             The minimum size for a volume/pool in bytes.
-            
-        MaximumVolumeSize -- (type pywbem.Uint64) 
+
+        MaximumVolumeSize -- (type pywbem.Uint64)
             The maximum size for a volume/pool in bytes.
-            
-        VolumeSizeDivisor -- (type pywbem.Uint64) 
+
+        VolumeSizeDivisor -- (type pywbem.Uint64)
             A volume/pool size must be a multiple of this value which is
             specified in bytes.
-            
+
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate,
             unrecognized or otherwise incorrect parameters)
-        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not 
+        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not
             exist in the specified namespace)
-        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor 
+        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor
             the invocation request)
         CIM_ERR_FAILED (some other unspecified error occurred)
 
@@ -283,7 +283,7 @@ class LMI_VGStoragePool(DeviceProvider, SettingHelper):
             Return Setting instance, which corresponds to LMI_*Setting with
             given InstanceID.
             Return None if there is no such instance.
-            
+
             Subclasses must override this method.
         """
         path = setting_provider.parse_setting_id(instance_id)
@@ -326,7 +326,7 @@ class LMI_VGStoragePool(DeviceProvider, SettingHelper):
                 constructor is a function which takes string argument
                 and returns CIM value. (i.e. pywbem.Uint16
                 or bool or string etc).
-            This hash will be passed to SettingProvider.__init__ 
+            This hash will be passed to SettingProvider.__init__
         """
         return {
                 'ExtentSize': pywbem.Uint64,

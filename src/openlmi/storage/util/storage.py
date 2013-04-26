@@ -86,7 +86,7 @@ def get_available_sectors(device):
     """
         Return (start, end), where start is the first usable sector after
         partition table and end is the last usable sector before any
-        partition table copy 
+        partition table copy
     """
     size = device.partedDevice.length
     if device.format:

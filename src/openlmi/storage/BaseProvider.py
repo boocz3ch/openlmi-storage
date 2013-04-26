@@ -56,7 +56,7 @@ class BaseProvider(CIMProvider2):
         """
             Implementation of basic associations. This method can be used by
             all subclasses, which implement association provider.
-            
+
             It has the same arguments as references() method of CIMProvider2,
             additional 'first_class' and 'second_class' should contain
             string with CIM class names of the associated classes.
@@ -91,7 +91,7 @@ class BaseProvider(CIMProvider2):
                 parameter).
             keys_only -- A boolean.  True if only the key properties should be
                 set on the generated instances.
-    
+
             The following diagram may be helpful in understanding the role,
             result_role, and result_class_name parameters.
             +------------------------+                    +-------------------+
@@ -105,7 +105,7 @@ class BaseProvider(CIMProvider2):
             (CIMInstanceName) | result_class_name REF result_role +------+
                               |                                   |(CIMInstanceName)
                               +-----------------------------------+
-    
+
             Possible Errors:
             CIM_ERR_ACCESS_DENIED
             CIM_ERR_NOT_SUPPORTED

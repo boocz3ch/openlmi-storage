@@ -26,7 +26,7 @@ class DeviceProvider(BaseProvider):
     """
         CIM Provider which provides CIM StorageExtent or CIM_StoragePool
         of a Anaconda device.
-        
+
         In addition to CIM provider methods, this class and its subclasses
         can convert CIM InstanceName to Anaconda's StorageDevice instance
         and a vice versa.
@@ -126,7 +126,7 @@ class DeviceProvider(BaseProvider):
     def do_delete_instance(self, device):
         """
             Really delete given Anaconda StorageDevice.
-            
+
             Subclasses must override this method to allow DeleteInstance
             intrinsic method.
         """
@@ -344,7 +344,7 @@ class DeviceProvider(BaseProvider):
                 Return common redundancy characteristics for list of devices.
                 Linear device is assumed, i.e. the data are either on self or
                 on B.
-                
+
                 raid_level: LINEAR = Linear, 0,1,5,6 - raidX
             """
             if raid_level == DeviceProvider.Redundancy.LINEAR:

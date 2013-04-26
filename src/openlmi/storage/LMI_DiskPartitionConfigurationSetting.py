@@ -96,7 +96,7 @@ class LMI_DiskPartitionConfigurationSetting(SettingProvider):
     def get_associated_element_name(self, instance_id):
         """
             Return CIMInstanceName for ElementSettingData association.
-            Return None if no such element exist. 
+            Return None if no such element exist.
         """
         path = self.parse_setting_id(instance_id)
         if not path:

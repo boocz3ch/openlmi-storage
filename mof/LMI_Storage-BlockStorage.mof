@@ -36,7 +36,7 @@ class LMI_VGStoragePool : CIM_StoragePool
         "Unique ID of the Volume Group. It is unique in scope of CIM namespace."
         " To ensure uniqueness, the ID has following format: LMI:VG:<VG name>.")]
     string InstanceID;
-    
+
    [Implemented(true), Override, Description (
           "Name of the Volume Group.")]
    string PoolID;
@@ -120,7 +120,7 @@ class LMI_VGStoragePool : CIM_StoragePool
 
 };
 
-[ Experimental, Description ( 
+[ Experimental, Description (
        "This service allows the active management of a Storage Server. "
        "It allows jobs to be started for the creation, modification "
        "and deletion of storage objects (StoragePools, StorageVolumes "
@@ -129,7 +129,7 @@ class LMI_VGStoragePool : CIM_StoragePool
        "allocation/modification of Logical Volume (CreateOrModifyElementFromStoragePool), "
        "Creation of MD RAID array () "
        "and destruction of all this (DeleteStoragePool, ReturnToStoragePool, ). "
-       "\nIn future, it may support creation of MD RAID containers (i.e. another kind of storage pools), " 
+       "\nIn future, it may support creation of MD RAID containers (i.e. another kind of storage pools), "
        "allocation of MD RAIDs from these containers, "
        "snapshots of Logical Volumes (AttachReplica), "
        "advanced Logical Volumes (for example with RAID characteristics), "
@@ -158,16 +158,16 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
           "take some time to complete, a ConcreteJob will be "
           "created and its reference returned in the output "
           "parameter Job. "
-          "\n This method automatically formats the StorageExtents added to a Volume Group as Physical Volumes." ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096", 
-          "4097", "4098..32767", "32768..65535" }, 
-       Values { "Job Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-          "In Use", "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+          "\n This method automatically formats the StorageExtents added to a Volume Group as Physical Volumes." ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+          "4097", "4098..32767", "32768..65535" },
+       Values { "Job Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
+          "In Use", "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Size Not Supported", "Method Reserved", "Vendor Specific" }]
    uint32 CreateOrModifyStoragePool(
-         [IN, Description ( 
+         [IN, Description (
              "A end user relevant name for the pool being "
              "created."
              "\nIf a Volume Group is being created or modified, it is used as the Volume Group name."
@@ -176,12 +176,12 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "\'ElementName\' property for the created pool. If "
              "not null, this parameter will supply a new name "
              "when modifying an existing pool." )]
-      string ElementName, 
-         [IN ( false ), OUT, Description ( 
+      string ElementName,
+         [IN ( false ), OUT, Description (
              "Reference to the job (may be null if job completed)."
               )]
-      CIM_ConcreteJob REF Job, 
-         [IN, Description ( 
+      CIM_ConcreteJob REF Job,
+         [IN, Description (
              "Reference to an instance of StorageSetting that "
              "defines the desired capabilities of the "
              "StoragePool. If set to a null value, the default "
@@ -190,20 +190,20 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "setting when modifying an existing pool."
              "\nAs only simple Volume Groups are supported now, no redundancy or stripping may be used. Null is the safest option here. "
              )]
-      CIM_StorageSetting REF Goal, 
-         [IN, OUT, Description ( 
+      CIM_StorageSetting REF Goal,
+         [IN, OUT, Description (
              "As an input parameter this specifies the desired "
              "pool size in bytes. If provided, it must match sum of sizes of all input StorageExtents. "
              "\nAs an output parameter this "
-             "specifies the size achieved." ), 
-          Units ( "Bytes" ), 
+             "specifies the size achieved." ),
+          Units ( "Bytes" ),
           PUnit ( "byte" )]
-      uint64 Size, 
-         [IN, Description ( 
+      uint64 Size,
+         [IN, Description (
              "This parameter is not supported by LMI and must be null."
              )]
-      string InPools[], 
-         [IN, Description ( 
+      string InPools[],
+         [IN, Description (
              "Array of strings containing representations of "
              "references to CIM_StorageExtent instances, that "
              "are used to create the Pool. "
@@ -215,8 +215,8 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "are not members of the Volume Group and are listed in InExtents "
              "parameter are added to tghe Volume Group."
              "\nIf null, no extents are removed and/or added to to Volume Group." )]
-      string InExtents[], 
-         [IN, OUT, Description ( 
+      string InExtents[],
+         [IN, OUT, Description (
              "As an input parameter: if null, creates a new "
              "StoragePool. If not null, modifies the referenced "
              "Pool. When returned, it is a reference to the "
@@ -267,7 +267,7 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
          [IN, Description ( "Reference to the pool to delete." )]
       CIM_StoragePool REF Pool);
 
-      [Implemented(true), Override, Description ( 
+      [Implemented(true), Override, Description (
           "Start a job to create (or modify) a Logical Volume from a "
           "LMI_StoragePool. One of the parameters for this method is "
           "Size. As an input parameter, Size specifies the desired "
@@ -285,44 +285,44 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
           "ConcreteJob instance was required. If 4096/0x1000 is "
           "returned, a ConcreteJob will be started to create the "
           "element. The Job\'s reference will be returned in the "
-          "output parameter Job." ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096", 
-          "4097", "4098..32767", "32768..65535" }, 
-       Values { "Job Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-          "In Use", "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+          "output parameter Job." ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+          "4097", "4098..32767", "32768..65535" },
+       Values { "Job Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
+          "In Use", "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Size Not Supported", "Method Reserved", "Vendor Specific" }]
    uint32 CreateOrModifyElementFromStoragePool(
-         [IN, Description ( 
+         [IN, Description (
              "A end user relevant name for the element being "
              "created, i.e. name of the Logical Volume. If NULL, then a system supplied default "
              "name can be used. The value will be stored in the "
              "\'ElementName\' property for the created element. "
              "If not NULL, this parameter will supply a new name "
              "when modifying an existing element." )]
-      string ElementName, 
-         [Experimental, IN, Description ( 
+      string ElementName,
+         [Experimental, IN, Description (
              "Enumeration indicating the type of element being "
              "created or modified. "
              "\nOnly StorageElement is supported now. "
              "\nIf the input parameter "
              "TheElement is specified when the operation is a "
              "\'modify\', this type value must match the type of "
-             "that instance." ), 
-          ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", 
-             "32768..65535" }, 
-          Values { "Unknown", "Reserved", "StorageVolume", 
-             "StorageExtent", "LogicalDisk", 
-             "ThinlyProvisionedStorageVolume", 
-             "ThinlyProvisionedLogicalDisk", "DMTF Reserved", 
+             "that instance." ),
+          ValueMap { "0", "1", "2", "3", "4", "5", "6", "..",
+             "32768..65535" },
+          Values { "Unknown", "Reserved", "StorageVolume",
+             "StorageExtent", "LogicalDisk",
+             "ThinlyProvisionedStorageVolume",
+             "ThinlyProvisionedLogicalDisk", "DMTF Reserved",
              "Vendor Specific" }]
-      uint16 ElementType, 
-         [IN ( false ), OUT, Description ( 
+      uint16 ElementType,
+         [IN ( false ), OUT, Description (
              "Reference to the job (may be null if job completed)."
               )]
-      CIM_ConcreteJob REF Job, 
-         [IN, Description ( 
+      CIM_ConcreteJob REF Job,
+         [IN, Description (
              "The requirements for the element to maintain. If "
              "set to a null value, the default configuration "
              "from the source pool will be used. This parameter "
@@ -333,29 +333,29 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "\n As we support only Volume Groups and simple Logical "
              "Volumes for now, no redundancy or stripping may be "
              "specified. Null is the safest option here.")]
-      CIM_ManagedElement REF Goal, 
-         [IN, OUT, Description ( 
+      CIM_ManagedElement REF Goal,
+         [IN, OUT, Description (
              "As an input parameter Size specifies the desired "
              "size. The Size will be rounded to extent size of the Volume Group. If not NULL, this parameter will supply a "
              "new size when modifying an existing element. As an "
-             "output parameter Size specifies the size achieved." ), 
-          Units ( "Bytes" ), 
+             "output parameter Size specifies the size achieved." ),
+          Units ( "Bytes" ),
           PUnit ( "byte" )]
-      uint64 Size, 
-         [IN, Description ( 
+      uint64 Size,
+         [IN, Description (
              "The Pool from which to create the element. This "
              "parameter must be set to null if the input "
              "parameter TheElement is specified (in the case of "
              "a \'modify\' operation)." )]
-      CIM_StoragePool REF InPool, 
-         [IN, OUT, Description ( 
+      CIM_StoragePool REF InPool,
+         [IN, OUT, Description (
              "As an input parameter: if null, creates a new "
              "element. If not null, then the method modifies the "
              "specified element. As an output parameter, it is a "
              "reference to the resulting element." )]
       CIM_LogicalElement REF TheElement);
 
-      [Override, Description ( 
+      [Override, Description (
           "Start a job to create (or modify) a MD RAID "
           "from specified input StorageExtents. "
           "Only whole StorageExtents can be added to a RAID."
@@ -371,24 +371,24 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
           "element. The Job\'s reference will be returned in the "
           "output parameter Job."
           "\n This method does not support MD RAID modification for now."
-        ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096", 
-          "4097", "4098..32767", "32768..65535" }, 
-       Values { "Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-          "In Use", "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+        ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+          "4097", "4098..32767", "32768..65535" },
+       Values { "Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
+          "In Use", "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Size Not Supported", "Method Reserved", "Vendor Specific" }]
    uint32 CreateOrModifyElementFromElements(
-         [IN, Description ( 
+         [IN, Description (
              "A end user relevant name for the MD RAID, i.e. /dev/md/<ElementName>. "
              "If NULL, then a system-supplied default "
              "name can be used. The value will be stored in the "
              "\'ElementName\' property for the created element. "
              "If not NULL, this parameter will supply a new name "
              "when modifying an existing element." )]
-      string ElementName, 
-         [Experimental, Required, IN, Description ( 
+      string ElementName,
+         [Experimental, Required, IN, Description (
              "Enumeration indicating the type of element being "
              "created or modified. "
              "\n Only StorageExtent is supported now."
@@ -399,20 +399,20 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "TheElement can be vendor-specific, but it must be "
              "a derived class of the appropriate CIM class -- "
              "i.e., CIM_StorageVolume, CIM_StorageExtent, "
-             "CIM_LogicalDisk, or CIM_StoragePool." ), 
-          ValueMap { "0", "1", "2", "3", "4", "5", "6", "7", 
-             "..", "32768..65535" }, 
-          Values { "Unknown", "Reserved", "Storage Volume", 
-             "Storage Extent", "Storage Pool", "Logical Disk", 
-             "ThinlyProvisionedStorageVolume", 
-             "ThinlyProvisionedLogicalDisk", "DMTF Reserved", 
+             "CIM_LogicalDisk, or CIM_StoragePool." ),
+          ValueMap { "0", "1", "2", "3", "4", "5", "6", "7",
+             "..", "32768..65535" },
+          Values { "Unknown", "Reserved", "Storage Volume",
+             "Storage Extent", "Storage Pool", "Logical Disk",
+             "ThinlyProvisionedStorageVolume",
+             "ThinlyProvisionedLogicalDisk", "DMTF Reserved",
              "Vendor Specific" }]
-      uint16 ElementType, 
-         [IN ( false ), OUT, Description ( 
+      uint16 ElementType,
+         [IN ( false ), OUT, Description (
              "Reference to the job (may be null if job completed)."
               )]
-      CIM_ConcreteJob REF Job, 
-         [IN, Description ( 
+      CIM_ConcreteJob REF Job,
+         [IN, Description (
              "The requirements for the element to maintain. If "
              "set to a null value, the default configuration "
              "associated with the Service will be used. This "
@@ -421,21 +421,21 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "being created. If not NULL, this parameter will "
              "supply a new Goal when modifying an existing "
              "element." )]
-      CIM_ManagedElement REF Goal, 
-         [IN, OUT, Description ( 
+      CIM_ManagedElement REF Goal,
+         [IN, OUT, Description (
              "As an input parameter Size specifies the desired "
              "size. If not NULL, this parameter "
              " must match resulting size of  the RAID. "
              "As an "
-             "output parameter Size specifies the size achieved." ), 
-          Units ( "Bytes" ), 
+             "output parameter Size specifies the size achieved." ),
+          Units ( "Bytes" ),
           PUnit ( "byte" )]
-      uint64 Size, 
-         [Required, IN, Description ( 
+      uint64 Size,
+         [Required, IN, Description (
              "Array of references to storage element instances "
              "that are used to create or modify TheElement." )]
-      CIM_StorageExtent REF InElements[], 
-         [IN, OUT, Description ( 
+      CIM_StorageExtent REF InElements[],
+         [IN, OUT, Description (
              "As an input parameter: if null, creates a new "
              "element. If not null, then the method modifies the "
              "specified element. As an output parameter, it is a "
@@ -448,12 +448,12 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
         "without calculation of the Goal setting."
         "\n Either Level or Goal must be specified. If both are specified, they must match."
         "\n RAID modification is not yet supported."),
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096", 
-          "4097", "4098..32767", "32768..65535" }, 
-       Values { "Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-          "In Use", "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+          "4097", "4098..32767", "32768..65535" },
+       Values { "Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
+          "In Use", "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Size Not Supported", "Method Reserved", "Vendor Specific" }]
     uint32 CreateOrModifyMDRAID(
         [IN, Description("Requested RAID level."),
@@ -482,10 +482,10 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
 
         [IN(False), OUT, Description("Reference to the job (may be null if job completed).")]
         CIM_ConcreteJob REF Job,
-        
-        [IN(False), OUT, Description ( 
-             "Size of the RAID device." ), 
-          Units ( "Bytes" ), 
+
+        [IN(False), OUT, Description (
+             "Size of the RAID device." ),
+          Units ( "Bytes" ),
           PUnit ( "byte" )]
       uint64 Size
     );
@@ -511,12 +511,12 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
     [Description("Create or modify Volume Group. This method is shortcut to CreateOrModifyStoragePool "
         "with the right Goal. Lazy applications can use this method to create or modify VGs, "
         "without calculation of the Goal setting."),
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "4096", 
-          "4097" }, 
-       Values { "Job Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "4096",
+          "4097" },
+       Values { "Job Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
           "In Use",
-          "Method Parameters Checked - Job Started", 
+          "Method Parameters Checked - Job Started",
           "Size Not Supported", "Method Reserved"}]
     uint32 CreateOrModifyVG(
         [IN, Description("Requested volume group name. "
@@ -547,9 +547,9 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
         [IN(False), OUT, Description("Reference to the job (may be null if job completed).")]
         CIM_ConcreteJob REF Job,
 
-        [IN(False), OUT, Description ( 
-             "Size of the volume group." ), 
-          Units ( "Bytes" ), 
+        [IN(False), OUT, Description (
+             "Size of the volume group." ),
+          Units ( "Bytes" ),
           PUnit ( "byte" )]
       uint64 Size
 
@@ -559,12 +559,12 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
     Description("Create or modify Logical Volume. This method is shortcut to CreateOrModifyElementFromStoragePool "
         "with the right Goal. Lazy applications can use this method to create or modify LVs, "
         "without calculation of the Goal setting."),
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096", 
-          "4097", "4098..32767", "32768..65535" }, 
-       Values { "Job Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-          "In Use", "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+          "4097", "4098..32767", "32768..65535" },
+       Values { "Job Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
+          "In Use", "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Size Not Supported", "Method Reserved", "Vendor Specific" }]
     uint32 CreateOrModifyLV(
         [IN, Description("Requested Logical Volume name. "
@@ -665,8 +665,8 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
     )]
 class LMI_StorageSetting : CIM_StorageSetting
 {
-      [Implemented(true), Override ( "ChangeableType" ), 
-       Description ( 
+      [Implemented(true), Override ( "ChangeableType" ),
+       Description (
           "Enumeration indicating the type of setting. \"Fixed - "
           "Not Changeable\" settings are primordial. These setting "
           "are defined at the implementor of the class. \"Changeable "
@@ -676,9 +676,9 @@ class LMI_StorageSetting : CIM_StorageSetting
           "and potentially modified setting indefinately. Only a "
           "\"Changeable - Transient\" setting SHALL be converted to "
           "a \"Changeable = Persistent\" setting; the setting SHALL "
-          "NOT be changed back." ), 
-       ValueMap { "0", "1", "2" }, 
-       Values { "Fixed - Not Changeable", "Changeable - Transient", 
+          "NOT be changed back." ),
+       ValueMap { "0", "1", "2" },
+       Values { "Fixed - Not Changeable", "Changeable - Transient",
           "Changeable - Persistent" }]
     uint16 ChangeableType;
 
@@ -772,7 +772,7 @@ class LMI_VGStorageCapabilities : CIM_StorageCapabilities
         Units ( "Bytes" ),
         PUnit ( "byte" )]
     uint64 ExtentSizeDefault;
-    
+
     [ Implemented(true) ] string ElementName;
     [ Implemented(true) ] uint16 DataRedundancyDefault;
     [ Implemented(true) ] uint16 DataRedundancyMax;
@@ -783,7 +783,7 @@ class LMI_VGStorageCapabilities : CIM_StorageCapabilities
     [ Implemented(true) ] uint16 PackageRedundancyDefault;
     [ Implemented(true) ] uint16 PackageRedundancyMax;
     [ Implemented(true) ] uint16 PackageRedundancyMin;
-    
+
 };
 
 [ Experimental, Description("This class represents capability of LMI_StorageConfigurationService to create MD RAID arrays. "
@@ -846,7 +846,7 @@ class LMI_LVStorageCapabilities : CIM_StorageCapabilities
     uint32 CreateLVStorageSetting(
         [IN(False), OUT, Description("Created LMI_StorageSetting.")]
         LMI_StorageSetting REF Setting);
-    
+
     [ Implemented(true) ] string ElementName;
     [ Implemented(true) ] uint16 DataRedundancyDefault;
     [ Implemented(true) ] uint16 DataRedundancyMax;

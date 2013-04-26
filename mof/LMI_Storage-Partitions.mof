@@ -1,4 +1,4 @@
-[Experimental, Description ( 
+[Experimental, Description (
        "DiskPartitionConfigurationService provides methods for clients "
        "to configure DiskPartitions. "
        "\n"
@@ -12,21 +12,21 @@
        "avoided unless the application really knows what it is doing."
         )]
 class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationService {
-      [Implemented(true), Description ( 
+      [Implemented(true), Description (
           "Describes the partitioning schemes supported by the "
           "platform. AIX and HP_UX do not allow partitions. Linux "
           "allows volumes with and without partitions, Solaris "
           "requires Partitions. No more than a single instance of "
           "this class MAY be instantiated on a system. If set to "
           "\'No partitions allowed\' then the methods of this "
-          "service are not available." ), 
-       ValueMap { "2", "3", "4" }, 
-       Values { "No partitions allowed", 
-          "Volumes may be partitioned or treated as whole", 
+          "service are not available." ),
+       ValueMap { "2", "3", "4" },
+       Values { "No partitions allowed",
+          "Volumes may be partitioned or treated as whole",
           "Volumes must be partitioned" }]
    uint16 PartitioningSchemes;
 
-      [Implemented(true), Description ( 
+      [Implemented(true), Description (
           "This method installs a partition table on an extent of "
           "the specified partition style; creating an association "
           "between the extent and that capabilities instances "
@@ -35,30 +35,30 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
           "reduced by the block size of the metadata reserved by "
           "the partition table and associated metadata. This size "
           "is in the PartitionTableSize property of the associated "
-          "DiskPartitionConfigurationCapabilities instance." ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "..", "0x1000", 
-          "0x1001", "0x1002", "..", "0x8000.." }, 
-       Values { "Success", "Not Supported", "Unknown", "Timeout", 
-          "Failed", "Invalid Parameter", "DMTF Reserved", 
-          "Extent already has partition table", 
-          "Requested Extent too large", 
-          "Style not supported by Service", "Method Reserved", 
+          "DiskPartitionConfigurationCapabilities instance." ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "..", "0x1000",
+          "0x1001", "0x1002", "..", "0x8000.." },
+       Values { "Success", "Not Supported", "Unknown", "Timeout",
+          "Failed", "Invalid Parameter", "DMTF Reserved",
+          "Extent already has partition table",
+          "Requested Extent too large",
+          "Style not supported by Service", "Method Reserved",
           "Vendor Specific" }]
    uint32 SetPartitionStyle(
-         [IN, Description ( 
+         [IN, Description (
              "A reference to the extent (volume or partition) "
              "where this style (partition table) will be "
              "installed." )]
-      CIM_StorageExtent REF Extent, 
+      CIM_StorageExtent REF Extent,
 
-         [IN, Description ( 
+         [IN, Description (
              "A reference to the "
              "DiskPartitionConfigurationCapabilities instance "
              "describing the desired partition style." )]
       CIM_DiskPartitionConfigurationCapabilities REF PartitionStyle);
 
 
-      [Override, Implemented(false),Description ( 
+      [Override, Implemented(false),Description (
           "This method creates a new partition if the Partition "
           "parameter is null or modifies the partition specified. "
           "If the starting and ending address parameters are null, "
@@ -81,46 +81,46 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
           "The underlying extent MUST be associated to a "
           "capabilities class describing the installed partition "
           "style (partition table); this association is established "
-          "using SetPartitionStyle()." ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "..", "0x1000", 
-          "0x1001", "0x1002", "0x1003", "0x1004", "..", "0x8000.." }, 
-       Values { "Success", "Not Supported", "Unknown", "Timeout", 
-          "Failed", "Invalid Parameter", "DMTF Reserved", 
-          "Overlap Not Supported", "No Available Partitions", 
-          "Specified partition not on specified extent", 
-          "Device File Name not valid", 
-          "LogicalDisk with different DeviceFileName exists", 
+          "using SetPartitionStyle()." ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "..", "0x1000",
+          "0x1001", "0x1002", "0x1003", "0x1004", "..", "0x8000.." },
+       Values { "Success", "Not Supported", "Unknown", "Timeout",
+          "Failed", "Invalid Parameter", "DMTF Reserved",
+          "Overlap Not Supported", "No Available Partitions",
+          "Specified partition not on specified extent",
+          "Device File Name not valid",
+          "LogicalDisk with different DeviceFileName exists",
           "Method Reserved", "Vendor Specific" }]
    uint32 CreateOrModifyPartition(
-         [IN, Description ( 
+         [IN, Description (
              "A reference to the underlying extent the partition is base on."
               )]
-      CIM_StorageExtent REF extent, 
+      CIM_StorageExtent REF extent,
 
          [IN, Description ( "The starting block number. "
             "If null when creating a partition, the first block is used."
             "If null when modifying a partition, the partition start "
             "won't be chnaged." )]
-      uint64 StartingAddress, 
+      uint64 StartingAddress,
 
          [IN, Description ( "The ending block number. "
             "If null when creating a partition, the last block of the device "
             "will be used. If null when modifying a partition, the partition "
             "end won't be chnaged." )]
-      uint64 EndingAddress, 
+      uint64 EndingAddress,
 
-         [IN, Description ( 
+         [IN, Description (
              "The platform-specific special file name to be "
              "assigned to the LogicalDisk instance BasedOn the "
              "new DiskPartition instance." )]
       string DeviceFileName,
 
-         [IN, OUT, Description ( 
+         [IN, OUT, Description (
              "A reference an existing partition instance to "
              "modify or null to request a new partition." )]
       CIM_GenericDiskPartition REF Partition
     );
-    
+
    [Implemented(true), Description("Create new partition on given extent."
         "Partition modification is not yet supported."
         "The implementation will select the best space to fit the partition, "
@@ -142,18 +142,18 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
         "If there is no extended partition and three primary partitions "
         "already exist, new extended partition with all remaining space is "
         "created and a logical partition with requested size is created."),
-   ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096", 
-       "4097", "4098..32767", "32768..65535" }, 
-   Values { "Job Completed with No Error", "Not Supported", 
-      "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-      "In Use", "DMTF Reserved", 
-      "Method Parameters Checked - Job Started", 
+   ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "4096",
+       "4097", "4098..32767", "32768..65535" },
+   Values { "Job Completed with No Error", "Not Supported",
+      "Unknown", "Timeout", "Failed", "Invalid Parameter",
+      "In Use", "DMTF Reserved",
+      "Method Parameters Checked - Job Started",
       "Size Not Supported", "Method Reserved", "Vendor Specific" }]
    uint32 LMI_CreateOrModifyPartition(
-         [IN, Description ( 
+         [IN, Description (
              "A reference to the underlying extent the partition is base on."
               )]
-      CIM_StorageExtent REF extent, 
+      CIM_StorageExtent REF extent,
 
          [IN, OUT, Description ( "Requested size of the partition to create. "
             "If null when creating a partition, the larges possible "
@@ -162,14 +162,14 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
             Units("Bytes")]
       uint64 Size,
 
-         [IN, OUT, Description ( 
+         [IN, OUT, Description (
              "A reference an existing partition instance to "
              "modify or null to request a new partition." )]
       CIM_GenericDiskPartition REF Partition,
 
       [IN, Description("Setting to be applied to created/modified partition.")]
       LMI_DiskPartitionConfigurationSetting REF Goal,
-      
+
       [IN(false), OUT, Description (
             "A reference to started job (may be null if job is completed).")]
       CIM_ConcreteJob REF Job
@@ -195,7 +195,7 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
   );
 };
 
-   [Experimental, Description ( 
+   [Experimental, Description (
        "DiskPartitionConfigurationCapabilities instances describe a "
        "partition style supported by the platform. An instance of this "
        "class is associated with a volume (or partition) when a "
@@ -203,20 +203,20 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
        "DiskPartitionConfigurationService.SetPartitionStyle." )]
 class LMI_DiskPartitionConfigurationCapabilities : CIM_DiskPartitionConfigurationCapabilities {
 
-      [Implemented(true), Override, Description ( 
+      [Implemented(true), Override, Description (
           "The partition style (i.e partition table type) "
           "associated with this capabilities instance. "
           "\n"
-          "LMI introduces additional partition styles." ), 
-       ValueMap { "2", "3", "4", "4097", "4098", "4099", "4100" }, 
+          "LMI introduces additional partition styles." ),
+       ValueMap { "2", "3", "4", "4097", "4098", "4099", "4100" },
        Values { "MBR", "GPT", "VTOC", "PC98", "SUN", "MAC", "EMBR" }]
    uint16 PartitionStyle;
-      [Override, Description ( 
+      [Override, Description (
           "Some partitions can act as a container for other "
           "partitions. If sub partitions are not supported, this "
-          "should be set to NULL." ), 
-       ValueMap { "1", "2", "3", "4", "4100" }, 
-       Values { "Other", "MBR", "VTOC", "GPT", "EMBR" }, 
+          "should be set to NULL." ),
+       ValueMap { "1", "2", "3", "4", "4100" },
+       Values { "Other", "MBR", "VTOC", "GPT", "EMBR" },
        ArrayType ( "Indexed" )]
    uint16 ValidSubPartitionStyles[];
 
@@ -226,7 +226,7 @@ class LMI_DiskPartitionConfigurationCapabilities : CIM_DiskPartitionConfiguratio
         ValueMap{ "1", "2", "3" },
         Values{"Partition Type", "Bootable", "Hidden"}]
    uint16 SupportedSettings[];
-   
+
    [Implemented(true),
         Description("Create LMI_DiskPartitionConfigurationSetting applicable to this "
         "partition table. All properties its will have default values."),
@@ -274,7 +274,7 @@ class LMI_DiskPartitionConfigurationCapabilities : CIM_DiskPartitionConfiguratio
         [IN(False), OUT, Description("Suggested ending block number of the partition. ")]
         uint64 EndingAddress
     );
-    
+
     [Implemented(true)] string InstanceID;
     [Implemented(true)] string Caption;
     [Implemented(true)] string ElementName;
@@ -295,7 +295,7 @@ class LMI_DiskPartitionConfigurationSetting : CIM_SettingData
         "be bootable.  For PC98 partition table, all ext2 partitions must "
         "be bootable (this is enforced by this API).")]
     boolean Bootable = False;
-    
+
     [Description("Flag can be enabled to hide partitions "
           "from Microsoft operating systems.")]
     boolean Hidden;

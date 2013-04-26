@@ -112,7 +112,7 @@ class ExtentProvider(DeviceProvider):
         """
             Return (BlockSize, NumberOfBlocks, ConsumableBlocks) properties
             for given StorageDevice.
-            
+
             The ConsumableBlocks should be reduced by partition table size.
         """
         if device.partedDevice:
@@ -244,17 +244,17 @@ class ExtentProvider(DeviceProvider):
         """Enumerate instances.
 
         The WBEM operations EnumerateInstances and EnumerateInstanceNames
-        are both mapped to this method. 
+        are both mapped to this method.
         This method is a python generator
 
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        model -- A template of the pywbem.CIMInstances to be generated.  
-            The properties of the model are already filtered according to 
-            the PropertyList from the request.  Only properties present in 
-            the model need to be given values.  If you prefer, you can 
-            always set all of the values, and the instance will be filtered 
-            for you. 
+        model -- A template of the pywbem.CIMInstances to be generated.
+            The properties of the model are already filtered according to
+            the PropertyList from the request.  Only properties present in
+            the model need to be given values.  If you prefer, you can
+            always set all of the values, and the instance will be filtered
+            for you.
         keys_only -- A boolean.  True if only the key properties should be
             set on the generated instances.
 

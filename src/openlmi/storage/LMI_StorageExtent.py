@@ -25,7 +25,7 @@ import openlmi.common.cmpi_logging as cmpi_logging
 class LMI_StorageExtent(ExtentProvider):
     """
         Provider of generic LMI_StorageExtent class.
-        
+
         It provides all StorageExtent instances, which do not have any
         specialized providers in LMI.
     """

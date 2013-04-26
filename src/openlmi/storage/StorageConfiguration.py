@@ -26,7 +26,7 @@ class StorageConfiguration(object):
     """
         OpenLMI configuration file. By default, it resides in
         /etc/openlmi/storage/storage.conf.
-        
+
         There should be only one instance of this class.
     """
 
@@ -53,7 +53,7 @@ class StorageConfiguration(object):
 
     @cmpi_logging.trace_method
     def add_listener(self, callback):
-        """ 
+        """
             Add a callback, which will be called when configuration is updated.
             The callback will be called with StorageConfiguration as parameter:
               callback(config)
@@ -62,7 +62,7 @@ class StorageConfiguration(object):
 
     @cmpi_logging.trace_method
     def remove_listener(self, callback):
-        """ 
+        """
             Remove previously registered callback.
         """
 

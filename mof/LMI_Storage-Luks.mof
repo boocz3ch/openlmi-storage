@@ -59,7 +59,7 @@ class LMI_ExtentEncryptionConfigurationService : CIM_Service
         string OldPassphrase,
         string NewPassphrase
     );
-        
+
     uint32 OpenEncryptionFormat(
         LMI_EncryptionFormat REF Format,
         string ElementName,
@@ -184,7 +184,7 @@ class LMI_LUKSFormatCapabilities : LMI_EncryptionFormatCapabilities
 
     [ Description("Discover all encryption modes which are supported for given block cipher. Minimum and maximum key sizes are also returned.")]
     uint32 GetSupportedChainModes(
-        
+
         [ Description("Encryption block cipher."),
             ValueMap { "0", "1", "2", "65535"},
             Values { "Blowfish", "Serpent", "AES", "Other"}]
