@@ -6,6 +6,9 @@ import logging
 import blivet
 import os
 
+# enable non-device filesystems
+blivet.flags.include_nodev = True
+
 # setup logging
 log_handler = logging.StreamHandler()
 log_handler.setLevel(logging.DEBUG)

@@ -88,6 +88,9 @@ def init_anaconda(log_manager, config):
     """ Initialize Anaconda storage module."""
     cmpi_logging.logger.info("Initializing Anaconda")
 
+    # enable discovery of non-device filesystems (procfs, tmpfs, ...)
+    blivet.flags.include_nodev = True
+
     # set up logging
     blivet_logger = logging.getLogger("blivet")
     blivet_logger.addHandler(log_manager.cmpi_handler)

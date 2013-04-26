@@ -41,8 +41,11 @@ class LMI_StorageExtent(ExtentProvider):
             Returns True, if this class is provider for given Anaconda
             StorageDevice class.
         """
+        # Skip non-devices (e.g. for tmpfs, sysfs, ...)
+        if  isinstance(device, blivet.devices.NoDevice):
+            return False
 
-        # check if this device has specialized provider
+        # Check if this device has specialized provider
         if  isinstance(device, blivet.devices.LVMVolumeGroupDevice):
             return False
 
@@ -56,7 +59,7 @@ class LMI_StorageExtent(ExtentProvider):
                 blivet.devices.LVMLogicalVolumeDevice):
             return False
 
-        # otherwise, if it is StorageDevice, we provide it
+        # Otherwise, if it is StorageDevice, we provide it
         if isinstance(device, blivet.devices.StorageDevice):
             return True
         return False
