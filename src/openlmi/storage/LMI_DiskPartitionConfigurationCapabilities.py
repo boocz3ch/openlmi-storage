@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_DiskPartitionConfigurationCapabilities class. """
+""""
+Module for LMI_DiskPartitionConfigurationCapabilities class.
+
+LMI_DiskPartitionConfigurationCapabilities
+------------------------------------------
+
+.. autoclass:: LMI_DiskPartitionConfigurationCapabilities
+    :members:
+
+"""
 
 from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 from openlmi.storage.LMI_DiskPartitionConfigurationSetting \
@@ -194,7 +203,7 @@ class LMI_DiskPartitionConfigurationCapabilities(CapabilitiesProvider):
     @cmpi_logging.trace_method
     def get_capabilities_for_device(self, device):
         """
-            Return capabilities for given StorageDevice 
+            Return capabilities for given StorageDevice
             Return None if it does not have any partition capabilities.
         """
 

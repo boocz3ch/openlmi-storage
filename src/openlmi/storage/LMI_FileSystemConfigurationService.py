@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_FileSystemConfigurationService class."""
+""""
+Module for LMI_FileSystemConfigurationService class.
+
+LMI_FileSystemConfigurationService
+----------------------------------
+
+.. autoclass:: LMI_FileSystemConfigurationService
+    :members:
+
+"""
 
 import blivet.formats
 import openlmi.storage.util
@@ -60,55 +69,55 @@ class LMI_FileSystemConfigurationService(ServiceProvider):
         CIM_FileSystemSetting stored on the CIMOM.\nA ResidesOnExtent
         association is created between the created FileSystem and the
         StorageExtents used for it.
-        
+
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName 
-            specifying the object on which the method LMI_CreateFileSystem() 
+        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName
+            specifying the object on which the method LMI_CreateFileSystem()
             should be invoked.
-        param_elementname --  The input parameter ElementName (type unicode) 
+        param_elementname --  The input parameter ElementName (type unicode)
             Label of the filesystem being created. If NULL, a
             system-supplied default name can be used. The value will be
             stored in the \'ElementName\' property for the created
             element.
-            
-        param_goal --  The input parameter Goal (type REF (pywbem.CIMInstanceName(classname='CIM_FileSystemSetting', ...)) 
+
+        param_goal --  The input parameter Goal (type REF (pywbem.CIMInstanceName(classname='CIM_FileSystemSetting', ...))
             The requirements for the FileSystem element to maintain. This
             is an element of class CIM_FileSystemSetting, or a derived
             class. This allows the client to specify the properties
             desired for the file system. If NULL, the
             FileSystemConfigurationService will create default filesystem.
-            
-        param_filesystemtype --  The input parameter FileSystemType (type pywbem.Uint16 self.Values.LMI_CreateFileSystem.FileSystemType) 
+
+        param_filesystemtype --  The input parameter FileSystemType (type pywbem.Uint16 self.Values.LMI_CreateFileSystem.FileSystemType)
             Type of file system to create. When NULL, file system type is
             retrieved from Goal parameter, which cannot be NULL.
-            
-        param_inextents --  The input parameter InExtents (type REF (pywbem.CIMInstanceName(classname='CIM_StorageExtent', ...)) 
+
+        param_inextents --  The input parameter InExtents (type REF (pywbem.CIMInstanceName(classname='CIM_StorageExtent', ...))
             The StorageExtents on which the created FileSystem will reside.
             At least one extent must be provided. If the filesystem being
             created supports more than one storage extent (e.g. btrfs),
             more extents can be provided. The filesystem will then reside
             on all of them.
-            
+
 
         Returns a two-tuple containing the return value (type pywbem.Uint32 self.Values.LMI_CreateFileSystem)
         and a list of CIMParameter objects representing the output parameters
 
         Output parameters:
-        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...)) 
+        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...))
             Reference to the job (may be null if job completed).
-            
-        TheElement -- (type REF (pywbem.CIMInstanceName(classname='CIM_FileSystem', ...)) 
+
+        TheElement -- (type REF (pywbem.CIMInstanceName(classname='CIM_FileSystem', ...))
             The newly created FileSystem.
-            
+
 
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate,
             unrecognized or otherwise incorrect parameters)
-        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not 
+        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not
             exist in the specified namespace)
-        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor 
+        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor
             the invocation request)
         CIM_ERR_FAILED (some other unspecified error occurred)
 
@@ -219,7 +228,7 @@ class LMI_FileSystemConfigurationService(ServiceProvider):
     def _parse_goal(self, param_goal, classname):
         """
             Find Setting for given CIMInstanceName and check, that it is
-            of given CIM class. 
+            of given CIM class.
             Return None, if no Goal was given.
             Raise CIMError, if the Goal cannot be found.
         """
@@ -307,13 +316,13 @@ class LMI_FileSystemConfigurationService(ServiceProvider):
         4096/0x1000 is returned, a ConcreteJob will be started to delete
         the FileSystem. A Reference to the ConcreteJob will be returned in
         the output parameter Job.
-        
+
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName 
-            specifying the object on which the method DeleteFileSystem() 
+        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName
+            specifying the object on which the method DeleteFileSystem()
             should be invoked.
-        param_waittime --  The input parameter WaitTime (type pywbem.Uint32) 
+        param_waittime --  The input parameter WaitTime (type pywbem.Uint32)
             An integer that indicates the time (in seconds) that the
             provider must wait before deleting this FileSystem. If
             WaitTime is not zero, the method will create a job, if
@@ -324,31 +333,31 @@ class LMI_FileSystemConfigurationService(ServiceProvider):
             ='0' (the default) is interpreted as 'Wait (forever) until
             Quiescence, then Delete Filesystem' and will be performed
             asynchronously if possible.
-            
-        param_thefilesystem --  The input parameter TheFileSystem (type REF (pywbem.CIMInstanceName(classname='CIM_ManagedElement', ...)) 
+
+        param_thefilesystem --  The input parameter TheFileSystem (type REF (pywbem.CIMInstanceName(classname='CIM_ManagedElement', ...))
             An element or association that uniquely identifies the
             FileSystem to be deleted.
-            
-        param_inuseoptions --  The input parameter InUseOptions (type pywbem.Uint16 self.Values.DeleteFileSystem.InUseOptions) 
+
+        param_inuseoptions --  The input parameter InUseOptions (type pywbem.Uint16 self.Values.DeleteFileSystem.InUseOptions)
             An enumerated integer that specifies the action to take if the
             FileSystem is still in use when this request is made.
-            
+
 
         Returns a two-tuple containing the return value (type pywbem.Uint32 self.Values.DeleteFileSystem)
         and a list of CIMParameter objects representing the output parameters
 
         Output parameters:
-        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...)) 
+        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...))
             Reference to the job (may be null if job completed).
-            
+
 
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate,
             unrecognized or otherwise incorrect parameters)
-        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not 
+        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not
             exist in the specified namespace)
-        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor 
+        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor
             the invocation request)
         CIM_ERR_FAILED (some other unspecified error occurred)
 

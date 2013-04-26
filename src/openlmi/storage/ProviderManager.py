@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for ProviderManager class."""
+""""
+Module for ProviderManager class.
+
+ProviderManager
+---------------
+
+.. autoclass:: ProviderManager
+    :members:
+
+"""
 
 import openlmi.common.cmpi_logging as cmpi_logging
 
@@ -24,9 +33,9 @@ class ProviderManager(object):
     """
         Simple class containing references to various providers to simplify
         various tasks.
-        
+
         The manager holds reference to all device providers of Anaconda
-        StorageDevice subclasses and all LMI_*Setting providers.        
+        StorageDevice subclasses and all LMI_*Setting providers.
         The manager can then find a CIM provider for a
         StorageDevice instance and find provider or StorageDevice instance
         for CIM InstanceName.
@@ -36,13 +45,13 @@ class ProviderManager(object):
 
         The device providers must be registered by add_device_provider().
         The device providers must be subclasses of DeviceProvider class.
-        
+
         The manager holds references to LMI_*Setting providers. For example
         LMI_*Service providers need access to settings, so they can use this
         manager to get them.
         The setting providers must be registered by add_setting_provider().
         The setting providers must be subclasses of SettingProvider class.
-        
+
         The manager holds references to LMI_*Service providers, so
         the LMI_HostedService can easily enumerate all services.
         The service providers must be registered by add_service_provider().
@@ -165,7 +174,7 @@ class ProviderManager(object):
             Return Setting instance for given InstanceID.
             If setting_classname is not None, it also checks that the
             setting classname equals setting_classname.
-            
+
             Return None if there is no such instance.
         """
         # parse the instance id

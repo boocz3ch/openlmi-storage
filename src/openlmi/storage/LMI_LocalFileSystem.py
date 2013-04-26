@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_LocalFilesystem."""
+""""
+Module for LMI_LocalFilesystem.
+
+LMI_LocalFileSystem
+-------------------
+
+.. autoclass:: LMI_LocalFileSystem
+    :members:
+
+"""
 
 from openlmi.storage.LocalFileSystemProvider import LocalFileSystemProvider
 import openlmi.common.cmpi_logging as cmpi_logging

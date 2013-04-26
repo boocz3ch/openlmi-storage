@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_LVAllocatedFromStoragePool class."""
+""""
+Module for LMI_LVAllocatedFromStoragePool class.
+
+LMI_LVAllocatedFromStoragePool
+------------------------------
+
+.. autoclass:: LMI_LVAllocatedFromStoragePool
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

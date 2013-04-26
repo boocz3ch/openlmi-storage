@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_VGStorageCapabilities class."""
+""""
+Module for LMI_VGStorageCapabilities class.
+
+LMI_VGStorageCapabilities
+-------------------------
+
+.. autoclass:: LMI_VGStorageCapabilities
+    :members:
+
+"""
 
 from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 from openlmi.storage.SettingManager import Setting

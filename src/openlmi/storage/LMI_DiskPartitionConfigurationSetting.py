@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_DiskPartitionConfigurationSetting class."""
+""""
+Module for LMI_DiskPartitionConfigurationSetting class.
+
+LMI_DiskPartitionConfigurationSetting
+-------------------------------------
+
+.. autoclass:: LMI_DiskPartitionConfigurationSetting
+    :members:
+
+"""
 
 import pywbem
 from openlmi.storage.SettingProvider import SettingProvider
@@ -96,7 +105,7 @@ class LMI_DiskPartitionConfigurationSetting(SettingProvider):
     def get_associated_element_name(self, instance_id):
         """
             Return CIMInstanceName for ElementSettingData association.
-            Return None if no such element exist. 
+            Return None if no such element exist.
         """
         path = self.parse_setting_id(instance_id)
         if not path:

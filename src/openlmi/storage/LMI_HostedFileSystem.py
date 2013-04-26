@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_HostedFileSystem class."""
+""""
+Module for LMI_HostedFileSystem class.
+
+LMI_HostedFileSystem
+--------------------
+
+.. autoclass:: LMI_HostedFileSystem
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

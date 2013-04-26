@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_StorageExtent class."""
+""""
+Module for LMI_StorageExtent class.
+
+LMI_StorageExtent
+-----------------
+
+.. autoclass:: LMI_StorageExtent
+    :members:
+
+"""
 
 from openlmi.storage.ExtentProvider import ExtentProvider
 import blivet
@@ -25,7 +34,7 @@ import openlmi.common.cmpi_logging as cmpi_logging
 class LMI_StorageExtent(ExtentProvider):
     """
         Provider of generic LMI_StorageExtent class.
-        
+
         It provides all StorageExtent instances, which do not have any
         specialized providers in LMI.
     """

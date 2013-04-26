@@ -16,9 +16,14 @@
 #
 # Authors: Jan Synacek <jsynacek@redhat.com>
 # -*- coding: utf-8 -*-
-"""Python Provider for LMI_MountPoint
+"""
+Python Provider for LMI_MountPoint
 
-Instruments the CIM class LMI_MountPoint
+LMI_MountPoint
+--------------
+
+.. autoclass:: LMI_MountPoint
+    :members:
 
 """
 

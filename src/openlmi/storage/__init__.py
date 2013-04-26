@@ -16,4 +16,7 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 
-""" OpenLMI storage provider. """
+""""
+OpenLMI storage provider.
+
+"""

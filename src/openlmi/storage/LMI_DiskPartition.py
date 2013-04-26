@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_DiskPartition class."""
+""""
+Module for LMI_DiskPartition class.
+
+LMI_DiskPartition
+-----------------
+
+.. autoclass:: LMI_DiskPartition
+    :members:
+
+"""
 
 from openlmi.storage.ExtentProvider import ExtentProvider
 import blivet

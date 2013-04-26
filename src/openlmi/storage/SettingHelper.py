@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for SettingHelper class."""
+""""
+Module for SettingHelper class.
+
+SettingHelper
+-------------
+
+.. autoclass:: SettingHelper
+    :members:
+
+"""
 
 import openlmi.common.cmpi_logging as cmpi_logging
 
@@ -51,7 +60,7 @@ class SettingHelper(object):
             Return Setting instance, which corresponds to LMI_*Setting with
             given InstanceID.
             Return None if there is no such instance.
-            
+
             Subclasses must override this method.
         """
         return None
@@ -74,7 +83,7 @@ class SettingHelper(object):
                 constructor is a function which takes string argument
                 and returns CIM value. (i.e. pywbem.Uint16
                 or bool or string etc).
-            This hash will be passed to SettingProvider.__init__ 
+            This hash will be passed to SettingProvider.__init__
         """
         return {}
 
@@ -86,7 +95,7 @@ class SettingHelper(object):
             If this value of the property is set, the ModifyInstance
             won't complain, but it will silently ignore the value.
             This is useful when someone tries to set default value
-            of a property and the provider does not implement it. 
+            of a property and the provider does not implement it.
         """
         return None
 

@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LocalFileSystemProvider."""
+""""
+Module for LocalFileSystemProvider.
+
+LocalFileSystemProvider
+-----------------------
+
+.. autoclass:: LocalFileSystemProvider
+    :members:
+
+"""
 
 import pywbem
 from openlmi.storage.FormatProvider import FormatProvider
@@ -427,7 +436,7 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
                 constructor is a function which takes string argument
                 and returns CIM value. (i.e. pywbem.Uint16
                 or bool or string etc).
-            This hash will be passed to SettingProvider.__init__ 
+            This hash will be passed to SettingProvider.__init__
         """
         return {
                 'ActualFileSystemType': pywbem.Uint16,

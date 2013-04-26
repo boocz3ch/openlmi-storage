@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_DiskPartitionConfigurationService class."""
+""""
+Module for LMI_DiskPartitionConfigurationService class.
+
+LMI_DiskPartitionConfigurationService
+-------------------------------------
+
+.. autoclass:: LMI_DiskPartitionConfigurationService
+    :members:
+
+"""
 
 from openlmi.storage.ServiceProvider import ServiceProvider
 from openlmi.storage.LMI_DiskPartitionConfigurationSetting \
@@ -144,7 +153,7 @@ class LMI_DiskPartitionConfigurationService(ServiceProvider):
             It must be CIMInstanceName of LMI_DiskPartitionConfigurationSetting.
             Return Setting appropriate to the CIMInstanceName or None
             if no Goal was specified.
-            Raise CIMError, if the goal does not exist. 
+            Raise CIMError, if the goal does not exist.
 
             param_goal = CIMInstanceName
         """
@@ -172,9 +181,9 @@ class LMI_DiskPartitionConfigurationService(ServiceProvider):
             was set.
             Raise CIMError on any error like the partition does not exist
             or the partition is not on given device.
-            
+
             param_partition = CIMInstanceName
-            device = StorageDevice 
+            device = StorageDevice
         """
         if not param_partition:
             return None
@@ -200,15 +209,15 @@ class LMI_DiskPartitionConfigurationService(ServiceProvider):
             It must be CIMInstanceName of a CIM_StorageExtent and it must
             be possible to create partitions on it.
             If a Goal was specified in the method, then check that the
-            partition with such goal can be created on the partition. 
+            partition with such goal can be created on the partition.
             Return (StorageDevice, logical), where 'logical' is True, if
             a logical partition is requested. Return None if no Extent parameter
             was set.
             Raise CIMError on any error, like the device does not exist
             or there is no partition table on the device.
-            
+
             param_extent = CIMInstanceName
-            goal = Setting 
+            goal = Setting
         """
         if not param_extent:
             return (None, None)
@@ -516,23 +525,23 @@ class LMI_DiskPartitionConfigurationService(ServiceProvider):
             is no extended partition and three primary partitions already
             exist, new extended partition with all remaining space is created
             and a logical partition with requested size is created.
-        
+
             Keyword arguments:
             env -- Provider Environment (pycimmb.ProviderEnvironment)
-            object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName 
-                specifying the object on which the method LMI_CreateOrModifyPartition() 
+            object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName
+                specifying the object on which the method LMI_CreateOrModifyPartition()
                 should be invoked.
-            param_partition --  The input parameter Partition (type REF (pywbem.CIMInstanceName(classname='CIM_GenericDiskPartition', ...)) 
+            param_partition --  The input parameter Partition (type REF (pywbem.CIMInstanceName(classname='CIM_GenericDiskPartition', ...))
                 A reference an existing partition instance to modify or null to
                 request a new partition.
-            
-            param_goal --  The input parameter Goal (type REF (pywbem.CIMInstanceName(classname='LMI_DiskPartitionConfigurationSetting', ...)) 
+
+            param_goal --  The input parameter Goal (type REF (pywbem.CIMInstanceName(classname='LMI_DiskPartitionConfigurationSetting', ...))
                 Setting to be applied to created/modified partition.
-        
-            param_extent --  The input parameter extent (type REF (pywbem.CIMInstanceName(classname='CIM_StorageExtent', ...)) 
+
+            param_extent --  The input parameter extent (type REF (pywbem.CIMInstanceName(classname='CIM_StorageExtent', ...))
                 A reference to the underlying extent the partition is base on.
-        
-            param_size --  The input parameter Size (type pywbem.Uint64) 
+
+            param_size --  The input parameter Size (type pywbem.Uint64)
                 Requested size of the partition to create. If null when
                 creating a partition, the larges possible partition is
                 created.On output, the achieved size is returned.

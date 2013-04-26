@@ -16,7 +16,28 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for SettingManager and Setting classes."""
+""""
+Module for SettingManager and Setting classes.
+
+SettingManager
+--------------
+
+.. autoclass:: SettingManager
+    :members:
+
+Setting
+-------
+
+.. autoclass:: Setting
+    :members:
+
+StorageSetting
+--------------
+
+.. autoclass:: StorageSetting
+    :members:
+
+"""
 
 import os
 import ConfigParser
@@ -26,21 +47,21 @@ class SettingManager(object):
     """
         Class, which manages all persistent, transient and preconfigured
         LMI_*Setting instances.
-        
+
         Note: LMI_*Setting instances, which represent actual configuration
         of some element are *not* managed by this class!
-        
+
         It should be enough to have only one instance of this class.
-        
+
         Settings must be removed using special methods of this class.
-        
+
         Preconfigured settings are stored in /etc/openlmi/storage/setting/
         directory. Each LMI_*Setting class has its own file. Name of the
         file is the same as name of the class.
         Each file has ini structure. Each section represents one LMI_*Setting
         instance, with key=value pairs. Name of the ini section is the same
         as InstanceID of the setting.
-        
+
         Persistent settings have the same structure, but they are stored in
         /var/lib/openlmi-storage/settings/ directory.
     """
@@ -216,7 +237,7 @@ class SettingManager(object):
     def expire_setting(self, classname, the_id):
         """
         Removes expired setting.
-        
+
         :param classname: (``string``) Name of LMI_*Setting CIM class.
         :param the_id: (``string``) ID of the setting instance, which has
                 expired.

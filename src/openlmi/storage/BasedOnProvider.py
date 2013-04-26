@@ -17,7 +17,16 @@
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
 
-""" Module for BasedOnProvider class. """
+""""
+Module for BasedOnProvider class.
+
+BasedOnProvider
+---------------
+
+.. autoclass:: BasedOnProvider
+    :members:
+
+"""
 
 import pywbem
 from openlmi.storage.BaseProvider import BaseProvider

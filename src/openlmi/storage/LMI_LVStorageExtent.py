@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_LVStorageExtent class."""
+""""
+Module for LMI_LVStorageExtent class.
+
+LMI_LVStorageExtent
+-------------------
+
+.. autoclass:: LMI_LVStorageExtent
+    :members:
+
+"""
 
 from openlmi.storage.ExtentProvider import ExtentProvider
 import blivet
@@ -104,7 +113,7 @@ class LMI_LVStorageExtent(ExtentProvider, SettingHelper):
             Return Setting instance, which corresponds to LMI_*Setting with
             given InstanceID.
             Return None if there is no such instance.
-            
+
             Subclasses must override this method.
         """
         path = setting_provider.parse_setting_id(instance_id)
@@ -147,7 +156,7 @@ class LMI_LVStorageExtent(ExtentProvider, SettingHelper):
                 constructor is a function which takes string argument
                 and returns CIM value. (i.e. pywbem.Uint16
                 or bool or string etc).
-            This hash will be passed to SettingProvider.__init__ 
+            This hash will be passed to SettingProvider.__init__
         """
         return {
                 'DataRedundancyGoal': pywbem.Uint16,

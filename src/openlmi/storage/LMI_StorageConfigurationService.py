@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_StorageConfigurationService class."""
+""""
+Module for LMI_StorageConfigurationService class.
+
+LMI_StorageConfigurationService
+-------------------------------
+
+.. autoclass:: LMI_StorageConfigurationService
+    :members:
+
+"""
 
 from openlmi.storage.ServiceProvider import ServiceProvider
 import pywbem
@@ -104,7 +113,7 @@ class LMI_StorageConfigurationService(ServiceProvider):
             Check that DeviceProvider.Redundancy matches Setting['*Goal'].
             Return None if so or string with error message if it does
             not match.
-            
+
             If any of the *Goal property is missing, the min/max is checked
             if it fits.
         """
@@ -222,7 +231,7 @@ class LMI_StorageConfigurationService(ServiceProvider):
     def _parse_goal(self, param_goal, classname):
         """
             Find Setting for given CIMInstanceName and check, that it is
-            of given CIM class. 
+            of given CIM class.
             Return None, if no Goal was given.
             Raise CIMError, if the Goal cannot be found.
         """
@@ -624,7 +633,7 @@ class LMI_StorageConfigurationService(ServiceProvider):
             CreateOrModifyStoragePool with the right Goal. Lazy applications
             can use this method to create or modify VGs, without calculation
             of the Goal setting.
-            
+
             On implementation side, this method is called by
             CreateOrModifyStoragePool. If so, input_arguments and method_name
             parameters are set, so we can create proper Job here.
@@ -1175,31 +1184,31 @@ class LMI_StorageConfigurationService(ServiceProvider):
 
         Delete MD RAID array. All members are detached from the array and
         all RAID metadata are erased.
-        
+
         Keyword arguments:
         env -- Provider Environment (pycimmb.ProviderEnvironment)
-        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName 
-            specifying the object on which the method DeleteMDRAID() 
+        object_name -- A pywbem.CIMInstanceName or pywbem.CIMCLassName
+            specifying the object on which the method DeleteMDRAID()
             should be invoked.
-        param_theelement --  The input parameter TheElement (type REF (pywbem.CIMInstanceName(classname='LMI_MDRAIDStorageExtent', ...)) 
+        param_theelement --  The input parameter TheElement (type REF (pywbem.CIMInstanceName(classname='LMI_MDRAIDStorageExtent', ...))
             The MD RAID device to destroy.
-            
+
 
         Returns a two-tuple containing the return value (type pywbem.Uint32 self.Values.DeleteMDRAID)
         and a list of CIMParameter objects representing the output parameters
 
         Output parameters:
-        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...)) 
+        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...))
             Reference to the job (may be null if job completed).
-            
+
 
         Possible Errors:
         CIM_ERR_ACCESS_DENIED
-        CIM_ERR_INVALID_PARAMETER (including missing, duplicate, 
+        CIM_ERR_INVALID_PARAMETER (including missing, duplicate,
             unrecognized or otherwise incorrect parameters)
-        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not 
+        CIM_ERR_NOT_FOUND (the target CIM Class or instance does not
             exist in the specified namespace)
-        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor 
+        CIM_ERR_METHOD_NOT_AVAILABLE (the CIM Server is unable to honor
             the invocation request)
         CIM_ERR_FAILED (some other unspecified error occurred)
 
@@ -1341,7 +1350,7 @@ class LMI_StorageConfigurationService(ServiceProvider):
         4096/0x1000 is returned, a ConcreteJob will be started to delete
         the StoragePool. A reference to the Job is returned in the Job
         parameter.
-        
+
         Implementation just calls DeleteVG with the same arguments.
         """
         input_arguments = {

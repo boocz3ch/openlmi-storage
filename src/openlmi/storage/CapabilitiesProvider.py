@@ -16,7 +16,22 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for CapabilitiesProvider class. """
+""""
+Module for CapabilitiesProvider class.
+
+CapabilitiesProvider
+--------------------
+
+.. autoclass:: CapabilitiesProvider
+    :members:
+
+ElementCapabilitiesProvider
+---------------------------
+
+.. autoclass:: ElementCapabilitiesProvider
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem
@@ -26,10 +41,10 @@ class CapabilitiesProvider(BaseProvider):
     """
         Base class for every LMI_*Capabilities providers.
         It implements get_instance and enum_instances methods.
-        
+
         This class assumes that most LMI_*Capabilities are associated to
         appropriate LMI_*Service and adds support for it.
-        
+
         Of course, LMI_*Capabilities can be associated to different instances
         in subclasses of this provider.
     """
@@ -73,7 +88,7 @@ class CapabilitiesProvider(BaseProvider):
             If the capabilities are the default ones, it must have
             '_default' as a property name.
             Return None if there is no such Capabilities instance.
-            
+
             Subclasses can override this method.
         """
         for capabilities in self.enumerate_capabilities():
@@ -88,7 +103,7 @@ class CapabilitiesProvider(BaseProvider):
             dictionaries property_name -> value.
             If the capabilities are the default ones, it must have
             '_default' as a property name.
-            
+
             Subclasses must override this method.
         """
         return []
@@ -98,8 +113,8 @@ class CapabilitiesProvider(BaseProvider):
     def create_setting_for_capabilities(self, capabilities):
         """
             Create LMI_*Setting for given capabilities.
-            Return CIMInstanceName of the setting or raise CIMError on error. 
-            
+            Return CIMInstanceName of the setting or raise CIMError on error.
+
             Subclasses must override this method.
         """
         return None
@@ -197,10 +212,10 @@ class CapabilitiesProvider(BaseProvider):
 class ElementCapabilitiesProvider(BaseProvider):
     """
         Base class for LMI_*ElementCapabilities providers.
-        
+
         If all capabilities instances are associated only with appropriate
         LMI_*Service, this class does not need to be subclasses.
-        
+
         Otherwise, subclasses can associate capabilities to other managed
         elements.
     """
@@ -218,10 +233,10 @@ class ElementCapabilitiesProvider(BaseProvider):
             Return iterable with (managed_element_name, capabilities_name),
             where managed_element_name and capabilities_name
             are CIMInstanceName.
-            
+
             By default, all capabilities provided by capabilities_provider
             are associated to service_provider.
-            
+
             Subclasses can override this method if different behavior is
             requested.
         """

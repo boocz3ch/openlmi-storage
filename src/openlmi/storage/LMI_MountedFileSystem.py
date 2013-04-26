@@ -16,9 +16,14 @@
 #
 # Authors: Jan Synacek <jsynacek@redhat.com>
 # -*- coding: utf-8 -*-
-"""Python Provider for LMI_MountedFileSystem
+"""
+Python Provider for LMI_MountedFileSystem
 
-Instruments the CIM class LMI_MountedFileSystem
+LMI_MountedFileSystem
+---------------------
+
+.. autoclass:: LMI_MountedFileSystem
+    :members:
 
 """
 

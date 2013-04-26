@@ -16,9 +16,14 @@
 #
 # Authors: Jan Synacek <jsynacek@redhat.com>
 # -*- coding: utf-8 -*-
-"""Python Provider for LMI_HostedMount
+"""
+Python Provider for LMI_HostedMount
 
-Instruments the CIM class LMI_HostedMount
+LMI_HostedMount
+---------------
+
+.. autoclass:: LMI_HostedMount
+    :members:
 
 """
 

@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_MDRAIDStorageCapabilities class."""
+""""
+Module for LMI_MDRAIDStorageCapabilities class.
+
+LMI_MDRAIDStorageCapabilities
+-----------------------------
+
+.. autoclass:: LMI_MDRAIDStorageCapabilities
+    :members:
+
+"""
 
 from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 from openlmi.storage.SettingManager import Setting
