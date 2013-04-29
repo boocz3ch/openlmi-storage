@@ -93,32 +93,32 @@ Supported event filters
 
 * PercentComplete property of a job changed::
 
-    SELECT * FROM CIM_InstModification
+    SELECT * FROM LMI_StorageInstModification
         WHERE SourceInstance ISA LMI_StorageJob
             AND SourceInstance.CIM_ConcreteJob::PercentComplete
                 <> PreviousInstance.CIM_ConcreteJob::PercentComplete
 
 * State of a job changed::
 
-    SELECT FROM CIM_InstModification
+    SELECT FROM LMI_StorageInstModification
         WHERE SourceInstance ISA CIM_ConcreteJob
             AND SourceInstance.CIM_ConcreteJob::JobState <> PreviousInstance.CIM_ConcreteJob::JobState
 
 * A job reaches state "Completed/OK"::
 
-    SELECT * FROM CIM_InstModification
+    SELECT * FROM LMI_StorageInstModification
         WHERE SourceInstance ISA LMI_StorageJob
             AND SourceInstance.CIM_ConcreteJob::JobState = 17
 
 * A job reaches state "Completed/Error"::
 
-    SELECT * FROM CIM_InstModification
+    SELECT * FROM LMI_StorageInstModification
         WHERE SourceInstance ISA LMI_StorageJob
             AND SourceInstance.CIM_ConcreteJob::JobState = 10
 
 * New job was created::
 
-    SELECT * FROM CIM_InstCreation WHERE SourceInstance ISA LMI_StorageJob
+    SELECT * FROM LMI_StorageInstCreation WHERE SourceInstance ISA LMI_StorageJob
 
 .. Note::
 
