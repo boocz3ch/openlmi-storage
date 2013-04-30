@@ -81,6 +81,7 @@ from openlmi.storage.LMI_AttachedFileSystem import LMI_AttachedFileSystem
 from openlmi.storage.LMI_MountConfigurationService import LMI_MountConfigurationService
 from openlmi.storage.LMI_MountedFileSystemCapabilities import LMI_MountedFileSystemCapabilities
 from openlmi.common.TimerManager import TimerManager
+from openlmi.storage.LMI_TransientFileSystem import LMI_TransientFileSystem
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -89,6 +90,9 @@ import logging
 def init_anaconda(log_manager, config):
     """ Initialize Anaconda storage module."""
     cmpi_logging.logger.info("Initializing Anaconda")
+
+    # enable discovery of non-device filesystems (procfs, tmpfs, ...)
+    blivet.flags.include_nodev = True
 
     # set up logging
     blivet_logger = logging.getLogger("blivet")
@@ -387,6 +391,10 @@ def get_providers(env):
             setting_data_classname="LMI_FileSystemSetting",
             **opts)
     providers['LMI_FileSystemElementSettingData'] = assoc_provider
+
+    fmt = LMI_TransientFileSystem(**opts)
+    manager.add_format_provider(fmt)
+    providers['LMI_TransientFileSystem'] = fmt
 
     service_provider = LMI_FileSystemConfigurationService(**opts)
     manager.add_service_provider(service_provider)

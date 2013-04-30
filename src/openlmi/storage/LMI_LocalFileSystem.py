@@ -39,6 +39,11 @@ class LMI_LocalFileSystem(LocalFileSystemProvider):
     def provides_format(self, device, fmt):
         if fmt is None:
             return False
+
+        # Skip non-devices (e.g. for tmpfs, sysfs, ...)
+        if  isinstance(device, blivet.devices.NoDevice):
+            return False
+
         # skip all non-filesystems
         if not isinstance(fmt, blivet.formats.fs.FS):
             return False

@@ -24,6 +24,30 @@ class LMI_LocalFileSystem : CIM_LocalFileSystem
     [Implemented(true)] uint16 IsFixedSize;
 };
 
+[ Experimental,
+  Description(
+    "Base class for nonpersistent filesystems of this "
+    "system, such as tmpfs, cgroups, procfs etc.")]
+class LMI_TransientFileSystem : CIM_LocalFileSystem
+{
+    [ Implemented(true), Override("Name"), MaxLen ( 256 ),
+      Description("Unique identifier of the filesystem on computer system.")]
+    string Name;
+
+    [Implemented(true)] uint16 OperationalStatus[];
+    [Implemented(true)] string Root;
+    [Implemented(true)] uint64 BlockSize;
+    [Implemented(true)] uint64 FileSystemSize;
+    [Implemented(true)] uint64 AvailableSpace;
+    [Implemented(true)] boolean ReadOnly;
+    [Implemented(true)] boolean CaseSensitive;
+    [Implemented(true)] boolean CasePreserved;
+    [Implemented(true)] uint32 MaxFileNameLength;
+    [Implemented(true)] string FileSystemType;
+    [Implemented(true)] uint16 PersistenceType;
+    [Implemented(true)] uint16 IsFixedSize;
+};
+
 [ Experimental, Description(
        "FileSystemCapabilities specifies the combination of properties "
        "that a FileSystemService can support when creating or "
