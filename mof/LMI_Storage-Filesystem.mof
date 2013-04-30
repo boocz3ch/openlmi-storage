@@ -63,11 +63,11 @@ class LMI_TransientFileSystem : CIM_LocalFileSystem
 class LMI_FileSystemCapabilities : CIM_FileSystemCapabilities
 {
     [ Override("ActualFileSystemType"), Implemented(true),
-      ValueMap{"0", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
+      ValueMap{"0", "2", "3", "4", "5", "6", "7", "8", "9", "10",
           "11", "12", "13", "..",
           "32769", "32770", "32771", "32772", "32773" },
-      Values { "Unknown", "UFS", "HFS", "FAT", "FAT16", "FAT32", 
-          "NTFS4", "NTFS5", "XFS", "AFS", "EXT2", "EXT3", 
+      Values { "Unknown", "UFS", "HFS", "FAT", "FAT16", "FAT32",
+          "NTFS4", "NTFS5", "XFS", "AFS", "EXT2", "EXT3",
           "REISERFS", "DMTF Reserved",
           "EXT4", "BTRFS", "JFS", "TMPFS", "VFAT"}]
     uint16 ActualFileSystemType;
@@ -75,7 +75,7 @@ class LMI_FileSystemCapabilities : CIM_FileSystemCapabilities
     [ Implemented(true) ] uint16 SupportedPersistenceTypes[];
     [ Implemented(true) ] uint16 SupportedProperties[];
 
-    [Experimental, Implemented(true), Description ( 
+    [Experimental, Implemented(true), Description (
           "Creates a supported FileSystemSetting. "
           "Caller can modify the setting via ModifyInstance "
           "intrinsic method."
@@ -88,7 +88,7 @@ class LMI_FileSystemCapabilities : CIM_FileSystemCapabilities
         ValueMap { "0", "1", "4" },
         Values { "Success", "Not Supported", "Failed"}]
     uint16 LMI_CreateSetting(
-         [IN ( false ), OUT, Description ( 
+         [IN ( false ), OUT, Description (
              "Created setting.")]
       LMI_FileSystemSetting REF Setting
     );
@@ -98,38 +98,38 @@ class LMI_FileSystemCapabilities : CIM_FileSystemCapabilities
 class LMI_FileSystemConfigurationCapabilities : CIM_FileSystemConfigurationCapabilities
 {
     [ Override("SupportedActualFileSystemTypes"), Implemented(true),
-      ValueMap{"0", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
+      ValueMap{"0", "2", "3", "4", "5", "6", "7", "8", "9", "10",
           "11", "12", "13", "..",
           "32769", "32770", "32771", "32772", "32773" },
-      Values { "Unknown", "UFS", "HFS", "FAT", "FAT16", "FAT32", 
-          "NTFS4", "NTFS5", "XFS", "AFS", "EXT2", "EXT3", 
+      Values { "Unknown", "UFS", "HFS", "FAT", "FAT16", "FAT32",
+          "NTFS4", "NTFS5", "XFS", "AFS", "EXT2", "EXT3",
           "REISERFS", "DMTF Reserved",
           "EXT4", "BTRFS", "JFS", "TMPFS", "VFAT"}]
     uint16 SupportedActualFileSystemTypes[];
 
 
     [Implemented(true), Override("SupportedSynchronousMethods"),
-       Description ( 
+       Description (
           "An array of methods of this Service that are supported "
-          "as synchronous methods." ), 
-       ValueMap { "2", "3", "4", "5", "6", "..", "32769" }, 
-       Values { "CreateFileSystem", "DeleteFileSystem", 
-          "ModifyFileSystem", "CreateGoal", 
-          "GetRequiredStorageSize", "DMTF Reserved", "LMI_CreateFileSystem" }, 
+          "as synchronous methods." ),
+       ValueMap { "2", "3", "4", "5", "6", "..", "32769" },
+       Values { "CreateFileSystem", "DeleteFileSystem",
+          "ModifyFileSystem", "CreateGoal",
+          "GetRequiredStorageSize", "DMTF Reserved", "LMI_CreateFileSystem" },
        Read]
     uint16 SupportedSynchronousMethods[];
 
     [Implemented(true), Override("SupportedAsynchronousMethods"),
-       Description ( 
+       Description (
           "An array of methods of this Service that are supported "
-          "as asynchronous methods." ), 
-       ValueMap { "2", "3", "4", "5", "6", "..", "32769" }, 
-       Values { "CreateFileSystem", "DeleteFileSystem", 
-          "ModifyFileSystem", "CreateGoal", 
-          "GetRequiredStorageSize", "DMTF Reserved", "LMI_CreateFileSystem" }, 
+          "as asynchronous methods." ),
+       ValueMap { "2", "3", "4", "5", "6", "..", "32769" },
+       Values { "CreateFileSystem", "DeleteFileSystem",
+          "ModifyFileSystem", "CreateGoal",
+          "GetRequiredStorageSize", "DMTF Reserved", "LMI_CreateFileSystem" },
        Read]
     uint16 SupportedAsynchronousMethods[];
-    
+
     [ Implemented(true) ] uint16 InitialAvailability;
 };
 
@@ -137,11 +137,11 @@ class LMI_FileSystemConfigurationCapabilities : CIM_FileSystemConfigurationCapab
 class LMI_FileSystemSetting : CIM_FileSystemSetting
 {
     [ Override("ActualFileSystemType"), Implemented(true),
-      ValueMap{"0", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
+      ValueMap{"0", "2", "3", "4", "5", "6", "7", "8", "9", "10",
           "11", "12", "13", "..",
           "32769", "32770", "32771", "32772", "32773" },
-      Values { "Unknown", "UFS", "HFS", "FAT", "FAT16", "FAT32", 
-          "NTFS4", "NTFS5", "XFS", "AFS", "EXT2", "EXT3", 
+      Values { "Unknown", "UFS", "HFS", "FAT", "FAT16", "FAT32",
+          "NTFS4", "NTFS5", "XFS", "AFS", "EXT2", "EXT3",
           "REISERFS", "DMTF Reserved",
           "EXT4", "BTRFS", "JFS", "TMPFS", "VFAT"}]
     uint16 ActualFileSystemType;
@@ -170,7 +170,7 @@ class LMI_FileSystemElementSettingData : CIM_ElementSettingData
 [ Experimental ]
 class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
 {
-      [Implemented(true), Description ( 
+      [Implemented(true), Description (
           "Start a job to create a FileSystem on StorageExtents. "
           "If the operation completes successfully and did not "
           "require a long-running ConcreteJob, it will return 0. If "
@@ -189,15 +189,15 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
           "CIM standard CreateFileSystem, the parameter is reference "
           "to CIM_FileSystemSetting stored on the CIMOM.\n"
           "A ResidesOnExtent association is created between the "
-          "created FileSystem and the StorageExtents used for it." ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "7", "..", 
-          "4096", "4098..32767", "32768..65535" }, 
-       Values { "Job Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed", "Invalid Parameter", 
-          "StorageExtent is not big enough to satisfy the request.", 
-          "StorageExtent specified by default cannot be created.", 
-          "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+          "created FileSystem and the StorageExtents used for it." ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "7", "..",
+          "4096", "4098..32767", "32768..65535" },
+       Values { "Job Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed", "Invalid Parameter",
+          "StorageExtent is not big enough to satisfy the request.",
+          "StorageExtent specified by default cannot be created.",
+          "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Method Reserved", "Vendor Specific" }]
    uint32 LMI_CreateFileSystem(
          [IN, Description (
@@ -212,17 +212,17 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
                  "REISERFS", "DMTF Reserved",
                  "EXT4", "BTRFS", "JFS", "TMPFS", "VFAT"}]
       uint16 FileSystemType,
-         [IN, Description ( 
+         [IN, Description (
              "Label of the filesystem being "
              "created. If NULL, a system-supplied default name "
              "can be used. The value will be stored in the "
              "\'ElementName\' property for the created element." )]
-      string ElementName, 
-         [IN ( false ), OUT, Description ( 
+      string ElementName,
+         [IN ( false ), OUT, Description (
              "Reference to the job (may be null if job completed)."
               )]
-      CIM_ConcreteJob REF Job, 
-         [IN, Description ( 
+      CIM_ConcreteJob REF Job,
+         [IN, Description (
              "The requirements for the FileSystem element to "
              "maintain. This is an element of class "
              "CIM_FileSystemSetting, or a derived class. "
@@ -231,8 +231,8 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
              "the FileSystemConfigurationService will "
              "create default filesystem."
              )]
-      CIM_FileSystemSetting REF Goal, 
-         [IN, Description ( 
+      CIM_FileSystemSetting REF Goal,
+         [IN, Description (
              "The StorageExtents on which the created FileSystem "
              "will reside. At least one extent must be provided. "
              "If the filesystem being created supports more than "
@@ -240,7 +240,7 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
              "provided. The filesystem will then reside on all of "
              "them."
              )]
-      CIM_StorageExtent REF InExtents[], 
+      CIM_StorageExtent REF InExtents[],
          [IN(false), OUT, Description ( "The newly created FileSystem." )]
       CIM_FileSystem REF TheElement);
 
@@ -252,7 +252,7 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
     [ Implemented(true) ] string StartMode;
     [ Implemented(true) ] boolean Started;
 
-    [Implemented(true), Description ( 
+    [Implemented(true), Description (
           "Start a job to delete a FileSystem. If the FileSystem "
           "cannot be deleted, no action will be taken, and the "
           "Return Value will be 4097/0x1001. If the method "
@@ -260,36 +260,36 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
           "long-running ConcreteJob, it will return 0. If "
           "4096/0x1000 is returned, a ConcreteJob will be started "
           "to delete the FileSystem. A Reference to the ConcreteJob "
-          "will be returned in the output parameter Job." ), 
-       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "0x1000", 
-          "0x1001..0x7FFF", "0x8000.." }, 
-       Values { "Job Completed with No Error", "Not Supported", 
-          "Unknown", "Timeout", "Failed, Unspecified Reasons", 
-          "Invalid Parameter", "FileSystem in use, Failed", 
-          "DMTF Reserved", 
-          "Method Parameters Checked - Job Started", 
+          "will be returned in the output parameter Job." ),
+       ValueMap { "0", "1", "2", "3", "4", "5", "6", "..", "0x1000",
+          "0x1001..0x7FFF", "0x8000.." },
+       Values { "Job Completed with No Error", "Not Supported",
+          "Unknown", "Timeout", "Failed, Unspecified Reasons",
+          "Invalid Parameter", "FileSystem in use, Failed",
+          "DMTF Reserved",
+          "Method Parameters Checked - Job Started",
           "Method Reserved", "Vendor Specific" }]
    uint32 DeleteFileSystem(
-         [IN ( false ), OUT, Description ( 
+         [IN ( false ), OUT, Description (
              "Reference to the job (may be null if job completed)."
               )]
-      CIM_ConcreteJob REF Job, 
-         [IN, Description ( 
+      CIM_ConcreteJob REF Job,
+         [IN, Description (
              "An element or association that uniquely identifies "
              "the FileSystem to be deleted." )]
-      CIM_ManagedElement REF TheFileSystem, 
-         [IN, Description ( 
+      CIM_ManagedElement REF TheFileSystem,
+         [IN, Description (
              "An enumerated integer that specifies the action to "
              "take if the FileSystem is still in use when this "
-             "request is made.\n" 
-             "This option is not supported by OpenLMI."), 
-          ValueMap { "2", "3", "4", "..", "0x1000..0xFFFF" }, 
-          Values { "Do Not Delete", 
-             "Wait for specified time, then Delete Immediately", 
-             "Attempt Quiescence for specified time, then Delete Immediately", 
+             "request is made.\n"
+             "This option is not supported by OpenLMI."),
+          ValueMap { "2", "3", "4", "..", "0x1000..0xFFFF" },
+          Values { "Do Not Delete",
+             "Wait for specified time, then Delete Immediately",
+             "Attempt Quiescence for specified time, then Delete Immediately",
              "DMTF Reserved", "Vendor Defined" }]
-      uint16 InUseOptions, 
-         [IN, Description ( 
+      uint16 InUseOptions,
+         [IN, Description (
              "An integer that indicates the time (in seconds) "
              "that the provider must wait before deleting this "
              "FileSystem. If WaitTime is not zero, the method "
@@ -303,8 +303,8 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
              "\'Wait (forever) until Quiescence, then Delete "
              "Filesystem\' and will be performed asynchronously "
              "if possible.\n"
-             "This option is not supported by OpenLMI."), 
-          Units ( "seconds" ), 
+             "This option is not supported by OpenLMI."),
+          Units ( "seconds" ),
           PUnit ( "second" )]
       uint32 WaitTime);
 };
