@@ -50,23 +50,6 @@ class CapabilitiesProvider(BaseProvider):
         return "LMI:" + self.classname + ":" + myid
 
     @cmpi_logging.trace_method
-    def parse_instance_id(self, instance_id):
-        """
-            InstanceID should have format LMI:<classname>:<myid>.
-            This method checks, that the format is OK and returns the myid.
-            It returns None if the format is not OK.
-            This method can be used in get_configuration_for_id.
-        """
-        parts = instance_id.split(":")
-        if len(parts) != 3:
-            return None
-        if parts[0] != "LMI":
-            return None
-        if parts[1] != self.classname:
-            return None
-        return parts[2]
-
-    @cmpi_logging.trace_method
     def get_capabilities_for_id(self, instance_id):
         """
             Return dictionary property_name -> value.

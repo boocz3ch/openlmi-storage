@@ -25,6 +25,7 @@ import pywbem
 import blivet.devices
 from openlmi.storage.BaseProvider import BaseProvider
 from openlmi.storage.util import storage
+import openlmi.common
 
 class LMI_LVStorageCapabilities(CapabilitiesProvider):
     """ Provider of LMI_LVStorageCapabilities class."""
@@ -40,7 +41,7 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
             Return CIMInstanceName of storage pool associated with capabilities
             with given id.
         """
-        path = self.parse_instance_id(instance_id)
+        path = openlmi.common.parse_instance_id(instance_id, self.classname)
         if not path:
             return None
         device = storage.get_device_for_persistent_name(self.storage, path)
@@ -162,7 +163,7 @@ class LMI_LVStorageCapabilities(CapabilitiesProvider):
             
             Subclasses can override this method.
         """
-        path = self.parse_instance_id(instance_id)
+        path = openlmi.common.parse_instance_id(instance_id, self.classname)
         if not path:
             return None
         device = storage.get_device_for_persistent_name(self.storage, path)

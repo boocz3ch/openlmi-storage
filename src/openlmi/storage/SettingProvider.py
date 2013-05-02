@@ -23,6 +23,7 @@ import ast
 from openlmi.storage.BaseProvider import BaseProvider
 from openlmi.storage.SettingManager import Setting
 import openlmi.common.cmpi_logging as cmpi_logging
+import openlmi.common
 
 class SettingProvider(BaseProvider):
     """
@@ -96,16 +97,9 @@ class SettingProvider(BaseProvider):
             It returns None if the format is not OK.
             This method can be used in get_configuration_for_id.
         """
-        # some devices (raid) have ':' in their /dev/disk/by-id, do not
-        # include it in the split
-        parts = instance_id.split(":", 2)
-        if len(parts) != 3:
-            return None
-        if parts[0] != "LMI":
-            return None
-        if parts[1] != self.setting_classname:
-            return None
-        return parts[2]
+        return openlmi.common.parse_instance_id(
+                instance_id, self.setting_classname)
+
 
     @cmpi_logging.trace_method
     def create_setting_id(self, myid):
