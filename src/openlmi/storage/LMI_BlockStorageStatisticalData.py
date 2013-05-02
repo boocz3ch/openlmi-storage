@@ -383,7 +383,8 @@ class LMI_HostedStorageStatisticsCollection(BaseProvider):
 
     @cmpi_logging.trace_method
     def __init__(self, *args, **kwargs):
-        super(LMI_HostedStorageStatisticsCollection, self).__init__(*args, **kwargs)
+        super(LMI_HostedStorageStatisticsCollection, self).__init__(
+                *args, **kwargs)
 
     @cmpi_logging.trace_method
     def enum_instances(self, env, model, keys_only):
@@ -433,4 +434,244 @@ class LMI_HostedStorageStatisticsCollection(BaseProvider):
         return self.simple_references(env, object_name, model,
                 result_class_name, role, result_role, keys_only,
                 "CIM_System",
+                "LMI_StorageStatisticsCollection")
+
+class LMI_BlockStatisticsManifestCollection(BaseProvider):
+    """
+    Provider of LMI_BlockStatisticsManifestCollection. There is only one instance
+    of LMI_BlockStatisticsManifestCollection on the system, we don't allow
+    user-specified manifests.
+    """
+    INSTANCE_ID = "LMI:LMI_BlockStatisticsManifestCollection:instance"
+
+    @cmpi_logging.trace_method
+    def __init__(self, *args, **kwargs):
+        super(LMI_BlockStatisticsManifestCollection, self).__init__(
+                *args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'InstanceID': None})
+        model['InstanceID'] = self.INSTANCE_ID
+        if keys_only:
+            yield model
+        else:
+            yield self.get_instance(env, model)
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        if model['InstanceID'] != self.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown InstanceID.")
+        model['IsDefault'] = True
+        return model
+
+class LMI_BlockStatisticsManifest(BaseProvider):
+    """
+    Provider of LMI_BlockStatisticsManifest. We don't allow
+    user-specified manifests.
+    """
+
+    # Sequence of columns in CSV format returned by
+    # LMI_BlockStatisticsService.GetStatisticsCollection().
+    CSV_SEQUENCE = [
+            'InstanceID',
+            'ElementType',
+            'StatisticTime',
+            'IOTimeCounter',
+            'KBytesRead',
+            'KBytesTransferred',
+            'KBytesWritten',
+            'ReadIOs',
+            'TotalIOs',
+            'WriteIOs',
+        ]
+
+    @cmpi_logging.trace_method
+    def __init__(self, *args, **kwargs):
+        super(LMI_BlockStatisticsManifest, self).__init__(
+                *args, **kwargs)
+        # The manifests are static, we keep them in dictionary
+        # InstanceID -> { property name -> property value }
+        extent = LMI_BlockStorageStatisticalData.Values.ElementType.Extent
+        self.manifests = {
+                'LMI:LMI_BlockStatisticsManifest:Extent' : {
+                    'ElementType': extent,
+                    'IncludeIdleTimeCounter': False,
+                    'IncludeIOTimeCounter': True,
+                    'IncludeKBytesRead': True,
+                    'IncludeKBytesTransferred': True,
+                    'IncludeKBytesWritten': True,
+                    'IncludeMaintOp': False,
+                    'IncludeMaintTimeCounter': False,
+                    'IncludeReadHitIOs': False,
+                    'IncludeReadHitIOTimeCounter': False,
+                    'IncludeReadIOs': True,
+                    'IncludeReadIOTimeCounter': False,
+                    'IncludeStartStatisticTime': False,
+                    'IncludeStatisticTime': True,
+                    'IncludeTotalIOs': True,
+                    'IncludeWriteHitIOs': False,
+                    'IncludeWriteHitIOTimeCounter': False,
+                    'IncludeWriteIOs': True,
+                    'IncludeWriteIOTimeCounter': False,
+                    'CSVSequence': self.CSV_SEQUENCE
+                }
+        }
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'InstanceID': None})
+        for key in self.manifests.iterkeys():
+            model['InstanceID'] = key
+            if keys_only:
+                yield model
+            else:
+                yield self.get_instance(env, model)
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        manifest = self.manifests.get(model['InstanceID'], None)
+        if not manifest:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown InstanceID.")
+        model.update(manifest)
+        return model
+
+class LMI_MemberOfBlockStatisticsManifestCollection(BaseProvider):
+    """
+    Provider of LMI_MemberOfBlockStatisticsManifestCollection.
+    """
+    @cmpi_logging.trace_method
+    def __init__(self, manifest_provider, *args, **kwargs):
+        """
+        :param manifest_provider: (``LMI_BlockStatisticsManifest``)
+            Provider instance to use.
+        """
+        self.manifest_provider = manifest_provider
+        super(LMI_MemberOfBlockStatisticsManifestCollection, self).__init__(
+                *args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'Collection': None, 'Member': None})
+
+        manifest_model = pywbem.CIMInstance(
+                classname='LMI_BlockStatisticsManifest',
+                path=pywbem.CIMInstanceName(
+                        classname='LMI_BlockStatisticsManifest',
+                        namespace=self.config.namespace))
+
+        for manifest in self.manifest_provider.enum_instances(
+                env, manifest_model, True):
+            model['Collection'] = pywbem.CIMInstanceName(
+                    classname="LMI_BlockStatisticsManifestCollection",
+                    namespace=self.config.namespace,
+                    keybindings={
+                        'InstanceID' :
+                            LMI_BlockStatisticsManifestCollection.INSTANCE_ID
+                    })
+            model['Member'] = manifest.path
+            yield model
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        # Just check instance keys
+        if model['Collection'] ['InstanceID'] != \
+                LMI_BlockStatisticsManifestCollection.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown Collection InstanceID.")
+        # get_instance will throw Not Found error if the Member is wrong:
+        _manifest_model = self.manifest_provider.get_instance(
+                env, model['Member'])
+        return model
+
+    @cmpi_logging.trace_method
+    def references(self, env, object_name, model, result_class_name, role,
+                   result_role, keys_only):
+        """Instrument Associations."""
+        return self.simple_references(env, object_name, model,
+                result_class_name, role, result_role, keys_only,
+                "LMI_BlockStatisticsManifestCollection",
+                "LMI_BlockStatisticsManifest")
+
+class LMI_AssociatedBlockStatisticsManifestCollection(BaseProvider):
+    """
+    Provider of LMI_AssociatedBlockStatisticsManifestCollection.
+    There should be only one LMI_AssociatedBlockStatisticsManifestCollection
+    instance, since we have only one ManifestCollection.
+    """
+    @cmpi_logging.trace_method
+    def __init__(self, *args, **kwargs):
+        super(LMI_AssociatedBlockStatisticsManifestCollection, self).__init__(
+                *args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'Statistics': None, 'ManifestCollection': None})
+
+        model['ManifestCollection'] = pywbem.CIMInstanceName(
+                classname="LMI_BlockStatisticsManifestCollection",
+                namespace=self.config.namespace,
+                keybindings={
+                    'InstanceID' :
+                        LMI_BlockStatisticsManifestCollection.INSTANCE_ID
+                })
+        model['Statistics'] = pywbem.CIMInstanceName(
+                    classname="LMI_StorageStatisticsCollection",
+                    namespace=self.config.namespace,
+                    keybindings={
+                        'InstanceID' :
+                            LMI_StorageStatisticsCollection.INSTANCE_ID
+                    })
+        yield model
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        # Just check instance keys
+        if model['Statistics'] ['InstanceID'] != \
+                LMI_StorageStatisticsCollection.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown Dependent InstanceID.")
+        if model['ManifestCollection'] ['InstanceID'] != \
+                LMI_BlockStatisticsManifestCollection.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown Dependent InstanceID.")
+        return model
+
+    @cmpi_logging.trace_method
+    def references(self, env, object_name, model, result_class_name, role,
+                   result_role, keys_only):
+        """Instrument Associations."""
+        return self.simple_references(env, object_name, model,
+                result_class_name, role, result_role, keys_only,
+                "LMI_BlockStatisticsManifestCollection",
                 "LMI_StorageStatisticsCollection")

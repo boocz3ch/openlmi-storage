@@ -83,7 +83,10 @@ from openlmi.storage.LMI_TransientFileSystem import LMI_TransientFileSystem
 from openlmi.storage.LMI_BlockStorageStatisticalData import \
     LMI_BlockStorageStatisticalData, LMI_StorageElementStatisticalData, \
     LMI_StorageStatisticsCollection, LMI_MemberOfStorageStatisticsCollection, \
-    LMI_HostedStorageStatisticsCollection
+    LMI_HostedStorageStatisticsCollection, \
+    LMI_BlockStatisticsManifestCollection, LMI_BlockStatisticsManifest, \
+    LMI_MemberOfBlockStatisticsManifestCollection, \
+    LMI_AssociatedBlockStatisticsManifestCollection
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -425,6 +428,19 @@ def get_providers(env):
 
     provider = LMI_HostedStorageStatisticsCollection(**opts)
     providers['LMI_HostedStorageStatisticsCollection'] = provider
+
+    provider = LMI_BlockStatisticsManifestCollection(**opts)
+    providers['LMI_BlockStatisticsManifestCollection'] = provider
+
+    manifest_provider = LMI_BlockStatisticsManifest(**opts)
+    providers['LMI_BlockStatisticsManifest'] = manifest_provider
+
+    provider = LMI_MemberOfBlockStatisticsManifestCollection(
+            manifest_provider=manifest_provider, **opts)
+    providers['LMI_MemberOfBlockStatisticsManifestCollection'] = provider
+
+    provider = LMI_AssociatedBlockStatisticsManifestCollection(**opts)
+    providers['LMI_AssociatedBlockStatisticsManifestCollection'] = provider
 
     cmpi_logging.logger.trace_info("Registered providers: %s"
             % (str(providers)))
