@@ -132,8 +132,7 @@ class LMI_BlockStorageStatisticalData(BaseProvider):
     @cmpi_logging.trace_method
     def enum_instances(self, env, model, keys_only):
         """
-            Enumerate instances. Subclasses do not need to override this method,
-            as long as enumeration by self.provides_format is sufficient.
+            EnumerateInstances provider method.
         """
         model.path.update({'InstanceID': None})
         broker = env.get_cimom_handle()
@@ -187,9 +186,7 @@ class LMI_BlockStorageStatisticalData(BaseProvider):
     # pylint: disable-msg=W0221
     def get_instance(self, env, model, device=None):
         """
-            Get instance.
-            Subclasses should override this method, the default implementation
-            just check if the instance exists.
+            GetInstance method provider.
         """
         if not device:
             device = self.get_device_for_name(model)
@@ -234,8 +231,7 @@ class LMI_StorageElementStatisticalData(BaseProvider):
     @cmpi_logging.trace_method
     def enum_instances(self, env, model, keys_only):
         """
-            Enumerate instances. Subclasses do not need to override this method,
-            as long as enumeration by self.provides_format is sufficient.
+            EnumerateInstances provider method.
         """
         model.path.update({'ManagedElement': None, 'Stats': None})
         broker = env.get_cimom_handle()
@@ -252,9 +248,7 @@ class LMI_StorageElementStatisticalData(BaseProvider):
     # pylint: disable-msg=W0613
     def get_instance(self, env, model):
         """
-            Get instance.
-            Subclasses should override this method, the default implementation
-            just check if the instance exists.
+            GetInstance method provider.
         """
         # Just check that the keys are correct
         device_name = model['ManagedElement']
@@ -282,3 +276,161 @@ class LMI_StorageElementStatisticalData(BaseProvider):
                 result_class_name, role, result_role, keys_only,
                 "CIM_StorageExtent",
                 "LMI_BlockStorageStatisticalData")
+
+class LMI_StorageStatisticsCollection(BaseProvider):
+    """
+    Provider of LMI_StorageStatisticsCollection. There is only one instance
+    of LMI_StorageStatisticsCollection on the system.
+    """
+    INSTANCE_ID = "LMI:LMI_StorageStatisticsCollection:instance"
+
+    @cmpi_logging.trace_method
+    def __init__(self, *args, **kwargs):
+        super(LMI_StorageStatisticsCollection, self).__init__(*args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'InstanceID': None})
+        model['InstanceID'] = self.INSTANCE_ID
+        if keys_only:
+            yield model
+        else:
+            yield self.get_instance(env, model)
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        if model['InstanceID'] != self.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown InstanceID.")
+        # 0 = no fixed sampling interval
+        model['SampleInterval'] = pywbem.CIMDateTime(datetime.timedelta(0))
+        return model
+
+class LMI_MemberOfStorageStatisticsCollection(BaseProvider):
+    @cmpi_logging.trace_method
+    def __init__(self, block_stat_provider, *args, **kwargs):
+        """
+        :param block_stat_provider: (``LMI_BlockStorageStatisticalData``)
+            Provider instance to use.
+        """
+        self.block_stat_provider = block_stat_provider
+        super(LMI_MemberOfStorageStatisticsCollection, self).__init__(
+                *args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'Collection': None, 'Member': None})
+        broker = env.get_cimom_handle()
+        for device in self.storage.devices:
+            if not self.block_stat_provider.has_statistics(device, broker):
+                continue
+            model['Collection'] = pywbem.CIMInstanceName(
+                    classname="LMI_StorageStatisticsCollection",
+                    namespace=self.config.namespace,
+                    keybindings={
+                        'InstanceID' :
+                            LMI_StorageStatisticsCollection.INSTANCE_ID
+                    })
+            model['Member'] = self.block_stat_provider.get_name_for_device(
+                    device)
+            yield model
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        # Just check instance keys
+        if model['Collection'] ['InstanceID'] != \
+                LMI_StorageStatisticsCollection.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown Collection InstanceID.")
+        device = self.block_stat_provider.get_device_for_name(model['Member'])
+        if not device:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown Member.")
+        broker = env.get_cimom_handle()
+        if not self.block_stat_provider.has_statistics(device, broker):
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Member is not part of the Collection.")
+        return model
+
+    @cmpi_logging.trace_method
+    def references(self, env, object_name, model, result_class_name, role,
+                   result_role, keys_only):
+        """Instrument Associations."""
+        return self.simple_references(env, object_name, model,
+                result_class_name, role, result_role, keys_only,
+                "LMI_BlockStorageStatisticalData",
+                "LMI_StorageStatisticsCollection")
+
+class LMI_HostedStorageStatisticsCollection(BaseProvider):
+    """
+    Provider of LMI_HostedStorageStatisticsCollection. There is only one instance
+    of LMI_HostedStorageStatisticsCollection on the system.
+    """
+
+    @cmpi_logging.trace_method
+    def __init__(self, *args, **kwargs):
+        super(LMI_HostedStorageStatisticsCollection, self).__init__(*args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def enum_instances(self, env, model, keys_only):
+        """
+            EnumerateInstances provider method.
+        """
+        model.path.update({'Antecedent': None, 'Dependent': None})
+        model['Antecedent'] = pywbem.CIMInstanceName(
+                    classname=self.config.system_class_name,
+                    namespace=self.config.namespace,
+                    keybindings={
+                            'CreationClassName' : self.config.system_class_name,
+                            'Name' : self.config.system_name,
+                    })
+
+        model['Dependent'] = pywbem.CIMInstanceName(
+                    classname="LMI_StorageStatisticsCollection",
+                    namespace=self.config.namespace,
+                    keybindings={
+                        'InstanceID' :
+                            LMI_StorageStatisticsCollection.INSTANCE_ID
+                    })
+        yield model
+
+    @cmpi_logging.trace_method
+    # pylint: disable-msg=W0613
+    def get_instance(self, env, model):
+        """
+            GetInstance method provider.
+        """
+        # just check keys
+        system = model['Antecedent']
+        if (system['CreationClassName'] != self.config.system_class_name
+                or system['Name'] != self.config.system_name):
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Wrong Antecedent keys.")
+        if model['Dependent'] ['InstanceID'] != \
+                LMI_StorageStatisticsCollection.INSTANCE_ID:
+            raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                    "Unknown Dependent InstanceID.")
+        return model
+
+    @cmpi_logging.trace_method
+    def references(self, env, object_name, model, result_class_name, role,
+                   result_role, keys_only):
+        """Instrument Associations."""
+        return self.simple_references(env, object_name, model,
+                result_class_name, role, result_role, keys_only,
+                "CIM_System",
+                "LMI_StorageStatisticsCollection")
