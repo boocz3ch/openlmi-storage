@@ -86,7 +86,8 @@ from openlmi.storage.LMI_BlockStorageStatisticalData import \
     LMI_HostedStorageStatisticsCollection, \
     LMI_BlockStatisticsManifestCollection, LMI_BlockStatisticsManifest, \
     LMI_MemberOfBlockStatisticsManifestCollection, \
-    LMI_AssociatedBlockStatisticsManifestCollection
+    LMI_AssociatedBlockStatisticsManifestCollection, \
+    LMI_BlockStatisticsService, LMI_BlockStatisticsCapabilities
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -441,6 +442,20 @@ def get_providers(env):
 
     provider = LMI_AssociatedBlockStatisticsManifestCollection(**opts)
     providers['LMI_AssociatedBlockStatisticsManifestCollection'] = provider
+
+    service_provider = LMI_BlockStatisticsService(
+            block_stat_provider,
+            **opts)
+    providers['LMI_BlockStatisticsService'] = service_provider
+    manager.add_service_provider(service_provider)
+
+    cap_provider = LMI_BlockStatisticsCapabilities(**opts)
+    providers['LMI_BlockStatisticsCapabilities'] = cap_provider
+
+    assoc_provider = ElementCapabilitiesProvider(
+            "LMI_BlockStorageStatisticsElementCapabilities",
+            cap_provider, service_provider, **opts)
+    providers['LMI_BlockStorageStatisticsElementCapabilities'] = assoc_provider
 
     cmpi_logging.logger.trace_info("Registered providers: %s"
             % (str(providers)))
