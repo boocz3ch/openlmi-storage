@@ -16,7 +16,22 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for FormatProvider."""
+""""
+Module for FormatProvider.
+
+FormatProvider
+--------------
+
+.. autoclass:: FormatProvider
+    :members:
+
+LMI_ResidesOnExtent
+-------------------
+
+.. autoclass:: LMI_ResidesOnExtent
+    :members:
+
+"""
 
 import pywbem
 from openlmi.storage.BaseProvider import BaseProvider

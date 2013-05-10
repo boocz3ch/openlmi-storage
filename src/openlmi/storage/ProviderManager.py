@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for ProviderManager class."""
+""""
+Module for ProviderManager class.
+
+ProviderManager
+---------------
+
+.. autoclass:: ProviderManager
+    :members:
+
+"""
 
 import openlmi.common.cmpi_logging as cmpi_logging
 

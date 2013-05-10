@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for FormatProvider."""
+""""
+Module for FormatProvider.
+
+LMI_DataFormatProvider
+----------------------
+
+.. autoclass:: LMI_DataFormatProvider
+    :members:
+
+"""
 
 from openlmi.storage.FormatProvider import FormatProvider
 import blivet.formats

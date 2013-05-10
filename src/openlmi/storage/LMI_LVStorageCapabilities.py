@@ -16,7 +16,22 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_LVStorageCapabilities class."""
+""""
+Module for LMI_LVStorageCapabilities class.
+
+LMI_LVStorageCapabilities
+-------------------------
+
+.. autoclass:: LMI_LVStorageCapabilities
+    :members:
+
+LMI_LVElementCapabilities
+-------------------------
+
+.. autoclass:: LMI_LVElementCapabilities
+    :members:
+
+"""
 
 from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 import openlmi.common.cmpi_logging as cmpi_logging

@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_StorageConfigurationService class."""
+""""
+Module for LMI_StorageConfigurationService class.
+
+LMI_StorageConfigurationService
+-------------------------------
+
+.. autoclass:: LMI_StorageConfigurationService
+    :members:
+
+"""
 
 from openlmi.storage.ServiceProvider import ServiceProvider
 import pywbem

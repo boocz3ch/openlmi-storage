@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for SettingHelper class."""
+""""
+Module for SettingHelper class.
+
+SettingHelper
+-------------
+
+.. autoclass:: SettingHelper
+    :members:
+
+"""
 
 import openlmi.common.cmpi_logging as cmpi_logging
 

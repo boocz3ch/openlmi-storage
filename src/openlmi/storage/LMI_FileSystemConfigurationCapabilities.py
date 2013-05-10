@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_FileSystemConfigurationCapabilities class. """
+""""
+Module for LMI_FileSystemConfigurationCapabilities class.
+
+LMI_FileSystemConfigurationCapabilities
+---------------------------------------
+
+.. autoclass:: LMI_FileSystemConfigurationCapabilities
+    :members:
+
+"""
 
 from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 import pywbem

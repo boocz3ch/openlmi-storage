@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for StorageConfiguration class."""
+""""
+Module for StorageConfiguration class.
+
+StorageConfiguration
+--------------------
+
+.. autoclass:: StorageConfiguration
+    :members:
+
+"""
 
 import ConfigParser
 import socket

@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for ServiceProvider class."""
+""""
+Module for ServiceProvider class.
+
+ServiceProvider
+---------------
+
+.. autoclass:: ServiceProvider
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

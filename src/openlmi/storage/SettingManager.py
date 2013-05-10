@@ -16,7 +16,28 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for SettingManager and Setting classes."""
+""""
+Module for SettingManager and Setting classes.
+
+SettingManager
+--------------
+
+.. autoclass:: SettingManager
+    :members:
+
+Setting
+-------
+
+.. autoclass:: Setting
+    :members:
+
+StorageSetting
+--------------
+
+.. autoclass:: StorageSetting
+    :members:
+
+"""
 
 import os
 import ConfigParser

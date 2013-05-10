@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_DiskPartitionConfigurationCapabilities class. """
+""""
+Module for LMI_DiskPartitionConfigurationCapabilities class.
+
+LMI_DiskPartitionConfigurationCapabilities
+------------------------------------------
+
+.. autoclass:: LMI_DiskPartitionConfigurationCapabilities
+    :members:
+
+"""
 
 from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 from openlmi.storage.LMI_DiskPartitionConfigurationSetting \

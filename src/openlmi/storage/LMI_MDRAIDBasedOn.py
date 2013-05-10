@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_MDRAIDBasedOn class."""
+""""
+Module for LMI_MDRAIDBasedOn class.
+
+LMI_MDRAIDBasedOn
+-----------------
+
+.. autoclass:: LMI_MDRAIDBasedOn
+    :members:
+
+"""
 
 from openlmi.storage.BasedOnProvider import BasedOnProvider
 import pywbem

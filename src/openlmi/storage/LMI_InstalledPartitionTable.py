@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_InstalledPartitionTable class."""
+""""
+Module for LMI_InstalledPartitionTable class.
+
+LMI_InstalledPartitionTable
+---------------------------
+
+.. autoclass:: LMI_InstalledPartitionTable
+    :members:
+
+"""
 
 import blivet.formats
 from openlmi.storage.BaseProvider import BaseProvider

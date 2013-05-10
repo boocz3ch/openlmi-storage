@@ -17,7 +17,16 @@
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
 
-""" Module for BaseProvider class. """
+""""
+Module for BaseProvider class.
+
+BaseProvider
+------------
+
+.. autoclass:: BaseProvider
+    :members:
+
+"""
 
 from pywbem.cim_provider2 import CIMProvider2
 import openlmi.common.cmpi_logging as cmpi_logging

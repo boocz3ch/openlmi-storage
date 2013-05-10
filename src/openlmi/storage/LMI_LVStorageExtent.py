@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_LVStorageExtent class."""
+""""
+Module for LMI_LVStorageExtent class.
+
+LMI_LVStorageExtent
+-------------------
+
+.. autoclass:: LMI_LVStorageExtent
+    :members:
+
+"""
 
 from openlmi.storage.ExtentProvider import ExtentProvider
 import blivet

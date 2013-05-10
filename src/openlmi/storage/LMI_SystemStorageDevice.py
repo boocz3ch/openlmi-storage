@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_SystemStorageDevice class."""
+""""
+Module for LMI_SystemStorageDevice class.
+
+LMI_SystemStorageDevice
+-----------------------
+
+.. autoclass:: LMI_SystemStorageDevice
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

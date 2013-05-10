@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_LVBasedOn class."""
+""""
+Module for LMI_LVBasedOn class.
+
+LMI_LVBasedOn
+-------------
+
+.. autoclass:: LMI_LVBasedOn
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

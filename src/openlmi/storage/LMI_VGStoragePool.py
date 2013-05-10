@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_VGStoragePool class."""
+""""
+Module for LMI_VGStoragePool class.
+
+LMI_VGStoragePool
+-----------------
+
+.. autoclass:: LMI_VGStoragePool
+    :members:
+
+"""
 
 from openlmi.storage.DeviceProvider import DeviceProvider
 import pywbem

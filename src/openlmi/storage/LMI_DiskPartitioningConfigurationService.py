@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_DiskPartitionConfigurationService class."""
+""""
+Module for LMI_DiskPartitionConfigurationService class.
+
+LMI_DiskPartitionConfigurationService
+-------------------------------------
+
+.. autoclass:: LMI_DiskPartitionConfigurationService
+    :members:
+
+"""
 
 from openlmi.storage.ServiceProvider import ServiceProvider
 from openlmi.storage.LMI_DiskPartitionConfigurationSetting \

@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_VGAssociatedComponentExtent class."""
+""""
+Module for LMI_VGAssociatedComponentExtent class.
+
+LMI_VGAssociatedComponentExtent
+-------------------------------
+
+.. autoclass:: LMI_VGAssociatedComponentExtent
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

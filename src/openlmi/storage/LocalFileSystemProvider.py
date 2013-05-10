@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LocalFileSystemProvider."""
+""""
+Module for LocalFileSystemProvider.
+
+LocalFileSystemProvider
+-----------------------
+
+.. autoclass:: LocalFileSystemProvider
+    :members:
+
+"""
 
 import pywbem
 from openlmi.storage.FormatProvider import FormatProvider

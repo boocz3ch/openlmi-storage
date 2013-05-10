@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_PartitionBasedOn class."""
+""""
+Module for LMI_PartitionBasedOn class.
+
+LMI_PartitionBasedOn
+--------------------
+
+.. autoclass:: LMI_PartitionBasedOn
+    :members:
+
+"""
 
 from openlmi.storage.BasedOnProvider import BasedOnProvider
 import pywbem

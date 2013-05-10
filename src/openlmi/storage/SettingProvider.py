@@ -16,7 +16,28 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for SettingProvider class."""
+""""
+Module for SettingProvider class.
+
+SettingProvider
+---------------
+
+.. autoclass:: SettingProvider
+    :members:
+
+ElementSettingDataProvider
+--------------------------
+
+.. autoclass:: ElementSettingDataProvider
+    :members:
+
+SettingHelperProvider
+---------------------
+
+.. autoclass:: SettingHelperProvider
+    :members:
+
+"""
 
 import pywbem
 import ast

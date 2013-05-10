@@ -16,9 +16,14 @@
 #
 # Authors: Jan Synacek <jsynacek@redhat.com>
 # -*- coding: utf-8 -*-
-"""Python Provider for LMI_AttachedFileSystem
+"""
+Python Provider for LMI_AttachedFileSystem
 
-Instruments the CIM class LMI_AttachedFileSystem
+LMI_AttachedFileSystem
+----------------------
+
+.. autoclass:: LMI_AttachedFileSystem
+    :members:
 
 """
 

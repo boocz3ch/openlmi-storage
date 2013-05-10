@@ -16,7 +16,22 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for CapabilitiesProvider class. """
+""""
+Module for CapabilitiesProvider class.
+
+CapabilitiesProvider
+--------------------
+
+.. autoclass:: CapabilitiesProvider
+    :members:
+
+ElementCapabilitiesProvider
+---------------------------
+
+.. autoclass:: ElementCapabilitiesProvider
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

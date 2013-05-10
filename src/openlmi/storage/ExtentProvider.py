@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for ExtentProvider class. """
+""""
+Module for ExtentProvider class.
+
+ExtentProvider
+--------------
+
+.. autoclass:: ExtentProvider
+    :members:
+
+"""
 
 from openlmi.storage.DeviceProvider import DeviceProvider
 import pywbem

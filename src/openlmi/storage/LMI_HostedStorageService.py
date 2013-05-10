@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_GenericDiskPartition class."""
+""""
+Module for LMI_GenericDiskPartition class.
+
+LMI_HostedStorageService
+------------------------
+
+.. autoclass:: LMI_HostedStorageService
+    :members:
+
+"""
 
 from openlmi.storage.BaseProvider import BaseProvider
 import pywbem

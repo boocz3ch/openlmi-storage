@@ -16,7 +16,16 @@
 #
 # Authors: Jan Safranek <jsafrane@redhat.com>
 # -*- coding: utf-8 -*-
-""" Module for LMI_FileSystemConfigurationService class."""
+""""
+Module for LMI_FileSystemConfigurationService class.
+
+LMI_FileSystemConfigurationService
+----------------------------------
+
+.. autoclass:: LMI_FileSystemConfigurationService
+    :members:
+
+"""
 
 import blivet.formats
 import openlmi.storage.util
