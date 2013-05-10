@@ -429,3 +429,24 @@ location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
 unload: never
+
+[LMI_StorageStatisticsCollection]
+provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
+location: pyCmpiProvider
+type: instance method
+namespace: root/cimv2
+unload: never
+
+[LMI_MemberOfStorageStatisticsCollection]
+provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
+location: pyCmpiProvider
+type: association instance
+namespace: root/cimv2
+unload: never
+
+[LMI_HostedStorageStatisticsCollection]
+provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
+location: pyCmpiProvider
+type: association instance
+namespace: root/cimv2
+unload: never
