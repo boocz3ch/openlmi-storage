@@ -24,10 +24,10 @@ Instruments the CIM class LMI_AttachedFileSystem
 
 import pywbem
 import blivet
-from openlmi.storage.BaseProvider import BaseProvider
+from openlmi.storage.MountingProvider import MountingProvider
 import openlmi.common.cmpi_logging as cmpi_logging
 
-class LMI_AttachedFileSystem(BaseProvider):
+class LMI_AttachedFileSystem(MountingProvider):
     """Instrument the CIM class LMI_AttachedFileSystem
 
     CIM_Dependency is a generic association used to establish dependency
@@ -53,14 +53,7 @@ class LMI_AttachedFileSystem(BaseProvider):
         spec = model['Dependent']['FileSystemSpec']
         path = model['Dependent']['MountPointPath']
 
-        provider = self.provider_manager.get_provider_for_format_name(fs)
-        if provider is None:
-            raise pywbem.CIMError(pywbem.CIM_ERR_FAILED, "Could not get provider for %s" % fs['Name'])
-        # XXX somewhat hackish, the method should return tuples consistently
-        (device, fmt) = provider.get_format_for_name(fs) or (None, None)
-
-        if device is None:
-            raise pywbem.CIMError(pywbem.CIM_ERR_FAILED, "No such device: " + fs['Name'])
+        (device, fmt) = self.get_device_and_format_from_fs(fs)
 
         paths = blivet.util.get_mount_paths(device.path)
 
