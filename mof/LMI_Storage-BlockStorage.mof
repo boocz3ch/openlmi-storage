@@ -954,3 +954,242 @@ class LMI_PVFormatResidesOnExtent : LMI_ResidesOnExtent
 class LMI_SystemStorageDevice : CIM_SystemDevice
 {
 };
+
+[ Experimental ]
+class LMI_BlockStorageStatisticalData : CIM_BlockStorageStatisticalData
+{
+
+    [ Implemented(true) ] string ElementName;
+    [ Implemented(true) ] datetime StartStatisticTime;
+    [ Implemented(true) ] datetime StatisticTime;
+    [ Implemented(true) ] datetime SampleInterval;
+    [ Implemented(true) ] uint16 ElementType;
+    [ Implemented(true) ] uint64 TotalIOs;
+    [ Implemented(true) ] uint64 KBytesTransferred;
+    [ Implemented(true) ] uint64 KBytesWritten;
+    [ Implemented(true) ] uint64 IOTimeCounter;
+    [ Implemented(true) ] uint64 ReadIOs;
+    [ Implemented(true) ] uint64 KBytesRead;
+    [ Implemented(true) ] uint64 WriteIOs;
+    [ Implemented(true) ] uint64 IdleTimeCounter;
+};
+
+[ Experimental, Association ]
+class LMI_StorageElementStatisticalData : CIM_ElementStatisticalData
+{
+    [Key, Override ( "ManagedElement" ),
+        Min ( 1 ),
+        Max ( 1 ),
+        Description (
+            "The ManagedElement for which statistical or metric data "
+            "is defined." )]
+    CIM_StorageExtent REF ManagedElement;
+
+    [Key, Override ( "Stats" ),
+        Description ( "The statistic information/object." )]
+    LMI_BlockStorageStatisticalData REF Stats;
+};
+
+[ Experimental ]
+class LMI_StorageStatisticsCollection : CIM_StatisticsCollection
+{
+    [ Implemented(true) ] datetime SampleInterval;
+};
+
+[ Experimental, Association ]
+class LMI_MemberOfStorageStatisticsCollection : CIM_MemberOfCollection
+{
+    [Key, Aggregate, Override("Collection"), Description (
+        "The Collection that aggregates members." )]
+    LMI_StorageStatisticsCollection REF Collection;
+
+    [Key, Override("Member"), Description ( "The aggregated member of the Collection." )]
+    LMI_BlockStorageStatisticalData REF Member;
+};
+
+[ Experimental, Association ]
+class LMI_HostedStorageStatisticsCollection : CIM_HostedCollection
+{
+    [Override ( "Antecedent" ),
+        Min ( 1 ),
+        Max ( 1 ),
+        Description ( "The scoping system." )]
+    CIM_System REF Antecedent;
+
+    [Override ( "Dependent" ),
+        Description (
+            "The collection defined in the context of a system." )]
+    LMI_StorageStatisticsCollection REF Dependent;
+};
+
+[ Experimental ]
+class LMI_BlockStatisticsService : CIM_BlockStatisticsService
+{
+    [Implemented(true), Description (
+        "Retrieves statistics in a well-defined bulk format. The "
+        "collection of statistics returned is determined by the "
+        "list of element types passed in to the method and the "
+        "manifests for those types contained in the supplied "
+        "BlockStatisticsManifestCollection. If both the Elements "
+        "and BlockStatisticsManifestCollection parameters are "
+        "supplied, then the types of elements returned is an "
+        "intersection of the element types listed in the Elements "
+        "parameter and the types for which "
+        "BlockStatisticsManifest instances exist in the supplied "
+        "BlockStatisticsManifestCollection. The statistics are "
+        "returned through a well-defined array of strings, whose "
+        "format is specified by the StatisticsFormat parameter, "
+        "that can be parsed to retrieve the desired statistics as "
+        "well as limited information about the elements that "
+        "those metrics describe." ),
+    ValueMap { "0", "1", "2", "3", "4", "5", "..", "4096",
+        "4097", "4098", "4099..32767", "32768..65535" },
+    Values { "Job Completed with No Error", "Not Supported",
+        "Unknown", "Timeout", "Failed", "Invalid Parameter",
+        "Method Reserved",
+        "Method Parameters Checked - Job Started",
+        "Element Not Supported",
+        "Statistics Format Not Supported", "Method Reserved",
+        "Vendor Specific" }]
+    uint32 GetStatisticsCollection(
+        [IN ( false ), OUT, Description (
+            "Reference to the job (may be null if job completed)."
+        )]
+        CIM_ConcreteJob REF Job,
+        [IN, Description (
+            "Element types for which statistics should be "
+            "returned. If not supplied (i.e. parameter is null) "
+            "this parameter is not considered when filtering "
+            "the instances of StatisticalData that will "
+            "populate the Statistics output parameter. If the "
+            "array is not null, but is empty, then no "
+            "statistics will be returned by this method. A "
+            "client SHOULD NOT specify this parameter if it is "
+            "not meaningful (i.e. the service only provides "
+            "statistics for a single type of element)." ),
+        ValueMap { "2", "3", "4", "5", "6", "7", "8", "9",
+            "10", "11", "12", "..", "0x8000.." },
+        Values { "Computer System",
+            "Front-end Computer System", "Peer Computer System",
+            "Back-end Computer System", "Front-end Port",
+            "Back-end Port", "Volume", "Extent", "Disk Drive",
+            "Arbitrary LUs", "Remote Replica Group",
+            "DMTF Reserved", "Vendor Specific" },
+        ModelCorrespondence {
+            "CIM_BlockStorageStatisticalData.ElementType" }]
+        uint16 ElementTypes[],
+        [IN, Description (
+            "The BlockStatisticsManifestCollection that "
+            "contains the manifests that list the metrics to be "
+            "returned for each element type. If not supplied "
+            "(i.e. parameter is null), then all available "
+            "statistics will be returned unfiltered. Only "
+            "elements that match the element type properties "
+            "(if meaningful) of the BlockStatisticsManifest "
+            "instances contained within the "
+            "BlockStatisticsManifestCollection will have data "
+            "returned by this method. If the supplied "
+            "BlockStatisticsManifestCollection does not contain "
+            "any BlockStatisticsManifest instances, then no "
+            "statistics will be returned by this method." )]
+        CIM_BlockStatisticsManifestCollection REF ManifestCollection,
+        [IN, Description (
+            "Specifies the format of the Statistics output "
+            "parameter. \n"
+            "- CSV = Comma Separated Values." ),
+        ValueMap { "0", "1", "2", "..", "0x8000.." },
+        Values { "Unknown", "Other", "CSV", "DMTF Reserved",
+            "Vendor Specific" }]
+        uint16 StatisticsFormat,
+        [OUT, Description (
+            "The statistics for all the elements as determined "
+            "by the Elements, ManifestCollection parameters, "
+            "and StatisticsFormat parameters." ),
+        ModelCorrespondence {
+            "CIM_BlockStatisticsService.GetStatisticsCollection(ElementTypes)",
+            "CIM_BlockStatisticsService.GetStatisticsCollection(ManifestCollection)",
+            "CIM_BlockStatisticsService.GetStatisticsCollection(StatisticsFormat)" }]
+        string Statistics[]);
+
+    [ Implemented(true) ] uint16 EnabledDefault;
+    [ Implemented(true) ] uint16 EnabledState;
+    [ Implemented(true) ] uint16 HealthState;
+    [ Implemented(true) ] uint16 OperationalStatus[];
+    [ Implemented(true) ] uint16 PrimaryStatus;
+    [ Implemented(true) ] string StartMode;
+    [ Implemented(true) ] boolean Started;
+};
+
+[ Experimental ]
+class LMI_BlockStatisticsCapabilities : CIM_BlockStatisticsCapabilities
+{
+    [ Implemented(true) ] uint16 ElementTypesSupported[];
+    [ Implemented(true) ] uint16 SynchronousMethodsSupported[];
+    [ Implemented(true) ] uint16 AsynchronousMethodsSupported[];
+    [ Implemented(true) ] uint64 ClockTickInterval;
+    [ Implemented(true) ] uint16 SupportedFeatures[];
+};
+
+[ Experimental ]
+class LMI_BlockStorageStatisticsElementCapabilities : CIM_ElementCapabilities
+{
+};
+
+[ Experimental ]
+class LMI_BlockStatisticsManifest : CIM_BlockStatisticsManifest
+{
+    [ Implemented(true) ] uint16 ElementType;
+    [ Implemented(true) ] boolean IncludeStartStatisticTime = false;
+    [ Implemented(true) ] boolean IncludeStatisticTime = false;
+    [ Implemented(true) ] boolean IncludeTotalIOs = false;
+    [ Implemented(true) ] boolean IncludeKBytesTransferred = false;
+    [ Implemented(true) ] boolean IncludeIOTimeCounter = false;
+    [ Implemented(true) ] boolean IncludeReadIOs = false;
+    [ Implemented(true) ] boolean IncludeReadHitIOs = false;
+    [ Implemented(true) ] boolean IncludeReadIOTimeCounter = false;
+    [ Implemented(true) ] boolean IncludeReadHitIOTimeCounter = false;
+    [ Implemented(true) ] boolean IncludeKBytesRead = false;
+    [ Implemented(true) ] boolean IncludeWriteIOs = false;
+    [ Implemented(true) ] boolean IncludeWriteHitIOs = false;
+    [ Implemented(true) ] boolean IncludeWriteIOTimeCounter = false;
+    [ Implemented(true) ] boolean IncludeWriteHitIOTimeCounter = false;
+    [ Implemented(true) ] boolean IncludeKBytesWritten = false;
+    [ Implemented(true) ] boolean IncludeIdleTimeCounter = false;
+    [ Implemented(true) ] boolean IncludeMaintOp = false;
+    [ Implemented(true) ] boolean IncludeMaintTimeCounter = false;
+    [ Implemented(true) ] string CSVSequence[];
+};
+
+[ Experimental(true) ]
+class LMI_BlockStatisticsManifestCollection : CIM_BlockStatisticsManifestCollection
+{
+    [ Implemented(true) ] string ElementName;
+    [ Implemented(true) ] boolean IsDefault;
+};
+
+[ Experimental(true), Association ]
+class LMI_MemberOfBlockStatisticsManifestCollection : CIM_MemberOfCollection
+{
+    [Key, Aggregate, Override("Collection"), Description (
+        "The Collection that aggregates members." )]
+    LMI_BlockStatisticsManifestCollection REF Collection;
+
+    [Key, Override("Member"), Description ( "The aggregated member of the Collection." )]
+    LMI_BlockStatisticsManifest REF Member;
+};
+
+[ Experimental, Association ]
+class LMI_AssociatedBlockStatisticsManifestCollection : CIM_AssociatedBlockStatisticsManifestCollection
+{
+    [Key, Override("Statistics"), Min ( 1 ),
+        Max ( 1 ),
+        Description (
+            "The collection of statistics filtered by the "
+            "BlockStatisticsManifestCollection." )]
+    LMI_StorageStatisticsCollection REF Statistics;
+
+    [Key, Override("ManifestCollection"), Description (
+        "The collection of Manifests applied to the StatisticsCollection."
+    )]
+   LMI_BlockStatisticsManifestCollection REF ManifestCollection;
+};
