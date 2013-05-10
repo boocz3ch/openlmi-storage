@@ -330,7 +330,12 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
         model['CasePreserved'] = True
         model['PersistenceType'] = self.Values.PersistenceType.Persistent
         model['ElementName'] = fmt.device
-        model['IsFixedSize'] = (fmt.resizable == False)
+        if fmt.resizable is None:
+            model['IsFixedSize'] = self.Values.IsFixedSize.Not_Specified
+        elif fmt.resizable:
+            model['IsFixedSize'] = self.Values.IsFixedSize.Not_Fixed_Size
+        else:
+            model['IsFixedSize'] = self.Values.IsFixedSize.Fixed_Size
         uuid = self.get_uuid(device, fmt)
         if uuid:
             model['UUID'] = uuid
@@ -533,3 +538,9 @@ class LocalFileSystemProvider(FormatProvider, SettingHelper):
             Windows_LongNames = pywbem.Uint16(4)
             # DMTF_Reserved = ..
             # Vendor_Defined = 0x8000..
+
+        class IsFixedSize(object):
+            Not_Specified = pywbem.Uint16(0)
+            Fixed_Size = pywbem.Uint16(1)
+            Not_Fixed_Size = pywbem.Uint16(2)
+            _reverse_map = {0: 'Not Specified', 1: 'Fixed Size', 2: 'Not Fixed Size'}
