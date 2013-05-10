@@ -23,6 +23,8 @@ from openlmi.storage.BaseProvider import BaseProvider
 import openlmi.common.cmpi_logging as cmpi_logging
 import openlmi.storage.util.storage as storage
 from openlmi.common import parse_instance_id
+from openlmi.storage.ServiceProvider import ServiceProvider
+from openlmi.storage.CapabilitiesProvider import CapabilitiesProvider
 import datetime
 
 class LMI_BlockStorageStatisticalData(BaseProvider):
@@ -108,6 +110,7 @@ class LMI_BlockStorageStatisticalData(BaseProvider):
         stats = map(int, stats)
 
         model = pywbem.cim_obj.NocaseDict()
+        model['ElementName'] = device.path
         model['StatisticTime'] = pywbem.CIMDateTime(datetime.datetime.utcnow())
         model['ElementType'] = self.Values.ElementType.Extent
 
@@ -194,7 +197,6 @@ class LMI_BlockStorageStatisticalData(BaseProvider):
             raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
                     "Cannot find device for this InstanceID.")
 
-        model['ElementName'] = device.path
         stats = self.load_stats(device)
         model.update(stats)
         return model
@@ -675,3 +677,248 @@ class LMI_AssociatedBlockStatisticsManifestCollection(BaseProvider):
                 result_class_name, role, result_role, keys_only,
                 "LMI_BlockStatisticsManifestCollection",
                 "LMI_StorageStatisticsCollection")
+
+class LMI_BlockStatisticsService(ServiceProvider):
+    """
+        LMI_BlockStatisticsService provider implementation.
+    """
+    # Maximum size of Statistics[] item in GetStatisticsCollection() method.
+    # SMI-S says it should be less than 64 kB
+    MAXCHUNK = 65535
+
+    @cmpi_logging.trace_method
+    def __init__(self, block_stat_provider, *args, **kwargs):
+        """
+        :param block_stat_provider: (``LMI_BlockStorageStatisticalData``)
+            Provider instance to use.
+        """
+        self.block_stat_provider = block_stat_provider
+        super(LMI_BlockStatisticsService, self).__init__(
+                "LMI_BlockStatisticsService", *args, **kwargs)
+
+    @cmpi_logging.trace_method
+    def _get_statistics_line(self, device):
+        """
+        Return line for Statistics[] parameter of
+        LMI_BlockStatisticsService.GetStatisticsCollection()
+        for given device.
+
+        The line is semicolon-separated list of values of properties as listed
+        in associated LMI_BlockStatisticsManifest.
+
+        :param device: (``StorageDevice``) Device to examine.
+        :returns: ``string`` with device statistics.
+        """
+        stats = self.block_stat_provider.load_stats(device)
+        # Add missing InstanceID property
+        name = storage.get_persistent_name(device)
+        stats['InstanceID'] = "LMI:LMI_BlockStorageStatisticalData:" + name
+
+        columns = []
+        for name in LMI_BlockStatisticsManifest.CSV_SEQUENCE:
+            columns.append(str(stats[name]))
+        return ";".join(columns)
+
+    @cmpi_logging.trace_method
+    def cim_method_getstatisticscollection(self, env, object_name,
+                                           param_manifestcollection=None,
+                                           param_statisticsformat=None,
+                                           param_elementtypes=None,
+                                           param_statistics=None):
+        """Implements LMI_BlockStatisticsService.GetStatisticsCollection()
+
+        Retrieves statistics in a well-defined bulk format. The collection
+        of statistics returned is determined by the list of element types
+        passed in to the method and the manifests for those types
+        contained in the supplied BlockStatisticsManifestCollection. If
+        both the Elements and BlockStatisticsManifestCollection parameters
+        are supplied, then the types of elements returned is an
+        intersection of the element types listed in the Elements parameter
+        and the types for which BlockStatisticsManifest instances exist in
+        the supplied BlockStatisticsManifestCollection. The statistics are
+        returned through a well-defined array of strings, whose format is
+        specified by the StatisticsFormat parameter, that can be parsed to
+        retrieve the desired statistics as well as limited information
+        about the elements that those metrics describe.
+
+        param_manifestcollection --  The input parameter ManifestCollection (type REF (pywbem.CIMInstanceName(classname='CIM_BlockStatisticsManifestCollection', ...)) 
+            The BlockStatisticsManifestCollection that contains the
+            manifests that list the metrics to be returned for each
+            element type. If not supplied (i.e. parameter is null), then
+            all available statistics will be returned unfiltered. Only
+            elements that match the element type properties (if
+            meaningful) of the BlockStatisticsManifest instances contained
+            within the BlockStatisticsManifestCollection will have data
+            returned by this method. If the supplied
+            BlockStatisticsManifestCollection does not contain any
+            BlockStatisticsManifest instances, then no statistics will be
+            returned by this method.
+        param_statisticsformat --  The input parameter StatisticsFormat (type pywbem.Uint16 self.Values.GetStatisticsCollection.StatisticsFormat) 
+            Specifies the format of the Statistics output parameter.  - CSV
+            = Comma Separated Values.
+        param_elementtypes --  The input parameter ElementTypes (type [pywbem.Uint16,] self.Values.GetStatisticsCollection.ElementTypes) 
+            Element types for which statistics should be returned. If not
+            supplied (i.e. parameter is null) this parameter is not
+            considered when filtering the instances of StatisticalData
+            that will populate the Statistics output parameter. If the
+            array is not null, but is empty, then no statistics will be
+            returned by this method. A client SHOULD NOT specify this
+            parameter if it is not meaningful (i.e. the service only
+            provides statistics for a single type of element).
+
+        Output parameters:
+        Job -- (type REF (pywbem.CIMInstanceName(classname='CIM_ConcreteJob', ...)) 
+            Reference to the job (may be null if job completed).
+
+        Statistics -- (type [unicode,]) 
+            The statistics for all the elements as determined by the
+            Elements, ManifestCollection parameters, and StatisticsFormat
+            parameters.
+        """
+        # check the parameters
+        self.check_instance(object_name)
+        if param_manifestcollection:
+            if (param_manifestcollection['InstanceID'] !=
+                    LMI_BlockStatisticsManifestCollection.INSTANCE_ID):
+                raise pywbem.CIMError(pywbem.CIM_ERR_NOT_FOUND,
+                        "Unknown ManifestCollection.")
+        csv = self.Values.GetStatisticsCollection.StatisticsFormat.CSV
+        if (param_statisticsformat is not None
+                and param_statisticsformat != csv):
+            raise pywbem.CIMError(pywbem.CIM_ERR_INVALID_PARAMETER,
+                        "Parameter StatisticsFormat must be CSV.")
+
+        extent = self.Values.GetStatisticsCollection.ElementTypes.Extent
+        if (param_elementtypes is not None
+                and param_elementtypes != [extent]):
+            raise pywbem.CIMError(pywbem.CIM_ERR_INVALID_PARAMETER,
+                        "Parameter ElementTypes must be [Extent].")
+
+        # Finally, get the statistics.
+        broker = env.get_cimom_handle()
+        # The output parameter:
+        statistics = []
+        # Current chunk, candidate to be inserted to statistics[]:
+        chunk = ""
+
+        for device in self.storage.devices:
+            if not self.block_stat_provider.has_statistics(device, broker):
+                continue
+
+            try:
+                line = self._get_statistics_line(device)
+            except pywbem.CIMError:
+                # Ignore any errors, the device may have disappeared
+                # -> no line in resulting statistics
+                cmpi_logging.logger.trace_warn(
+                        "Skipping device %s in statistics.", device.path)
+                continue
+
+            if len(line) + len(chunk) + 1 > self.MAXCHUNK:
+                statistics.append(chunk)
+                chunk = ""
+            chunk += line + "\n"
+
+        statistics.append(chunk)
+        out_params = []
+        out_params += [pywbem.CIMParameter('statistics', type='string',
+                           value=statistics)]
+        rval = self.Values.GetStatisticsCollection.Job_Completed_with_No_Error
+        return (rval, out_params)
+
+    class Values(ServiceProvider.Values):
+        class GetStatisticsCollection(object):
+            Job_Completed_with_No_Error = pywbem.Uint32(0)
+            Not_Supported = pywbem.Uint32(1)
+            Unknown = pywbem.Uint32(2)
+            Timeout = pywbem.Uint32(3)
+            Failed = pywbem.Uint32(4)
+            Invalid_Parameter = pywbem.Uint32(5)
+            # Method_Reserved = ..
+            Method_Parameters_Checked___Job_Started = pywbem.Uint32(4096)
+            Element_Not_Supported = pywbem.Uint32(4097)
+            Statistics_Format_Not_Supported = pywbem.Uint32(4098)
+            # Method_Reserved = 4099..32767
+            # Vendor_Specific = 32768..65535
+            class StatisticsFormat(object):
+                Unknown = pywbem.Uint16(0)
+                Other = pywbem.Uint16(1)
+                CSV = pywbem.Uint16(2)
+                # DMTF_Reserved = ..
+                # Vendor_Specific = 0x8000..
+            class ElementTypes(object):
+                Computer_System = pywbem.Uint16(2)
+                Front_end_Computer_System = pywbem.Uint16(3)
+                Peer_Computer_System = pywbem.Uint16(4)
+                Back_end_Computer_System = pywbem.Uint16(5)
+                Front_end_Port = pywbem.Uint16(6)
+                Back_end_Port = pywbem.Uint16(7)
+                Volume = pywbem.Uint16(8)
+                Extent = pywbem.Uint16(9)
+                Disk_Drive = pywbem.Uint16(10)
+                Arbitrary_LUs = pywbem.Uint16(11)
+                Remote_Replica_Group = pywbem.Uint16(12)
+                # DMTF_Reserved = ..
+                # Vendor_Specific = 0x8000..
+
+
+class LMI_BlockStatisticsCapabilities(CapabilitiesProvider):
+    """
+    LMI_DiskPartitionConfigurationCapabilities provider implementation.
+    """
+    @cmpi_logging.trace_method
+    def __init__(self, *args, **kwargs):
+        super(LMI_BlockStatisticsCapabilities, self).__init__(
+                "LMI_BlockStatisticsCapabilities", *args, **kwargs)
+        element_types = LMI_BlockStorageStatisticalData.Values.ElementType
+        methods = self.Values.SynchronousMethodsSupported
+        features = self.Values.SupportedFeatures
+        self.instance = {
+                'InstanceID': 'LMI:LMI_BlockStatisticsCapabilities:instance',
+                'ElementTypesSupported': [pywbem.Uint16(element_types.Extent)],
+                'SynchronousMethodsSupported': [
+                        methods.GetStatisticsCollection],
+                'AsynchronousMethodsSupported': pywbem.CIMProperty(
+                            name='AsynchronousMethodsSupported',
+                            value=[],
+                            type='uint16',
+                            array_size=0,
+                            is_array=True),
+                'ClockTickInterval': pywbem.Uint64(100000),  # 100 milliseconds
+                'SupportedFeatures': [features.none],
+                'ElementName': "BlockStatisticsCapabilities",
+                '_default': True
+        }
+    @cmpi_logging.trace_method
+    def enumerate_capabilities(self):
+        """
+            Return an iterable with all capabilities instances, i.e.
+            dictionaries property_name -> value.
+            If the capabilities are the default ones, it must have
+            '_default' as a property name.
+        """
+        return [self.instance]
+
+    @cmpi_logging.trace_method
+    def create_setting_for_capabilities(self, capabilities):
+        """
+            Create LMI_*Setting for given capabilities.
+            Return CIMInstanceName of the setting or raise CIMError on error.
+        """
+        # There is no LMI_BlockStorageStatisticsSetting
+        raise pywbem.CIMError(pywbem.CIM_ERR_NOT_SUPPORTED,
+                "This method is not supported.")
+
+    class Values:
+        class SynchronousMethodsSupported(object):
+            Execute_Query = pywbem.Uint16(2)
+            Query_Collection = pywbem.Uint16(3)
+            GetStatisticsCollection = pywbem.Uint16(4)
+            Manifest_Creation = pywbem.Uint16(5)
+            Manifest_Modification = pywbem.Uint16(6)
+            Manifest_Removal = pywbem.Uint16(7)
+        class SupportedFeatures(object):
+            none = pywbem.Uint16(2)
+            Client_Defined_Sequence = pywbem.Uint16(3)
+            # DMTF_Reserved = ..
+            # Vendor_Specific = 0x8000..
