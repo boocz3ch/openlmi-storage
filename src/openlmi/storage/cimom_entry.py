@@ -82,6 +82,8 @@ from openlmi.storage.LMI_MountConfigurationService import LMI_MountConfiguration
 from openlmi.storage.LMI_MountedFileSystemCapabilities import LMI_MountedFileSystemCapabilities
 from openlmi.common.TimerManager import TimerManager
 from openlmi.storage.LMI_TransientFileSystem import LMI_TransientFileSystem
+from openlmi.storage.LMI_BlockStorageStatisticalData import \
+    LMI_BlockStorageStatisticalData, LMI_StorageElementStatisticalData
 
 import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
@@ -416,6 +418,15 @@ def get_providers(env):
 
     provider = LMI_HostedFileSystem(**opts)
     providers['LMI_HostedFileSystem'] = provider
+
+    # Block Statistics providers
+    provider = LMI_BlockStorageStatisticalData(**opts)
+    providers['LMI_BlockStorageStatisticalData'] = provider
+
+    assoc_provider = LMI_StorageElementStatisticalData(
+            block_stat_provider=provider,
+            **opts)
+    providers['LMI_StorageElementStatisticalData'] = assoc_provider
 
     cmpi_logging.logger.trace_info("Registered providers: %s"
             % (str(providers)))
