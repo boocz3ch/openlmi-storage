@@ -15,6 +15,7 @@ or volume groups:
    usage-raid
    usage-lvm
    usage-fs
+   usage-block-performance
 
 
 .. note::

@@ -57,7 +57,9 @@ figures: pic/partitions.png \
     pic/fs-instance.svg \
     pic/job-states.svg \
     pic/job-affected-before.svg \
-    pic/job-affected-after.svg
+    pic/job-affected-after.svg \
+    pic/block-performance.svg \
+    pic/block-performance-full.svg
 
 mof:
 	make -C mof

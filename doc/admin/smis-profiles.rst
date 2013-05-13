@@ -17,6 +17,7 @@ OpenLMI-Storage implements following profiles:
    smis-composition
    smis-filesystem
    smis-jobs
+   smis-block-performance
 
 The OpenLMI-Storage CIM API follows following principles:
 
