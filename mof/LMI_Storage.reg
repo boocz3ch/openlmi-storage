@@ -3,6 +3,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDStorageExtent]
@@ -10,6 +11,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_DiskPartition]
@@ -17,6 +19,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_GenericDiskPartition]
@@ -24,6 +27,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVStorageExtent]
@@ -31,6 +35,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVStorageSetting]
@@ -38,6 +43,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVElementSettingData]
@@ -45,6 +51,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_VGStoragePool]
@@ -52,6 +59,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_VGStorageSetting]
@@ -59,6 +67,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_VGElementSettingData]
@@ -66,6 +75,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVStorageCapabilities]
@@ -73,6 +83,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVElementCapabilities]
@@ -80,6 +91,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageConfigurationService]
@@ -87,6 +99,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_VGStorageCapabilities]
@@ -94,6 +107,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDStorageCapabilities]
@@ -101,6 +115,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDElementCapabilities]
@@ -108,6 +123,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDStorageSetting]
@@ -115,6 +131,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDElementSettingData]
@@ -122,6 +139,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 
@@ -131,6 +149,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_DiskPartitionElementSettingData]
@@ -138,6 +157,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 
@@ -148,6 +168,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_DiskPartitionConfigurationCapabilities]
@@ -155,6 +176,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_DiskPartitionElementCapabilities]
@@ -162,6 +184,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_DataFormat]
@@ -169,6 +192,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDFormat]
@@ -176,6 +200,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_PVFormat]
@@ -183,6 +208,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LocalFileSystem]
@@ -190,6 +216,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_ResidesOnExtent]
@@ -197,6 +224,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_FileSystemSetting]
@@ -204,6 +232,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_FileSystemElementSettingData]
@@ -211,6 +240,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_FileSystemConfigurationService]
@@ -218,6 +248,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_FileSystemConfigurationCapabilities]
@@ -225,6 +256,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_FileSystemConfigurationElementCapabilities]
@@ -232,6 +264,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_PartitionBasedOn]
@@ -239,6 +272,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MDRAIDBasedOn]
@@ -246,6 +280,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVBasedOn]
@@ -253,6 +288,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_LVAllocatedFromStoragePool]
@@ -260,6 +296,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_VGAssociatedComponentExtent]
@@ -267,6 +304,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_HostedStorageService]
@@ -274,6 +312,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_SystemStorageDevice]
@@ -281,6 +320,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_InstalledPartitionTable]
@@ -288,6 +328,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageJob]
@@ -295,6 +336,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_OwningStorageJobElement]
@@ -302,6 +344,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_AffectedStorageJobElement]
@@ -309,6 +352,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageMethodResult]
@@ -316,6 +360,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_AssociatedStorageJobMethodResult]
@@ -323,6 +368,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageInstModification]
@@ -330,6 +376,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: indication
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageInstCreation]
@@ -337,6 +384,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: indication
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_HostedFileSystem]
@@ -344,6 +392,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountedFileSystem]
@@ -351,6 +400,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_HostedMount]
@@ -358,6 +408,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountedFileSystemSetting]
@@ -365,6 +416,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountConfigurationService]
@@ -372,6 +424,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountedFileSystemCapabilities]
@@ -379,6 +432,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountElementCapabilities]
@@ -386,6 +440,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountedFileSystemElementSettingData]
@@ -393,6 +448,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MountPoint]
@@ -400,6 +456,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_AttachedFileSystem]
@@ -407,6 +464,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance association
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_TransientFileSystem]
@@ -414,6 +472,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_BlockStorageStatisticalData]
@@ -421,6 +480,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageElementStatisticalData]
@@ -428,6 +488,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_StorageStatisticsCollection]
@@ -435,6 +496,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MemberOfStorageStatisticsCollection]
@@ -442,6 +504,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_HostedStorageStatisticsCollection]
@@ -449,6 +512,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_BlockStatisticsManifestCollection]
@@ -456,6 +520,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_BlockStatisticsManifest]
@@ -463,6 +528,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_MemberOfBlockStatisticsManifestCollection]
@@ -470,6 +536,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_AssociatedBlockStatisticsManifestCollection]
@@ -477,6 +544,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_BlockStatisticsService]
@@ -484,6 +552,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_BlockStatisticsCapabilities]
@@ -491,6 +560,7 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: instance method
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
 
 [LMI_BlockStorageStatisticsElementCapabilities]
@@ -498,4 +568,5 @@ provider: /usr/lib/python2.7/site-packages/openlmi/storage/cimom_entry.py
 location: pyCmpiProvider
 type: association instance
 namespace: root/cimv2
+group: openlmi-storage
 unload: never
