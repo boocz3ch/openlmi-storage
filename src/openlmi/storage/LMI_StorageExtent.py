@@ -54,6 +54,10 @@ class LMI_StorageExtent(ExtentProvider):
         if  isinstance(device, blivet.devices.NoDevice):
             return False
 
+        # Skip artificial BTRFS volumes and subvolumes
+        if  isinstance(device, blivet.devices.BTRFSDevice):
+            return False
+
         # Check if this device has specialized provider
         if  isinstance(device, blivet.devices.LVMVolumeGroupDevice):
             return False
