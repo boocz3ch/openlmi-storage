@@ -95,6 +95,10 @@ import openlmi.common.cmpi_logging as cmpi_logging
 import blivet
 import logging
 
+timer_manager = None
+indication_manager = None
+job_manager = None
+
 def init_anaconda(log_manager, config):
     """ Initialize Anaconda storage module."""
     cmpi_logging.logger.info("Initializing Anaconda")
@@ -168,8 +172,10 @@ def get_providers(env):
     cmpi_logging.logger.info("Provider init.")
 
     # initialize the timer manager
+    global timer_manager
     timer_manager = TimerManager.get_instance(env)
 
+    global indication_manager
     indication_manager = IndicationManager.get_instance(
             env, "Storage", config.namespace)
 
@@ -178,6 +184,7 @@ def get_providers(env):
     setting_manager.load()
     storage = init_anaconda(log_manager, config)
 
+    global job_manager
     job_manager = JobManager('Storage', config.namespace,
             indication_manager, timer_manager)
 
@@ -507,4 +514,8 @@ def can_unload(_env):
 def shutdown(_env):
     """ CIMOM callback."""
     cmpi_logging.logger.info("Provider shutdown.")
-    return True
+    # Job manager must be the first, it uses TimerManager and IndicationManager
+    job_manager.shutdown()
+
+    timer_manager.shutdown()
+    indication_manager.shutdown()
