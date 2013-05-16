@@ -509,7 +509,7 @@ def disable_indications(env):
 def can_unload(_env):
     """ CIMOM callback."""
     cmpi_logging.logger.trace_info("can_unload called")
-    return True
+    return job_manager.can_shutdown()
 
 def shutdown(_env):
     """ CIMOM callback."""
