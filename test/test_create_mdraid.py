@@ -789,6 +789,37 @@ class TestCreateMDRAID(StorageTestBase):
                 goal=setting.path)
         self._delete_setting(setting.path)
 
+    def test_create_on_disk(self):
+        """
+        Test MD RAID on plain disk, without partition table.
+        """
+        devices = [self.partition_names[0], self.disk_name]
+        (ret, outparams) = self.invoke_async_method(
+                "CreateOrModifyMDRAID",
+                self.service,
+                int, "theelement",
+                InExtents=devices,
+                Level=pywbem.Uint16(1))
+        self.assertEqual(ret, 0)
+        raidname = outparams['theelement']
+
+        # check based-on
+        basedons = self.wbemconnection.References(
+                raidname,
+                ResultClass="LMI_MDRAIDBasedOn")
+        self.assertEqual(len(basedons), 2)
+        for basedon in basedons:
+            self.assertCIMNameIn(basedon['Antecedent'], devices)
+            self.assertCIMNameEquals(basedon['Dependent'], raidname)
+
+        # destroy it
+        (ret, outparams) = self.invoke_async_method(
+                "DeleteMDRAID",
+                self.service,
+                int,
+                TheElement=raidname)
+        self.assertEquals(ret, 0)
+
 
 if __name__ == '__main__':
     unittest.main()
