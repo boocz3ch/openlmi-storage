@@ -3,9 +3,11 @@ of all classes.
 
 Therefore it is necessary:
 
-0) Install PlantUML and Sphinx
-   http://plantuml.sourceforge.net/
-   http://sphinx-doc.org/
+0) Install the tools
+   PlantUML: http://plantuml.sourceforge.net/
+   GraphViz: http://www.graphviz.org/
+   Sphinx:   http://sphinx-doc.org/
+   Dia:      https://live.gnome.org/Dia
 
 1) Install current MOF files to your CIMCOM running on localhost and start it.
    (or edit generated/Makefile and mof/Makefile and set HOST variable there)
