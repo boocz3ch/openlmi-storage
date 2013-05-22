@@ -145,6 +145,10 @@ class LMI_MountedFileSystem : CIM_ManagedElement
     string MountPointPath;
 };
 
+[ Version("0.5.1"), Experimental, Description(
+    "This class describes capabilities of associated "
+    "LMI_MountConfigurationService. It can also be used "
+    "to create new LMI_MountedFileSystemSetting.")]
 class LMI_MountedFileSystemCapabilities : CIM_Capabilities
 {
     [ Description (
@@ -167,6 +171,10 @@ class LMI_MountedFileSystemCapabilities : CIM_Capabilities
     uint16 SupportedAsynchronousMethods[];
 };
 
+[ Version("0.5.1"), Experimental, Description (
+    "This service has methods to create, delete and modify both "
+    "persistent mounts (in /etc/fstab) and runtime mounts (mounted "
+    "just now on running system).")]
 class LMI_MountConfigurationService : CIM_Service
 {
     [ Description (
@@ -321,7 +329,9 @@ class LMI_MountConfigurationService : CIM_Service
     );
 };
 
-[ Version("0.5.1"), Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association, Description(
+    "This association connects System with all mounts, both persistent "
+    "and runtime.")]
 class LMI_HostedMount : CIM_Dependency
 {
     [ Override("Antecedent"), Description (
@@ -333,7 +343,15 @@ class LMI_HostedMount : CIM_Dependency
     LMI_MountedFileSystem REF Dependent;
 };
 
-[ Version("0.5.1"), Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association, Description(
+    "This association connects mounted file system (representing a mount) "
+    "with options of the mount.\n"
+    "If IsNext property of this association is 1 ('Is Next'), the associated "
+    "setting represents options of persistent mount stored in /etc/fstab. "
+    "This setting will be applied on next machine reboot.\n"
+    "If IsCurrent property of this association is 1 ('Is Current'), the "
+    "associated setting represents currently active options of the mounted "
+    "filesystem.\n")]
 class LMI_MountedFileSystemElementSettingData : CIM_ElementSettingData
 {
     [ Override("ManagedElement"), Description (
@@ -347,7 +365,7 @@ class LMI_MountedFileSystemElementSettingData : CIM_ElementSettingData
     LMI_MountedFileSystemSetting REF SettingData;
 };
 
-[ Version("0.5.1"), Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association]
 class LMI_MountElementCapabilities : CIM_ElementCapabilities
 {
     [ Override("Capabilities"), Description (
@@ -359,7 +377,9 @@ class LMI_MountElementCapabilities : CIM_ElementCapabilities
     LMI_MountConfigurationService REF ManagedElement;
 };
 
-[ Version("0.5.1"), Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association, Description(
+    "This association connects LMI_MountedFileSystem to directory where "
+    "it is mounted.")]
 class LMI_MountPoint: CIM_Dependency
 {
     [ Override("Antecedent"), Description (
@@ -371,7 +391,9 @@ class LMI_MountPoint: CIM_Dependency
     LMI_MountedFileSystem REF Dependent;
 };
 
-[ Version("0.5.1"), Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association, Description(
+    "This association connects LMI_MountedFileSystem to the mounted "
+    "CIM_FileSystem")]
 class LMI_AttachedFileSystem: CIM_Dependency
 {
     [ Override("Antecedent"), Description (
