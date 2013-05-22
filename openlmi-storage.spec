@@ -52,7 +52,7 @@ fi
 # Register Schema and Provider
 if [ "$1" -ge 1 ]; then
     %{_bindir}/openlmi-mof-register register \
-        %{_datadir}/%{name}/6*_LMI_Storage.mof \
+        %{_datadir}/%{name}/60_LMI_Storage.mof \
         %{_datadir}/%{name}/LMI_Storage.reg \
         > /dev/null 2>&1 || :
 fi
@@ -61,7 +61,7 @@ fi
 # Deregister only if not upgrading
 if [ "$1" -eq 0 ]; then
     %{_bindir}/openlmi-mof-register unregister \
-        %{_datadir}/%{name}/6*_LMI_Storage.mof \
+        %{_datadir}/%{name}/60_LMI_Storage.mof \
         %{_datadir}/%{name}/LMI_Storage.reg \
         > /dev/null 2>&1 || :
 fi

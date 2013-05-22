@@ -4,3 +4,4 @@
 #pragma include("LMI_Storage-Jobs.mof")
 #pragma include("LMI_Storage-Luks.mof")
 #pragma include("LMI_Storage-Partitions.mof")
+#pragma include("LMI_Storage-Mounting.mof")
