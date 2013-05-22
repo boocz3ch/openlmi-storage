@@ -1,4 +1,5 @@
-[ Experimental, Description("This is generic class describing block devices "
+[ Version("0.5.1"), Experimental,
+  Description("This is generic class describing block devices "
     "available on the system, i.e. in machine's /dev/ directory.")]
 class LMI_StorageExtent : CIM_StorageExtent
 {
@@ -35,12 +36,12 @@ class LMI_StorageExtent : CIM_StorageExtent
     [ Implemented(true) ] uint64 ConsumableBlocks;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_ResidesOnExtent : CIM_ResidesOnExtent
 {
 };
 
-[ Experimental, Abstract, Description("Base class for all content formats.")]
+[ Version("0.5.1"), Experimental, Abstract, Description("Base class for all content formats.")]
 class LMI_DataFormat : CIM_EnabledLogicalElement
 {
       [Key, Description (

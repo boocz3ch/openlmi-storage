@@ -1,36 +1,36 @@
 // Note: This file is subject to change, it must be aligned with Anaconda
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_EncryptionResidesOnExtent : LMI_ResidesOnExtent
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_EncryptionElementSettingData : CIM_ElementSettingData
 {
 };
 
-[ Experimental, Abstract, Description("Base class for all encryption formats.")]
+[ Version("0.5.1"), Experimental, Abstract, Description("Base class for all encryption formats.")]
 class LMI_EncryptionFormat : LMI_DataFormat
 {
 };
 
-[ Experimental, Abstract, Description("Base class for all encryption settings.")]
+[ Version("0.5.1"), Experimental, Abstract, Description("Base class for all encryption settings.")]
 class LMI_EncryptionFormatSetting : CIM_SettingData
 {
 };
 
-[ Experimental, Abstract, Description("Base class for all encryption capabilities.")]
+[ Version("0.5.1"), Experimental, Abstract, Description("Base class for all encryption capabilities.")]
 class LMI_EncryptionFormatCapabilities : CIM_Capabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_EncryptionElementCapabilities : CIM_ElementCapabilities
 {
 };
 
-[ Experimental, Description("Service which configures LUKS formats on block devices.")]
+[ Version("0.5.1"), Experimental, Description("Service which configures LUKS formats on block devices.")]
 class LMI_ExtentEncryptionConfigurationService : CIM_Service
 {
     uint32 CreateEncryptedFormat(
@@ -79,17 +79,17 @@ class LMI_ExtentEncryptionConfigurationService : CIM_Service
     );
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LUKSResidesOnExtent : LMI_EncryptionResidesOnExtent
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LUKSElementSettingData : LMI_EncryptionElementSettingData
 {
 };
 
-[ Experimental, Description("Class representing LUKS data.")]
+[ Version("0.5.1"), Experimental, Description("Class representing LUKS data.")]
 class LMI_LUKSFormat : LMI_EncryptionFormat
 {
     [ Description("Version of the LUKS format.")]
@@ -103,7 +103,7 @@ class LMI_LUKSFormat : LMI_EncryptionFormat
     uint16 SlotStatus[];
 };
 
-[ Experimental, Description("Parameters used to create LUKS format by LMI_LUKSConfigurationService.") ]
+[ Version("0.5.1"), Experimental, Description("Parameters used to create LUKS format by LMI_LUKSConfigurationService.") ]
 class LMI_LUKSFormatSetting : LMI_EncryptionFormatSetting
 {
     [ Description("Encryption block cipher."),
@@ -142,7 +142,7 @@ class LMI_LUKSFormatSetting : LMI_EncryptionFormatSetting
     uint16 KeySize;
 };
 
-[ Experimental, Description("LMI_LUKSFormatCapabilities specifies combination of property values, which can be used to create a LUKS format using LMI_LUKSConfigurationService.")]
+[ Version("0.5.1"), Experimental, Description("LMI_LUKSFormatCapabilities specifies combination of property values, which can be used to create a LUKS format using LMI_LUKSConfigurationService.")]
 class LMI_LUKSFormatCapabilities : LMI_EncryptionFormatCapabilities
 {
     [ Description("Array of supported encryption block ciphers."),
@@ -213,17 +213,17 @@ class LMI_LUKSFormatCapabilities : LMI_EncryptionFormatCapabilities
 };
 
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LUKSSettingAssociatedToCapabilities : CIM_SettingAssociatedToCapabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LUKSElementCapabilities : LMI_EncryptionElementCapabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_HostedExtentEncryptionConfigurationService : CIM_Service
 {
 };

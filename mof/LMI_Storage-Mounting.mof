@@ -18,7 +18,7 @@
  * Authors: Jan Synacek <jsynacek@redhat.com>
  */
 
-[ Description (
+[ Version("0.5.1"), Experimental, Description (
     "Class for representing mount options. Basic boolean properties represent "
     "filesystem independent mount options (as listed in mount(8))." ) ]
 class LMI_MountedFileSystemSetting : CIM_SettingData
@@ -125,7 +125,7 @@ class LMI_MountedFileSystemSetting : CIM_SettingData
     uint16 FileSystemCheckOrder;
 };
 
-[ Description (
+[ Version("0.5.1"), Experimental, Description (
     "Class for representing mounted filesystems. Can be thought of as either "
     "an entry in /etc/mtab, or in /etc/fstab, according to its associated "
     "LMI_MountedFileSystemSetting." ) ]
@@ -321,7 +321,7 @@ class LMI_MountConfigurationService : CIM_Service
     );
 };
 
-[ Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_HostedMount : CIM_Dependency
 {
     [ Override("Antecedent"), Description (
@@ -333,7 +333,7 @@ class LMI_HostedMount : CIM_Dependency
     LMI_MountedFileSystem REF Dependent;
 };
 
-[ Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_MountedFileSystemElementSettingData : CIM_ElementSettingData
 {
     [ Override("ManagedElement"), Description (
@@ -347,7 +347,7 @@ class LMI_MountedFileSystemElementSettingData : CIM_ElementSettingData
     LMI_MountedFileSystemSetting REF SettingData;
 };
 
-[ Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_MountElementCapabilities : CIM_ElementCapabilities
 {
     [ Override("Capabilities"), Description (
@@ -359,7 +359,7 @@ class LMI_MountElementCapabilities : CIM_ElementCapabilities
     LMI_MountConfigurationService REF ManagedElement;
 };
 
-[ Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_MountPoint: CIM_Dependency
 {
     [ Override("Antecedent"), Description (
@@ -371,7 +371,7 @@ class LMI_MountPoint: CIM_Dependency
     LMI_MountedFileSystem REF Dependent;
 };
 
-[ Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_AttachedFileSystem: CIM_Dependency
 {
     [ Override("Antecedent"), Description (

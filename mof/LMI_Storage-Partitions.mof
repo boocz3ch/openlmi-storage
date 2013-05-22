@@ -1,4 +1,4 @@
-[Experimental, Description (
+[Version("0.5.1"), Experimental, Description (
        "DiskPartitionConfigurationService provides methods for clients "
        "to configure DiskPartitions. "
        "\n"
@@ -195,7 +195,7 @@ class LMI_DiskPartitionConfigurationService : CIM_DiskPartitionConfigurationServ
   );
 };
 
-   [Experimental, Description (
+   [Version("0.5.1"), Experimental, Description (
        "DiskPartitionConfigurationCapabilities instances describe a "
        "partition style supported by the platform. An instance of this "
        "class is associated with a volume (or partition) when a "
@@ -285,7 +285,7 @@ class LMI_DiskPartitionConfigurationCapabilities : CIM_DiskPartitionConfiguratio
     [Implemented(true)] uint16 SupportedSynchronousActions[];
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_DiskPartitionConfigurationSetting : CIM_SettingData
 {
     [Description("Bootable flag of the partition. It should be enabled if "
@@ -318,7 +318,7 @@ class LMI_DiskPartitionConfigurationSetting : CIM_SettingData
     );
 };
 
-[Experimental, Description("This class represents primary, extended and logical partitions on "
+[Version("0.5.1"), Experimental, Description("This class represents primary, extended and logical partitions on "
     "devices with MS-DOS (MBR) style partition tables.")]
 class LMI_DiskPartition : CIM_DiskPartition
 {
@@ -347,7 +347,7 @@ class LMI_DiskPartition : CIM_DiskPartition
     string Names[];
 };
 
-[Experimental, Description("This class represents partitions on "
+[Version("0.5.1"), Experimental, Description("This class represents partitions on "
     "devices with other than MBR partition tables.")]
 class LMI_GenericDiskPartition : CIM_GenericDiskPartition
 {
@@ -373,12 +373,12 @@ class LMI_GenericDiskPartition : CIM_GenericDiskPartition
     string Names[];
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_InstalledPartitionTable : CIM_InstalledPartitionTable
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_PartitionBasedOn : CIM_BasedOn
 {
     [ Implemented(true) ] uint64 StartingAddress;
@@ -386,12 +386,12 @@ class LMI_PartitionBasedOn : CIM_BasedOn
     [ Implemented(true) ] uint16 OrderIndex;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_DiskPartitionElementCapabilities : CIM_ElementCapabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_DiskPartitionElementSettingData : CIM_ElementSettingData
 {
     [Implemented(true)] uint16 IsCurrent;

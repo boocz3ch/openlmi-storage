@@ -1,4 +1,4 @@
-[ Experimental,
+[ Version("0.5.1"), Experimental,
   Description("Base class for filesystems on StorageExtents of this system.")]
 class LMI_LocalFileSystem : CIM_LocalFileSystem
 {
@@ -24,7 +24,7 @@ class LMI_LocalFileSystem : CIM_LocalFileSystem
     [Implemented(true)] uint16 IsFixedSize;
 };
 
-[ Experimental,
+[ Version("0.5.1"), Experimental,
   Description(
     "Base class for nonpersistent filesystems of this "
     "system, such as tmpfs, cgroups, procfs etc.")]
@@ -48,7 +48,7 @@ class LMI_TransientFileSystem : CIM_LocalFileSystem
     [Implemented(true)] uint16 IsFixedSize;
 };
 
-[ Experimental, Description(
+[ Version("0.5.1"), Experimental, Description(
        "FileSystemCapabilities specifies the combination of properties "
        "that a FileSystemService can support when creating or "
        "maintaining FileSystems. Each supported combination of "
@@ -94,7 +94,7 @@ class LMI_FileSystemCapabilities : CIM_FileSystemCapabilities
     );
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_FileSystemConfigurationCapabilities : CIM_FileSystemConfigurationCapabilities
 {
     [ Override("SupportedActualFileSystemTypes"), Implemented(true),
@@ -133,7 +133,7 @@ class LMI_FileSystemConfigurationCapabilities : CIM_FileSystemConfigurationCapab
     [ Implemented(true) ] uint16 InitialAvailability;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_FileSystemSetting : CIM_FileSystemSetting
 {
     [ Override("ActualFileSystemType"), Implemented(true),
@@ -160,14 +160,14 @@ class LMI_FileSystemSetting : CIM_FileSystemSetting
     [ Implemented(true) ] uint16 FilenameLengthMax[];
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_FileSystemElementSettingData : CIM_ElementSettingData
 {
 };
 
 
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
 {
       [Implemented(true), Description (
@@ -310,13 +310,13 @@ class LMI_FileSystemConfigurationService : CIM_FileSystemConfigurationService
 };
 
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_FileSystemConfigurationElementCapabilities : CIM_ElementCapabilities
 {
 };
 
 
-[ Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_HostedFileSystem : CIM_HostedFileSystem
 {
     [ Override("PartComponent") ]

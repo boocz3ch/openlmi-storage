@@ -1,28 +1,35 @@
+[ Version("0.5.1"), Experimental ]
 class LMI_StorageJob : LMI_ConcreteJob
 {
 };
 
+[ Version("0.5.1"), Experimental ]
 class LMI_StorageMethodResult : LMI_MethodResult
 {
 };
 
+[ Version("0.5.1"), Experimental ]
 class LMI_OwningStorageJobElement : LMI_OwningJobElement
 {
 };
 
 
+[ Version("0.5.1"), Experimental ]
 class LMI_AffectedStorageJobElement : LMI_AffectedJobElement
 {
 };
 
+[ Version("0.5.1"), Experimental ]
 class LMI_AssociatedStorageJobMethodResult : LMI_AssociatedJobMethodResult
 {
 };
 
+[ Version("0.5.1"), Experimental ]
 class LMI_StorageInstModification : CIM_InstModification
 {
 };
 
+[ Version("0.5.1"), Experimental ]
 class LMI_StorageInstCreation : CIM_InstCreation
 {
 };

@@ -1,4 +1,4 @@
-[ Experimental, Description("This class represents MD RAID devices on the managed system.")]
+[ Version("0.5.1"), Experimental, Description("This class represents MD RAID devices on the managed system.")]
 class LMI_MDRAIDStorageExtent : LMI_StorageExtent
 {
     [Implemented(true), Override, Description (
@@ -16,7 +16,7 @@ class LMI_MDRAIDStorageExtent : LMI_StorageExtent
 
 };
 
-[ Experimental, Description("This class represents Logical Volume devices on the managed system.")]
+[ Version("0.5.1"), Experimental, Description("This class represents Logical Volume devices on the managed system.")]
 class LMI_LVStorageExtent : LMI_StorageExtent
 {
     [Implemented(true), Override, Description (
@@ -27,7 +27,7 @@ class LMI_LVStorageExtent : LMI_StorageExtent
     string UUID;
 };
 
-[ Experimental, Description("This class represents Volume Groups. Space in Volume Groups "
+[ Version("0.5.1"), Experimental, Description("This class represents Volume Groups. Space in Volume Groups "
     "can be allocated in units called 'extents'. Only whole extents can be "
     "allocated, no partial allocation is allowed.")]
 class LMI_VGStoragePool : CIM_StoragePool
@@ -120,7 +120,7 @@ class LMI_VGStoragePool : CIM_StoragePool
 
 };
 
-[ Experimental, Description (
+[ Version("0.5.1"), Experimental, Description (
        "This service allows the active management of a Storage Server. "
        "It allows jobs to be started for the creation, modification "
        "and deletion of storage objects (StoragePools, StorageVolumes "
@@ -302,7 +302,7 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "If not NULL, this parameter will supply a new name "
              "when modifying an existing element." )]
       string ElementName,
-         [Experimental, IN, Description (
+         [IN, Description (
              "Enumeration indicating the type of element being "
              "created or modified. "
              "\nOnly StorageElement is supported now. "
@@ -388,7 +388,7 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
              "If not NULL, this parameter will supply a new name "
              "when modifying an existing element." )]
       string ElementName,
-         [Experimental, Required, IN, Description (
+         [Required, IN, Description (
              "Enumeration indicating the type of element being "
              "created or modified. "
              "\n Only StorageExtent is supported now."
@@ -656,7 +656,7 @@ class LMI_StorageConfigurationService : CIM_StorageConfigurationService
 };
 
 
-[ Experimental, Abstract, Description("Abstract StorageSetting class. "
+[ Version("0.5.1"), Experimental, Abstract, Description("Abstract StorageSetting class. "
     "This class just defines persistence types of all LMI StorageSetting classes. "
     "All subclasses of LMI_StorageSetting can be persistently stored by modifying ChangeableType "
     "property."
@@ -707,7 +707,7 @@ class LMI_StorageSetting : CIM_StorageSetting
     [ Implemented(true) ] uint16 ParityLayout;
 };
 
-[ Experimental, Description("This class defines characteristics of LMI_VGStoragePool which is created or modified by "
+[ Version("0.5.1"), Experimental, Description("This class defines characteristics of LMI_VGStoragePool which is created or modified by "
     "CreateOrModifyStoragePool method in the LMI_StorageConfigurationService."
     "\nCurrently only ExtentSize property is supported.")]
 class LMI_VGStorageSetting : LMI_StorageSetting
@@ -721,7 +721,7 @@ class LMI_VGStorageSetting : LMI_StorageSetting
     uint64 ExtentSize;
 };
 
-[ Experimental, Description("This class defines characteristics of LMI_LVStorageExtent which is created or modified by "
+[ Version("0.5.1"), Experimental, Description("This class defines characteristics of LMI_LVStorageExtent which is created or modified by "
     "CreateOrModifyElementFromStoragePool method in the LMI_StorageConfigurationService."
     "\n Currently no properties are defined or supported, only simple Logical Volumes can be created. "
     "In future, this may be extended to support redundancy and stripping and thin volumes.")]
@@ -730,7 +730,7 @@ class LMI_LVStorageSetting : LMI_StorageSetting
 
 };
 
-[ Experimental, Description("This class defines characteristics of LMI_MDRAIDStorageExtent which is created or modified by "
+[ Version("0.5.1"), Experimental, Description("This class defines characteristics of LMI_MDRAIDStorageExtent which is created or modified by "
     "CreateOrModifyElementFromElements method in the LMI_StorageConfigurationService."
     "\n Currently no additional properties are necessary in this class, redundancy and stripping is defined "
     "by DataRedundancy, PackageRedundancy and ExtentStripeLength."
@@ -740,7 +740,7 @@ class LMI_MDRAIDStorageSetting : LMI_StorageSetting
 {
 };
 
-[ Experimental, Description("This class represents capability of LMI_StorageConfigurationService to create Volume Groups. "
+[ Version("0.5.1"), Experimental, Description("This class represents capability of LMI_StorageConfigurationService to create Volume Groups. "
     "It describes, which properties and which values can be used in LMI_VGStorageSetting."
     "\n There are no additional properties for now."
     )]
@@ -786,7 +786,7 @@ class LMI_VGStorageCapabilities : CIM_StorageCapabilities
 
 };
 
-[ Experimental, Description("This class represents capability of LMI_StorageConfigurationService to create MD RAID arrays. "
+[ Version("0.5.1"), Experimental, Description("This class represents capability of LMI_StorageConfigurationService to create MD RAID arrays. "
     "It describes, which properties and which values can be used in LMI_MDRAIDStorageSetting."
     "\n There are no additional properties for now."
     )]
@@ -828,7 +828,7 @@ class LMI_MDRAIDStorageCapabilities : CIM_StorageCapabilities
 };
 
 
-[ Experimental, Description("This class represents capabilities of LMI_StorageConfigurationService to create Logical Volumes. "
+[ Version("0.5.1"), Experimental, Description("This class represents capabilities of LMI_StorageConfigurationService to create Logical Volumes. "
     "It describes, which properties and which values can be used in LMI_LVStorageSetting."
     "\n Each LMI_VGStoragePool has one instance of this class attached, which describes what kind of Logical Volumes can "
     "be allocated from it. As only basic Logical Volumes are supported, it basically only represents underlying redundancy and stripping"
@@ -860,60 +860,60 @@ class LMI_LVStorageCapabilities : CIM_StorageCapabilities
 };
 
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_HostedStorageService : CIM_HostedService
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_VGElementCapabilities : CIM_ElementCapabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_MDRAIDElementCapabilities : CIM_ElementCapabilities
 {
 };
 
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_MDRAIDBasedOn : CIM_BasedOn
 {
     [ Implemented(true) ] uint16 OrderIndex;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_MDRAIDElementSettingData : CIM_ElementSettingData
 {
 };
 
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_VGAssociatedComponentExtent : CIM_AssociatedComponentExtent
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_VGElementSettingData : CIM_ElementSettingData
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LVElementCapabilities : CIM_ElementCapabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LVAllocatedFromStoragePool : CIM_AllocatedFromStoragePool
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LVElementSettingData : CIM_ElementSettingData
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_LVBasedOn : CIM_BasedOn
 {
 };
@@ -921,7 +921,7 @@ class LMI_LVBasedOn : CIM_BasedOn
 
 
 
-[Experimental, Description("This class represents MD RAID metadata present on a StorageExtent. "
+[Version("0.5.1"), Experimental, Description("This class represents MD RAID metadata present on a StorageExtent. "
     "It can be part of existing MD RAID or it can be stray metadata of stopped MD RAID."
 )]
 class LMI_MDRAIDFormat : LMI_DataFormat
@@ -930,7 +930,7 @@ class LMI_MDRAIDFormat : LMI_DataFormat
     string MDUUID;
 };
 
-[Experimental, Description("This class represents Physical Volume metadata present on a StorageExtent. "
+[Version("0.5.1"), Experimental, Description("This class represents Physical Volume metadata present on a StorageExtent. "
     "The StorageExtent can be member of existing Volume Group or its Volume Group has been destroyed."
 )]
 class LMI_PVFormat : LMI_DataFormat
@@ -939,23 +939,23 @@ class LMI_PVFormat : LMI_DataFormat
     string UUID;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_MDRAIDFormatResidesOnExtent : LMI_ResidesOnExtent
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_PVFormatResidesOnExtent : LMI_ResidesOnExtent
 {
 };
 
-[ Experimental, Description("This association connects CIM_System with all"
+[ Version("0.5.1"), Experimental, Description("This association connects CIM_System with all"
     " storage devices available on it.")]
 class LMI_SystemStorageDevice : CIM_SystemDevice
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_BlockStorageStatisticalData : CIM_BlockStorageStatisticalData
 {
 
@@ -974,7 +974,7 @@ class LMI_BlockStorageStatisticalData : CIM_BlockStorageStatisticalData
     [ Implemented(true) ] uint64 IdleTimeCounter;
 };
 
-[ Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_StorageElementStatisticalData : CIM_ElementStatisticalData
 {
     [Key, Override ( "ManagedElement" ),
@@ -990,13 +990,13 @@ class LMI_StorageElementStatisticalData : CIM_ElementStatisticalData
     LMI_BlockStorageStatisticalData REF Stats;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_StorageStatisticsCollection : CIM_StatisticsCollection
 {
     [ Implemented(true) ] datetime SampleInterval;
 };
 
-[ Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_MemberOfStorageStatisticsCollection : CIM_MemberOfCollection
 {
     [Key, Aggregate, Override("Collection"), Description (
@@ -1007,7 +1007,7 @@ class LMI_MemberOfStorageStatisticsCollection : CIM_MemberOfCollection
     LMI_BlockStorageStatisticalData REF Member;
 };
 
-[ Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_HostedStorageStatisticsCollection : CIM_HostedCollection
 {
     [Override ( "Antecedent" ),
@@ -1022,7 +1022,7 @@ class LMI_HostedStorageStatisticsCollection : CIM_HostedCollection
     LMI_StorageStatisticsCollection REF Dependent;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_BlockStatisticsService : CIM_BlockStatisticsService
 {
     [Implemented(true), Description (
@@ -1120,7 +1120,7 @@ class LMI_BlockStatisticsService : CIM_BlockStatisticsService
     [ Implemented(true) ] boolean Started;
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_BlockStatisticsCapabilities : CIM_BlockStatisticsCapabilities
 {
     [ Implemented(true) ] uint16 ElementTypesSupported[];
@@ -1130,12 +1130,12 @@ class LMI_BlockStatisticsCapabilities : CIM_BlockStatisticsCapabilities
     [ Implemented(true) ] uint16 SupportedFeatures[];
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_BlockStorageStatisticsElementCapabilities : CIM_ElementCapabilities
 {
 };
 
-[ Experimental ]
+[ Version("0.5.1"), Experimental ]
 class LMI_BlockStatisticsManifest : CIM_BlockStatisticsManifest
 {
     [ Implemented(true) ] uint16 ElementType;
@@ -1160,14 +1160,14 @@ class LMI_BlockStatisticsManifest : CIM_BlockStatisticsManifest
     [ Implemented(true) ] string CSVSequence[];
 };
 
-[ Experimental(true) ]
+[ Version("0.5.1"), Experimental(true) ]
 class LMI_BlockStatisticsManifestCollection : CIM_BlockStatisticsManifestCollection
 {
     [ Implemented(true) ] string ElementName;
     [ Implemented(true) ] boolean IsDefault;
 };
 
-[ Experimental(true), Association ]
+[ Version("0.5.1"), Experimental(true), Association ]
 class LMI_MemberOfBlockStatisticsManifestCollection : CIM_MemberOfCollection
 {
     [Key, Aggregate, Override("Collection"), Description (
@@ -1178,7 +1178,7 @@ class LMI_MemberOfBlockStatisticsManifestCollection : CIM_MemberOfCollection
     LMI_BlockStatisticsManifest REF Member;
 };
 
-[ Experimental, Association ]
+[ Version("0.5.1"), Experimental, Association ]
 class LMI_AssociatedBlockStatisticsManifestCollection : CIM_AssociatedBlockStatisticsManifestCollection
 {
     [Key, Override("Statistics"), Min ( 1 ),
