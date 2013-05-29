@@ -8,7 +8,7 @@ Please appropriate ``ConfigurationService`` to create, modify or delete devices
 or volume groups:
 
 
-.. toctree:: 
+.. toctree::
    :maxdepth: 2
 
    usage-partitioning
@@ -16,6 +16,7 @@ or volume groups:
    usage-lvm
    usage-fs
    usage-block-performance
+   usage-mounting
 
 
 .. note::
