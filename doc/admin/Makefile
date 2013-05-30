@@ -60,7 +60,6 @@ figures: pic/partitions.png \
     pic/job-affected-after.svg \
     pic/block-performance.svg \
     pic/block-performance-full.svg \
-    pic/mounting-schema.svg \
     pic/mounting-instance.svg \
     pic/mounting-instance-2.svg \
     pic/mounting-instance-3.svg
