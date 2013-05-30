@@ -1,4 +1,6 @@
 New in version 0.5.1:
+Implemented mounting/unmounting.
+Implemented Block Server Performance Subprofile.
 Reorganized the sources to use fully qualified import names.
 Use Blivet instead of Anaconda as storage backend.
 Use CMPILogger from openlmi-providers for logging.
@@ -6,13 +8,13 @@ All CreateOrModify* and Delete* methods are now asynchronous.
 Block devices can be formatted with ext2/3/4, xfs and btrfs filesystems.
 Indications are now supported for LMI_StorageJobs.
 And as usual, fixed lot of bugs, improved test coverage and documentation.
-All changes should be backward-compatible.
 
 New SMI-S profiles:
   Jobs Storage Subprofile
   File Storage Profile
   Filesystem Profile
   Filesystem Manipulation Profile
+  Block Server Performance Subprofile
 
 New classes:
   LMI_AffectedStorageJobElement
@@ -34,6 +36,29 @@ New classes:
   LMI_StorageJob
   LMI_StorageJob
   LMI_StorageMethodResult
+  LMI_MountedFileSystemSetting
+  LMI_MountedFileSystem
+  LMI_MountedFileSystemCapabilities
+  LMI_MountConfigurationService
+  LMI_HostedMount
+  LMI_MountedFileSystemElementSettingData
+  LMI_MountElementCapabilities
+  LMI_MountPoint:
+  LMI_AttachedFileSystem:
+  LMI_BlockStorageStatisticalData
+  LMI_StorageElementStatisticalData
+  LMI_StorageStatisticsCollection
+  LMI_MemberOfStorageStatisticsCollection
+  LMI_HostedStorageStatisticsCollection
+  LMI_BlockStatisticsService
+  LMI_BlockStatisticsCapabilities
+  LMI_BlockStorageStatisticsElementCapabilities
+  LMI_BlockStatisticsManifest
+  LMI_BlockStatisticsManifestCollection
+  LMI_MemberOfBlockStatisticsManifestCollection
+  LMI_AssociatedBlockStatisticsManifestCollection
+  LMI_TransientFileSystem
+
 
 New in version 0.5.0:
 New and backward-incompatible storage model.
