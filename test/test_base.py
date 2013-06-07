@@ -506,7 +506,7 @@ class StorageTestBase(unittest.TestCase):
                 **kwargs)
         if ret == self.JOB_CREATED:
             # wait for the job
-            jobname = outparams['job']
+            jobname = outparams['Job']
             (ret, outparams) = self.finish_job(jobname,
                     return_constructor,
                     affected_output_name)
