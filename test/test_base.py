@@ -108,23 +108,31 @@ class StorageTestBase(unittest.TestCase):
         cls.cimom = os.environ.get("LMI_CIMOM_BROKER", "sblim-sfcb")
         cls.clean = os.environ.get("LMI_STORAGE_CLEAN", "Yes")
         cls.verbose = os.environ.get("LMI_STORAGE_VERBOSE", None)
+        cls.mnt_partition = os.environ.get("LMI_STORAGE_MNT_PARTITION", "")
+        cls.mnt_dir = os.environ.get("LMI_STORAGE_MNT_DIR", "/mnt")
+        cls.mnt_fstype = os.environ.get("LMI_STORAGE_MNT_FSTYPE", "ext4")
+        # TBI
+        # cls.mnt_options = os.environ.get("LMI_STORAGE_MNT_OPTIONS", "")
+        # cls.mnt_flags = os.environ.get("LMI_STORAGE_MNT_FLAGS", "")
         cls.mydir = os.path.dirname(__file__)
         cls.indication_port = 12345
         cls.indication_queue = Queue.Queue()
         cls.listener = None
         cls.wbemconnection = pywbem.WBEMConnection(cls.url, (cls.username, cls.password))
 
-        disk = cls.wbemconnection.ExecQuery("WQL",
+        elems = cls.wbemconnection.ExecQuery("WQL",
                     'select * from CIM_StorageExtent where Name="'
-                    + cls.disk + '"')[0]
-        cls.disk_name = disk.path
+                    + cls.disk + '"')
+        if elems:
+            cls.disk_name = elems[0].path
 
         cls.partition_names = []
         for device in cls.partitions:
-            partition = cls.wbemconnection.ExecQuery("WQL",
+            elems = cls.wbemconnection.ExecQuery("WQL",
                     'select * from CIM_StorageExtent where Name="'
-                    + device + '"')[0]
-            cls.partition_names.append(partition.path)
+                    + device + '"')
+            if elems:
+                cls.partition_names.append(elems[0].path)
 
 
     def setUp(self):
