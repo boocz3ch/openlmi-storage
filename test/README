@@ -36,7 +36,7 @@ LMI_STORAGE_PARTITIONS - Space-separated list of partitions or other block
                          must be empty and must have the same size.
                          The tests will destroy all data on these partitions,
                          do not use the system ones!
-                         At lest 10 partitions must be provided!
+                         At least 10 partitions must be provided!
                          For example: LMI_STORAGE_PARTITIONS=/dev/sdb?*
 LMI_CIMOM_BROKER - Name of the CIMOM service, e.g. 'tog-pegasus'. Several tests
                    need to restart the CIMOM and they will invoke.
